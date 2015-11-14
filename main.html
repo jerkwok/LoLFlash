@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assignment 2</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- // <script type="text/javascript" src="asmt3.js"></script> -->
+	<script type="text/javascript" src="main.js"></script>
+	<style type="text/css">
+		html, body {
+	        height: 100%;
+        	margin: 0;
+        	padding: 0;
+      	}
+
+		#data {
+			float: left;
+			width: 700px;
+		}
+
+		table {
+			border: 1px solid darkBlue;
+			border-collapse: collapse;
+			width: 650px;
+		}
+
+		td {
+			border: 1px solid darkBlue;
+			padding: 5px;
+		}
+
+		tr:nth-child(2n) {
+			background-color: white;
+		}
+
+		tr:nth-child(2n+1) {
+			background-color: lightBlue;
+			color: black;
+		}	   
+	</style>
+</head>
+
+<body>
+
+	<div id="data"><h1>Data</h1></div>
+
+	<button id="goButton">Go</button>
+
+	<div id="form">
+		Username<br>
+		<input type="text" id="username"><br>
+	</div>
+</body>
+</html>
