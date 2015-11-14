@@ -5,13 +5,15 @@ $(document).ready(function(){
 
 	
 	var username = $("#username").val()
-	// console.log(username);
+	var region = $('#region').val()
+	var season = $('#season').val()
+	// console.log(season);
 
 	// if (isNaN(username)){
 	// 	username = "Megaman703"
 	// }
 	
-	getdata(username);
+	getdata(username,region,season);
 
  	// $('#goButton').hide();
  	$("#data").show();
@@ -20,8 +22,8 @@ $(document).ready(function(){
 });
 
 
-function getdata(user){
-	var summonerurl = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+function getdata(user,region,season){
+	var summonerurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	// console.log(url);
 
 	$.ajax({
@@ -40,6 +42,31 @@ function getdata(user){
 			console.log("Level: " + sLevel);
 			console.log("Name: " + user);
 			console.log("ID: " + sID);
+
+			var region = "na"
+			// var statsurl = "https://na.api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+			getwinstats(sID,region,season);
+		}
+	})
+}
+
+function getwinstats (id,region,season) {
+	var winurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+	$.ajax({
+		url: winurl,
+		type: 'GET',
+		dataType: 'json',
+		data: {
+
+		},
+		success: function(data){
+			console.log("Win Stats:")
+			console.log(data["playerStatSummaries"])
+			console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
+			console.log(data["playerStatSummaries"][15].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][15].wins)
+			console.log(data["playerStatSummaries"][16].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][16].wins)
 		}
 	})
 }
