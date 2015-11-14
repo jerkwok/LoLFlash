@@ -65,8 +65,8 @@ function getwinstats (id,region,season) {
 			console.log("Win Stats:")
 			console.log(data["playerStatSummaries"])
 			console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
-			console.log(data["playerStatSummaries"][15].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][15].wins)
-			console.log(data["playerStatSummaries"][16].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][16].wins)
+			console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
+			console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
 		}
 	})
 }
