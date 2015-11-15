@@ -6,52 +6,34 @@
 	<!-- // <script type="text/javascript" src="asmt3.js"></script> -->
 	<script type="text/javascript" src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-	    		<a class="navbar-brand" href="#">NotOP.gg</a>
-	    	</div>
-	   		<div>
-		    	<ul class="nav navbar-nav">
-		    		<li><a href="#">Stats</a></li>
-		        	<li><a href="#">Game Status</a></li>
-		        	<li><a href="#">Competitive</a></li>
-		      	</ul>
-	    	</div>
-	 	</div>
+	<nav id="navbar">	   	
+	   	<div>
+		   	<ul>
+		   		<li><a id="main" href="#">NotOP.gg</a></li>
+		   		<li><a href="#">Stats</a></li>
+		       	<li><a href="#">Game Status</a></li>
+		       	<li><a href="#">Competitive</a></li>
+		   	</ul>
+	    </div>
 	</nav>
-	<div class="container-fluid">
-		<div class="form-horizontal" role="form">
-			<div class="form-group row form-group-sm">
 
-				<label class="col-sm-1 control-label" for="username">Username:</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control input" id="username" value="Megaman70">
-				</div>
-					
-				<label class="col-sm-1 control-label" for="region">Region:</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control input-sm" id="region" value="na">
-				</div>
-					
-				<label class="col-sm-1 control-label" for="season">Season:</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control input-sm" id="season" value="SEASON2015">
-				</div>
+	<div id="search">
+		<label for="username">Username:</label>
+		<input type="text" id="username" value="Megaman70">
 
-				<div class="col-sm-1">
-					<button type="button" class="btn btn-default btn-sm" id="goButton">Find Summoner</button>
-				</div>
+		<label for="region">Region:</label>
+		<input type="text" id="region" value="na">	
 
-			</div>
-		</div>
+		<label for="season">Season:</label>
+		<input type="text" id="season" value="SEASON2015">	
+
+		<button type="button" id="goButton">Find Summoner</button>
 	</div>
 
-<!-- 	<div id="data"><h1>Data</h1></div> -->
 
 <!-- 	<button id="goButton">Go</button>	 -->	
 </body>
