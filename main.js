@@ -1,7 +1,7 @@
 // Google API Key
 // AIzaSyC_lsyj7OW5s82il8Sn3D7YLzFONtM1LMg
 $(document).ready(function(){
- $("button").click(function(){
+ $("#goButton").click(function(){
 
 	
 	var username = $("#username").val()
@@ -19,7 +19,13 @@ $(document).ready(function(){
  	$("#data").show();
 
   });
+
+ $("#clearButton").click(function(){
+ });
+
 });
+
+
 
 
 function getID(user,region,season){
@@ -52,9 +58,9 @@ function getID(user,region,season){
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
 			//so we need to make a new web script that forwards the request, adds the api key, 
-			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");
+			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");	
 
-			getcurrentgame(sID,region);
+			// getcurrentgame(sID,region);
 		}
 	})
 }
@@ -73,7 +79,9 @@ function getcurrentgame (id,region) {
 		data: {
 			success: function(data){
 				console.log("Current Game:")
+				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Current Game:"
 				console.log(data)
+				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data
 			}
 		}
 	})
