@@ -48,7 +48,33 @@ function getID(user,region,season){
 
 			getwinstats(sID,region,season);
 			getrankedsolostats(sID,region);
-			getaramstats(sID,region,season)
+			getaramstats(sID,region,season);
+			//current game does NOT currently work.
+			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
+			//so we need to make a new web script that forwards the request, adds the api key, 
+			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");
+
+			getcurrentgame(sID,region);
+		}
+	})
+}
+
+function getcurrentgame (id,region) {
+	if (region == "na") {
+		region = "NA1"
+	};
+
+	var currgameurl = "https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/"+region+"/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+	$.ajax({
+		url: currgameurl,
+		type: 'GET',
+		dataType: 'json',	
+		data: {
+			success: function(data){
+				console.log("Current Game:")
+				console.log(data)
+			}
 		}
 	})
 }
