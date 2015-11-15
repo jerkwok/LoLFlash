@@ -29,7 +29,22 @@
 		<input type="text" id="region" value="na">	
 
 		<label for="season">Season:</label>
-		<input type="text" id="season" value="SEASON2015">	
+		<select id="season">
+		  <option value="PRESEASON3">Preseason 3</option>
+		  <option value="SEASON3">Season 3</option>
+		  <option value="PRESEASON2014">Preseason 4</option>
+		  <option value="SEASON2014">Season 4</option>
+		  <option value="PRESEASON2015">Preseason 5</option>
+		  <option selected value="SEASON2015">Season 5</option>
+		  <option value="PRESEASON2016">Preseason 6</option>
+		</select>
+
+		<label for="season">Ranked Queue:</label>
+		<select id="queueType">
+		  <option value="RANKED_SOLO_5x5">Solo Queue</option>
+		  <option value="RANKED_TEAM_3x3">Ranked 3's Team</option>
+		  <option value="RANKED_TEAM_5x5">Ranked 5's Team</option>
+		</select>
 
 		<button type="button" id="goButton">Find Summoner</button>
 		<button type="button" id="clearButton">Clear</button>
