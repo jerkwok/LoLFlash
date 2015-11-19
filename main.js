@@ -42,14 +42,14 @@ function getID(user,region,season){
 
 		},
 		success: function(data){
-			console.log(data)
+			// console.log(data)
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
-			console.log("Level: " + sLevel);
-			console.log("Name: " + user);
-			console.log("ID: " + sID);
+			// console.log("Level: " + sLevel);
+			// console.log("Name: " + user);
+			// console.log("ID: " + sID);
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Name: " + user + "</br>";
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Level: " + sLevel + "</br>";
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "ID: " + sID + "</br>";
@@ -84,9 +84,9 @@ function getcurrentgame (id,region) {
 		dataType: 'json',	
 		data: {
 			success: function(data){
-				console.log("Current Game:")
+				//console.log("Current Game:")
 				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Current Game:" + "</br>"
-				console.log(data)
+				//console.log(data)
 				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data + "</br>"
 			}
 		}
@@ -104,11 +104,11 @@ function getwinstats (id,region,season) {
 
 		},
 		success: function(data){
-			console.log("Win Stats:")
-			console.log(data["playerStatSummaries"])
-			console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
-			console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
-			console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
+			// console.log("Win Stats:")
+			// console.log(data["playerStatSummaries"])
+			// console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
+			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
+			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Win Stats:" + "</br>"
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
 			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
@@ -138,8 +138,8 @@ function getrankedsolostats(id, region){
 }
 
 function displayrankedsolostats(id,data,place){
-	console.log("Ranked League:")
-	console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
+	// console.log("Ranked League:")
+	// console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
 	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Ranked League:" + "</br>"
 	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
 
@@ -155,7 +155,7 @@ function getaramstats(id,region,season){
 
 			},
 			success: function(data){
-				console.log(data)
+				// console.log(data)
 				for (var i = 0; i < data.playerStatSummaries.length; i++) {
 					if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
 						displayaramstats(id,data,i);
@@ -169,8 +169,8 @@ function displayaramstats(id,data,place){
 	totkills = data.playerStatSummaries[place].aggregatedStats.totalChampionKills;
 	totassists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
 	totwins = data.playerStatSummaries[place].wins;
-	console.log("ARAM Stats:");
-	console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
+	// console.log("ARAM Stats:");
+	// console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
 	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "ARAM Stats:" + "</br>"
 	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
 
@@ -214,8 +214,19 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 	};
 	var matchhisturl = "https://na.api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
+	// Posts the match history url to the main.php
+	// $.ajax({
+	// 	url: "main.php",
+	// 	type: "POST",
+	// 	data: { data: matchhisturl },
+	// 	success: function(response) {
+ //        	alert(response);
+ //    	}
+	// });
+
 	$.ajax({
-		url: matchhisturl,
+			
+			url: matchhisturl,
 			type: 'GET',
 			dataType: 'json',
 			data: {
