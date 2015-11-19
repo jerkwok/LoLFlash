@@ -1,4 +1,4 @@
-<?
+<?php
 	$url = $_POST["data"];
 	
 
