@@ -1,7 +1,10 @@
 
 $(document).ready(function(){
- $("#goButton").click(function(){
+var champidmap = getchampidmap()
 
+
+ $("#goButton").click(function(){
+ 	console.log(champidmap)
 	
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -209,18 +212,19 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 		optargs += "&endIndex=" + endindex;
 	};
 
-	if (region == "na") {
-		region = "NA1"
-	};
+	// if (region == "na") {
+	// 	region = "NA1"
+	// };
 	var matchhisturl = "https://na.api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
-	// Posts the match history url to the main.php
+	//Posts the match history url to the main.php
 	// $.ajax({
 	// 	url: "main.php",
 	// 	type: "POST",
 	// 	data: { data: matchhisturl },
 	// 	success: function(response) {
  //        	alert(response);
+ //        	console.log(matchhisturl);
  //    	}
 	// });
 
@@ -233,13 +237,41 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 
 			},
 			success: function(data){
-				console.log("Match History:")
-				console.log(data)
+				// console.log("Match History:")
+				console.log("Last 10 Games:")
+				document.getElementById("content").innerHTML += "Match History:" + "</br>"
+				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
 				// 	if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
+				for(var i = 0; i < 10; i++){
+					displayGame(data.matches[i]);
+				}
+			}
+		})
+}
+
+function displayGame(match){
+	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
+	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
+
+}
+
+function getchampidmap(){
+
+	$.ajax({
+			
+			url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+				console.log(data)
+				return data
 			}
 		})
 }
