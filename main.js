@@ -265,6 +265,7 @@ function displayGame(match){
 	var champion;
 
 	for(var key in champidmap.data){
+		console.log(key);
 		console.log(champidmap.data.key.id);
 		// if(key.id == match.champion){
 		// 	champion = key.key;
