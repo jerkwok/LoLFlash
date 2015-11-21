@@ -276,7 +276,7 @@ function displayGame(match){
 	//DOESN'T QUITE WORK YET BUT ALMOST THERE.
 	//NEED TO GO TO WORK
 
-	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
+	//document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
 	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
 
 }
