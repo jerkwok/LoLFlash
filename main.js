@@ -1,10 +1,16 @@
+var champidmap
 
 $(document).ready(function(){
-var champidmap = getchampidmap()
-
+getchampidmap()
+//Calls the ajax at the start
 
  $("#goButton").click(function(){
  	console.log(champidmap)
+ 	//Current work around right now.
+ 	//Issue is ajax call is asynchronous so if the ajax call
+ 	//doesn't finish and put the data in champidmap then it is
+ 	//undefined when the button is pressed.
+
 	
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -259,19 +265,16 @@ function displayGame(match){
 
 }
 
-function getchampidmap(){
+function getchampidmap(callback){
 
 	$.ajax({
-			
-			url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
-			type: 'GET',
-			dataType: 'json',
-			data: {
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
 
-			},
-			success: function(data){
-				console.log(data)
-				return data
-			}
-		})
+			//console.log(data)
+			champidmap = data;
+		}
+	})
 }
