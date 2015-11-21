@@ -262,16 +262,16 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 function displayGame(match){
 	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
 
-	var champion;
+	// var champion;
 
-	for(var key in champidmap.data){
-		console.log(key);
-		console.log(champidmap.data.key.id);
+	// for(var key in champidmap.data){
+	// 	console.log(key);
+	// 	console.log(champidmap.data.key.id);
 		// if(key.id == match.champion){
 		// 	champion = key.key;
 		// 	break;
 		// }
-	}
+	// }
 	//MAY BE A BETTER WAY TO PARSE THIS.
 	//DOESN'T QUITE WORK YET BUT ALMOST THERE.
 	//NEED TO GO TO WORK
