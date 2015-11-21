@@ -261,6 +261,20 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 
 function displayGame(match){
 	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
+
+	var champion;
+
+	for(var key in champidmap.data){
+		if(key.id == match.champion){
+			champion = key.name;
+			break;
+		}
+	}
+	//MAY BE A BETTER WAY TO PARSE THIS.
+	//DOESN'T QUITE WORK YET BUT ALMOST THERE.
+	//NEED TO GO TO WORK
+
+	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + "></img>"
 	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
 
 }
