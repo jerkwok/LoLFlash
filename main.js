@@ -24,7 +24,8 @@ getChampIdMap()
   });
 
  $("#clearButton").click(function(){
- 	clear("content")
+ 	clear("teamA")
+ 	clear("teamB")
  });
 
 });
@@ -284,10 +285,10 @@ function getMatchInfo(region, matchId){
 
 					if(data.participants[i].teamId == 100){
 						document.getElementById("teamA").innerHTML += 
-						data.participantIdentities[i].player.summonerName +champPic;
+						data.participantIdentities[i].player.summonerName +champPic + "</br>";
 					} else{
 						document.getElementById("teamB").innerHTML += 
-						data.participantIdentities[i].player.summonerName +champPic;
+						data.participantIdentities[i].player.summonerName +champPic + "</br>";
 
 					}
 				}
