@@ -277,17 +277,30 @@ function getMatchInfo(region, matchId){
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
+
+				var match = document.createElement("div");
+				match.setAttribute("class", "match");
+
+				var teamA = document.createElement("div");
+				teamA.setAttribute("class", "teamA");
+				var teamB = document.createElement("div");
+				teamB.setAttribute("class", "teamB");
+
+				match.appendChild(teamA);
+				match.appendChild(teamB);
+
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
 					champPic = getChampPic(champKey);
 
 					if(data.participants[i].teamId == 100){
-						document.getElementById("teamA").innerHTML += champPic;
+						teamA.innerHTML += champPic;
 					} else{
-						document.getElementById("teamB").innerHTML += champPic;
+						teamB.innerHTML += champPic;
 					}
 				}
+				document.getElementById("content").appendChild(match);
 			}
 		})
 }
