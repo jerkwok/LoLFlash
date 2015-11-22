@@ -1,66 +1,475 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>webLOL</title>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- // <script type="text/javascript" src="asmt3.js"></script> -->
-	<script type="text/javascript" src="main.js"></script>
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
-</head>
+var champIdMap
+var itemIdMap
+var spellIdMap = {}
+var spellImgMap = {}
 
-<body>
-	<div class="navbar">	   	
-	   	<div>
-		   	<ul>
-		   		<li><a href="#">NotOP.gg</a></li>
-		   		<li><a href="#">Stats</a></li>
-		       	<li><a href="#">Game Status</a></li>
-		       	<li><a href="#">Competitive</a></li>
-		   	</ul>
-	    </div>
-	</div>
+$(document).ready(function(){
+getChampIdMap()
+getItemIdMap()
+getSpellIdMap()
+//Calls the ajax at the start
 
-	<div class="search">
-		<label for="username">Username:</label>
-		<input type="text" id="username" value="feed l0rd">
+ $("#goButton").click(function(){
+ 	console.log(itemIdMap)
 
-		<label for="region">Region:</label>
-		<input type="text" id="region" value="na">	
+	var username = $("#username").val()
+	var region = $('#region').val()
+	var season = $('#season').val()
+	// console.log(season);
 
-		<label for="season">Season:</label>
-		<select id="season">
-		  <option value="PRESEASON3">Preseason 3</option>
-		  <option value="SEASON3">Season 3</option>
-		  <option value="PRESEASON2014">Preseason 4</option>
-		  <option value="SEASON2014">Season 4</option>
-		  <option value="PRESEASON2015">Preseason 5</option>
-		  <option selected value="SEASON2015">Season 5</option>
-		  <option value="PRESEASON2016">Preseason 6</option>
-		</select>
+	// if (isNaN(username)){
+	// 	username = "Megaman703"
+	// }
+	
+	getID(username,region,season);
 
-		<label for="season">Ranked Queue:</label>
-		<select id="queueType">
-		  <option value="RANKED_SOLO_5x5">Solo Queue</option>
-		  <option value="RANKED_TEAM_3x3">Ranked 3's Team</option>
-		  <option value="RANKED_TEAM_5x5">Ranked 5's Team</option>
-		</select>
+ 	// $('#goButton').hide();
+ 	$("#data").show();
 
-		<button type="button" id="goButton">Find Summoner</button>
-		<button type="button" id="clearButton">Clear</button>
-	</div>
+  });
 
-	<div class="container">
-		<div class="content" id="content">
-			<div class="userstats" id="userstats">
-			</div>
-			<div class="teamA" id="teamA">
-			</div>
-			<p>vs.</p>
-			<div class="teamB" id="teamB">
-			</div>
-		</div>
-	</div>
+ $("#clearButton").click(function(){
+ 	clear("teamA")
+ 	clear("teamB")
+ 	clear("userstats")
+ });
 
-</body>
-</html>
+});
+
+function clear(id){
+	document.getElementById(id).innerHTML = ""
+}
+
+
+function getID(user,region,season){
+	var summonerurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	// console.log(url);
+
+	$.ajax({
+		url: summonerurl,
+		type: 'GET',
+		dataType: 'json',
+		data: {
+
+		},
+		success: function(data){
+			// console.log(data)
+			user = user.replace(" ", "");
+			user = user.toLowerCase().trim();
+			sLevel = data[user].summonerLevel;
+			sID = data[user].id;
+			// console.log("Level: " + sLevel);
+			// console.log("Name: " + user);
+			// console.log("ID: " + sID);
+			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
+			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
+			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
+
+			var region = "na"
+			// var statsurl = "https://na.api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+			// getwinstats(sID,region,season);
+			// getrankedsolostats(sID,region);
+			// getaramstats(sID,region,season);
+			getMatchHistory(sID,region)
+			//current game does NOT currently work.
+			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
+			//so we need to make a new web script that forwards the request, adds the api key, 
+			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");	
+
+			// getcurrentgame(sID,region);
+		}
+	})
+}
+
+function getcurrentgame (id,region) {
+	if (region == "na") {
+		region = "NA1"
+	};
+
+	var currgameurl = "https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/"+region+"/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+	$.ajax({
+		url: currgameurl,
+		type: 'GET',
+		dataType: 'json',	
+		data: {
+			success: function(data){
+				//console.log("Current Game:")
+				document.getElementById("userstats").innerHTML += "Current Game:" + "</br>"
+				//console.log(data)
+				document.getElementById("userstats").innerHTML += data + "</br>"
+			}
+		}
+	})
+}
+
+function getwinstats (id,region,season) {
+	var winurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+	$.ajax({
+		url: winurl,
+		type: 'GET',
+		dataType: 'json',
+		data: {
+
+		},
+		success: function(data){
+			// console.log("Win Stats:")
+			// console.log(data["playerStatSummaries"])
+			// console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
+			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
+			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
+			document.getElementById("userstats").innerHTML += "Win Stats:" + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
+
+		}
+	})
+}
+
+function getrankedsolostats(id, region){
+	var rankedsolourl = "https://na.api.pvp.net/api/lol/"+region+"/v2.5/league/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	$.ajax({
+		url: rankedsolourl,
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+				for (var i = 0; i < data[id].length - 1; i++) {
+					if (data[id][i].queue == "RANKED_SOLO_5x5") {
+						displayrankedsolostats(id,data,i);
+					}
+				};
+			}
+		})
+}
+
+function displayrankedsolostats(id,data,place){
+	// console.log("Ranked League:")
+	// console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
+	document.getElementById("userstats").innerHTML += "Ranked League:" + "</br>"
+	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
+
+}
+
+function getaramstats(id,region,season){
+	var statsurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	$.ajax({
+		url: statsurl,
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+				// console.log(data)
+				for (var i = 0; i < data.playerStatSummaries.length; i++) {
+					if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
+						displayaramstats(id,data,i);
+					}
+				};
+			}
+		})
+}
+
+function displayaramstats(id,data,place){
+	totkills = data.playerStatSummaries[place].aggregatedStats.totalChampionKills;
+	totassists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
+	totwins = data.playerStatSummaries[place].wins;
+	// console.log("ARAM Stats:");
+	// console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
+	document.getElementById("userstats").innerHTML += "ARAM Stats:" + "</br>"
+	document.getElementById("userstats").innerHTML += "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
+
+}
+
+function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
+	//last 7 args are optional.
+	var optargs = ""
+
+	//these need to be comma separated values
+	if (champids != undefined) {
+		optargs += "&champids=" + starttime;
+	};
+
+	if (rankedQueues != undefined) {
+		optargs += "&rankedQueues=" + starttime;
+	};
+
+	if (seasons != undefined) {
+		optargs += "&seasons=" + seasons;
+	};
+
+	if (begintime != undefined) {
+		optargs += "&beginTime=" + begintime;
+	};
+
+	if (endtime != undefined) {
+		optargs += "&endTime=" + endtime;
+	};
+
+	if (beginindex != undefined) {
+		optargs += "?&beginIndex=" + beginindex;
+	};
+
+	if (endindex != undefined) {
+		optargs += "&endIndex=" + endindex;
+	};
+
+	// if (region == "na") {
+	// 	region = "NA1"
+	// };
+	var matchhisturl = "https://na.api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+
+	//Posts the match history url to the main.php
+	// $.ajax({
+	// 	url: "main.php",
+	// 	type: "POST",
+	// 	data: { data: matchhisturl },
+	// 	success: function(response) {
+ //        	alert(response);
+ //        	console.log(matchhisturl);
+ //    	}
+	// });
+
+	$.ajax({
+			
+			url: matchhisturl,
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+				// console.log("Match History:")
+				// console.log("Last 10 Games:")
+				document.getElementById("userstats").innerHTML += "Match History:" + "</br>"
+				// console.log(data)
+				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
+				// 	if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
+				// 		displayaramstats(id,data,i);
+				// 	}
+				// };
+				for(var i = 0; i < 1; i++){
+					displayGame(id, data.matches[i], region);
+				}
+			}
+		})
+}
+
+function displayGame(playerID, match, region){
+
+	var name = getChampName(match.champion)
+	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
+		" Champion Played Id:" + match.champion + " Name:" + name
+	//displayChampPic(name);
+	document.getElementById("userstats").innerHTML +="</br>" 
+	// var KDA = getKDA(match.matchId, playerID, region)
+	// console.log(KDA)
+
+	getMatchInfo(region, match.matchId);
+}
+
+function getMatchInfo(region, matchId){
+	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var champKey;
+	var champPic;
+	var KDA = [0,0,0];
+	$.ajax({
+			
+			url: matchurl,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data){
+
+				var match = document.createElement("div");
+				match.setAttribute("class", "match");
+
+				var teamA = document.createElement("div");
+				teamA.setAttribute("class", "teamA");
+				var teamB = document.createElement("div");
+				teamB.setAttribute("class", "teamB");
+
+				match.appendChild(teamA);
+				match.appendChild(teamB);
+
+				for(var i = 0; i < data.participants.length; i++){
+					console.log(data.participants[i]);
+					champKey = getChampKey(data.participants[i].championId);
+					champPic = getChampPic(champKey);
+					KDA = getKDA(data.participants[i],i);
+
+					if(data.participants[i].teamId == 100){
+						document.getElementById("teamA").innerHTML +=
+						//name and picture 
+						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						//Summoner Spells
+						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>"
+						//KDA
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						//end game items
+						"Items: </br>";
+						for (var itemnum = 0; itemnum < 6; itemnum++){
+							var itemstring = "item"+itemnum
+							var itemnump = itemnum+1
+							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+								document.getElementById("teamA").innerHTML +=
+								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
+									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}
+						}
+
+						document.getElementById("teamA").innerHTML +=
+						//CS
+						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
+						//Gold
+						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
+						//Wards
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>"
+
+						;
+
+					} else{
+						document.getElementById("teamB").innerHTML += 
+						//name and picture 
+						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						//Summoner Spells
+						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>" +
+						//KDA
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						//end game items
+						"Items: </br>";
+						for (var itemnum = 0; itemnum < 6; itemnum++){
+							var itemstring = "item"+itemnum
+							var itemnump = itemnum+1
+							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+								document.getElementById("teamB").innerHTML +=
+								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
+									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}
+						}
+
+						document.getElementById("teamB").innerHTML +=
+						//CS
+						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
+						//Gold
+						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
+						//Wards
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>";
+						;
+					}
+				}
+				document.getElementById("content").appendChild(match);
+			}
+		})
+}
+
+function getKDA(data,participantId){
+	return [data.stats.kills,
+			 			 data.stats.deaths,
+			 			 data.stats.assists]
+			// KDACallback(
+			//  [data.participants[participantId].stats.kills,
+			//  			 data.participants[participantId].stats.deaths,
+			//  			 data.participants[participantId].stats.assists],container)
+}
+
+function KDACallback(KDA,container){
+	document.getElementById(container).innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
+}
+
+// Below code is for champion related functions
+// Retrieves all of the champion's data and stores it into the champIdMap
+function getChampIdMap(callback){
+
+	// May need to find a better way to do this since it's bad when the internet is slow
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+
+			champIdMap = data;
+		}
+	})
+}
+
+//Retrieves all of the item data and stores it into the itemIdMap
+function getItemIdMap(callback){
+
+	// May need to find a better way to do this since it's bad when the internet is slow
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+
+			itemIdMap = data;
+		}
+	})
+}
+
+//Retrieves all of the spell data and stores it into the spellIdMap
+function getSpellIdMap(callback){
+
+	// May need to find a better way to do this since it's bad when the internet is slow
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(response){
+			for (var i in response.data){
+				//Make our own map. Their json data doesn't work with what we want.
+				spellIdMap[response.data[i].id] = response.data[i].name
+				spellImgMap[response.data[i].id] = response.data[i].key
+			}
+			console.log(spellImgMap)
+		}
+	})
+}
+
+// Gets the champion's name (full name with punctuation)
+function getChampName(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].name;
+		}
+	}
+}
+
+// Gets the champion's key (no punctuation, used for links and data)
+function getChampKey(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].key;
+		}
+	}
+}
+
+// Gets the champion's title (full punctuation)
+function getChampTitle(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].title;
+		}
+	}
+}
+
+// Displays the champion's picture using the champion's key
+function getChampPic(champKey){
+	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+	//document.getElementById("content").innerHTML += "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+}
+
+function getSpellPic(spellName){
+	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+}
