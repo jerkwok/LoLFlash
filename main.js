@@ -257,22 +257,15 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 function displayGame(match){
 	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
 
-	displayChampPic(match.champion);
+	var name = getChampName(match.champion)
+	displayChampPic(name);
 
 	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
 }
 
-function displayChampPic(champId){
-	var champion;
-	// May be a more efficient way to do this instead
-	// of looping through all the champions til the id matches
-	for(var key in champidmap.data){
-		if(champidmap.data[key].id == champId){
-			champion = champidmap.data[key].key;
-			break;
-		}
-	}
-	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
+function displayChampPic(champName){
+	
+	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png></img>"
 }
 
 function getchampidmap(callback){
@@ -292,4 +285,15 @@ function getchampidmap(callback){
  	//doesn't finish and put the data in champidmap then it is
  	//undefined when the button is pressed
  	//Especially bad if the internet is slow and the ajax call takes awhile.
+}
+
+function getChampName(champId){
+	var champion;
+	// May be a more efficient way to do this instead
+	// of looping through all the champions til the id matches
+	for(var key in champidmap.data){
+		if(champidmap.data[key].id == champId){
+			return champidmap.data[key].key;
+		}
+	}
 }
