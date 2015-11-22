@@ -268,7 +268,7 @@ function displayGame(playerID, match, region){
 
 function displayChampPic(champName){
 	
-	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png></img>"
+	document.getElementById("content").innerHTML += "<img class=\"champpic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png\"></img>"
 }
 
 function getchampidmap(callback){
