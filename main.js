@@ -333,8 +333,9 @@ function getMatchInfo(region, matchId){
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById(playerdivdest).innerHTML +=
-								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
-									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+								getItemPic(data.participants[i].stats[itemstring])
+								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
+									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
 
@@ -385,8 +386,9 @@ function getMatchInfo(region, matchId){
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById(playerdivdest).innerHTML +=
-								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
-									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+								getItemPic(data.participants[i].stats[itemstring])
+								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
+									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
 
@@ -666,4 +668,8 @@ function getChampPic(champKey){
 
 function getSpellPic(spellName){
 	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+}
+
+function getItemPic (itemId) {
+	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
 }
