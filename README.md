@@ -17,3 +17,5 @@ Match history looks fairly easy to parse for information. I've implemented a fai
 I think for the main.js file, we should put functions that are of the same theme/idea together so we're not scrolling up and down looking for functions.
 
 Going to get ready for work.
+
+Images in the table are okay, but there is no image in DDragon for name and ward. Might need to make them ourselves and dl the icons locally. NBD.
