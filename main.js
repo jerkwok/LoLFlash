@@ -263,12 +263,11 @@ function displayGame(playerID, match, region){
 	document.getElementById("content").innerHTML +="</br>" 
 	var KDA = getKDA(match.matchId, playerID, region)
 	console.log(KDA)
-	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + "Deaths: " + KDA[1] + "Assists: " + KDA[2]+ "</br>" 
 }
 
 function displayChampPic(champName){
 	
-	document.getElementById("content").innerHTML += "<img class=\"champpic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png\"></img>"
+	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png></img>"
 }
 
 function getchampidmap(callback){
@@ -303,9 +302,7 @@ function getChampName(champId){
 
 function getKDA(matchId,playerId,region){
 	var participantId
-	var k = 1
-	var d = 2
-	var a = 3
+
 	$.ajax({
 		url: "https://na.api.pvp.net/api/lol/"+region+"/v2.2/match/"+matchId+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
 		type: 'GET',
@@ -324,20 +321,15 @@ function getKDA(matchId,playerId,region){
 					console.log(participantId)
 				}
 			}
-			 k = data.participants[participantId].stats.kills
-			 d = data.participants[participantId].stats.deaths
-			 a = data.participants[participantId].stats.assists
-
-			console.log("Kills:" + k)
-			console.log("D:" + d)
-			console.log("A:" + a)
-
-			// return[data.participants[participantId].stats.kills,
-			// data.participants[participantId].stats.deaths,
-			// data.participants[participantId].stats.assists];
-			// return [k, d, a]
+			KDACallback(
+			 [data.participants[participantId].stats.kills,
+			 			 data.participants[participantId].stats.deaths,
+			 			 data.participants[participantId].stats.assists])
 	}	
 	})
 
-			return [k, d, a]
+}
+
+function KDACallback(KDA){
+	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + "Deaths: " + KDA[1] + "Assists: " + KDA[2]+ "</br>" 
 }
