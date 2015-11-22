@@ -6,12 +6,7 @@ getchampidmap()
 
  $("#goButton").click(function(){
  	console.log(champidmap)
- 	//Current work around right now.
- 	//Issue is ajax call is asynchronous so if the ajax call
- 	//doesn't finish and put the data in champidmap then it is
- 	//undefined when the button is pressed.
 
-	
 	var username = $("#username").val()
 	var region = $('#region').val()
 	var season = $('#season').val()
@@ -262,23 +257,22 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 function displayGame(match){
 	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
 
-	// var champion;
+	displayChampPic(match.champion);
 
-	// for(var key in champidmap.data){
-	// 	console.log(key);
-	// 	console.log(champidmap.data.key.id);
-		// if(key.id == match.champion){
-		// 	champion = key.key;
-		// 	break;
-		// }
-	// }
-	//MAY BE A BETTER WAY TO PARSE THIS.
-	//DOESN'T QUITE WORK YET BUT ALMOST THERE.
-	//NEED TO GO TO WORK
-
-	//document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
 	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
+}
 
+function displayChampPic(champId){
+	var champion;
+	// May be a more efficient way to do this instead
+	// of looping through all the champions til the id matches
+	for(var key in champidmap.data){
+		if(champidmap.data[key].id == champId){
+			champion = champidmap.data[key].key;
+			break;
+		}
+	}
+	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
 }
 
 function getchampidmap(callback){
@@ -289,8 +283,13 @@ function getchampidmap(callback){
 		dataType: 'json',
 		success: function(data){
 
-			//console.log(data)
+			//champidmap is a global variable defined at the top
 			champidmap = data;
 		}
 	})
+	//Current work around right now.
+ 	//Issue is ajax call is asynchronous so if the ajax call
+ 	//doesn't finish and put the data in champidmap then it is
+ 	//undefined when the button is pressed
+ 	//Especially bad if the internet is slow and the ajax call takes awhile.
 }
