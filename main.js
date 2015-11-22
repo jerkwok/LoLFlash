@@ -263,7 +263,7 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 
 function displayGame(playerID, match, region){
 
-	var name = getChampName(match.champion)
+	var name = getChampName(match.champion,false)
 	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
 		" Champion Played Id:" + match.champion + " Name:" + name
 	//displayChampPic(name);
@@ -297,11 +297,11 @@ function getMatchInfo(region, matchId){
 
 				match.appendChild(teamA);
 				match.appendChild(teamB);
-				console.log(data.participants)	
+				console.log(champIdMap)	
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
-					champPic = getChampPic(champKey);
+					champPic = getChampPic(champKey,getChampName(data.participants[i].championId,true));
 					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
@@ -312,8 +312,8 @@ function getMatchInfo(region, matchId){
 						//Summoners
 						playerdivdest = "blue_player_spells" + i
 						document.getElementById(playerdivdest).innerHTML = 
-						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
-						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]);
+						getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
+						getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
 
 						//Name
 						playerdivdest = "blue_player_name" + i
@@ -333,7 +333,7 @@ function getMatchInfo(region, matchId){
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById(playerdivdest).innerHTML +=
-								getItemPic(data.participants[i].stats[itemstring])
+								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
@@ -365,8 +365,9 @@ function getMatchInfo(region, matchId){
 						//Summoners
 						playerdivdest = "red_player_spells" + teamplayernum
 						document.getElementById(playerdivdest).innerHTML = 
-						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
-						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]);
+						getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
+						getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
+
 
 						//Name
 						playerdivdest = "red_player_name" + teamplayernum
@@ -386,7 +387,7 @@ function getMatchInfo(region, matchId){
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById(playerdivdest).innerHTML +=
-								getItemPic(data.participants[i].stats[itemstring])
+								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
@@ -632,11 +633,16 @@ function getSpellIdMap(callback){
 }
 
 // Gets the champion's name (full name with punctuation)
-function getChampName(champId){
+//title is a boolean to return the title as well
+function getChampName(champId, title){
 	var champion;
 	for(var key in champIdMap.data){
 		if(champIdMap.data[key].id == champId){
-			return champIdMap.data[key].name;
+			if (title = false){
+				return champIdMap.data[key].name;
+			}else{
+				return champIdMap.data[key].name + ", " + champIdMap.data[key].title;				
+			}
 		}
 	}
 }
@@ -662,14 +668,14 @@ function getChampTitle(champId){
 }
 
 // Displays the champion's picture using the champion's key
-function getChampPic(champKey){
-	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+function getChampPic(champKey,champName){
+	return "<img title=\""+ champName + "\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
 }
 
-function getSpellPic(spellName){
-	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+function getSpellPic(spellName,spellRealName){
+	return "<img title=\""+ spellRealName +"\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
 
-function getItemPic (itemId) {
-	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
+function getItemPic (itemId,itemName) {
+	return "<img title=\""+ itemName +"\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
 }
