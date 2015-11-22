@@ -259,7 +259,7 @@ function displayGame(playerID, match, region){
 	var name = getChampName(match.champion)
 	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + 
 		" Champion Played Id:" + match.champion + " Name:" + name
-	displayChampPic(name);
+	//displayChampPic(name);
 	document.getElementById("content").innerHTML +="</br>" 
 	var KDA = getKDA(match.matchId, playerID, region)
 	console.log(KDA)
@@ -270,6 +270,7 @@ function displayGame(playerID, match, region){
 function getMatchInfo(region, matchId){
 	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
+	var champPic;
 	$.ajax({
 			
 			url: matchurl,
@@ -277,8 +278,15 @@ function getMatchInfo(region, matchId){
 			dataType: 'json',
 			success: function(data){
 				for(var i = 0; i < data.participants.length; i++){
+					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
-					displayChampPic(champKey);
+					champPic = getChampPic(champKey);
+
+					if(data.participants[i].teamId == 100){
+						document.getElementById("teamA").innerHTML += champPic;
+					} else{
+						document.getElementById("teamB").innerHTML += champPic;
+					}
 				}
 			}
 		})
@@ -365,6 +373,7 @@ function getChampTitle(champId){
 }
 
 // Displays the champion's picture using the champion's key
-function displayChampPic(champKey){
-	document.getElementById("content").innerHTML += "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+function getChampPic(champKey){
+	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+	//document.getElementById("content").innerHTML += "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
 }
