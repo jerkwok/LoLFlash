@@ -61,9 +61,9 @@ function getID(user,region,season){
 			var region = "na"
 			// var statsurl = "https://na.api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
-			getwinstats(sID,region,season);
-			getrankedsolostats(sID,region);
-			getaramstats(sID,region,season);
+			// getwinstats(sID,region,season);
+			// getrankedsolostats(sID,region);
+			// getaramstats(sID,region,season);
 			getMatchHistory(sID,region)
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
@@ -263,8 +263,23 @@ function displayGame(playerID, match, region){
 	document.getElementById("content").innerHTML +="</br>" 
 	var KDA = getKDA(match.matchId, playerID, region)
 	console.log(KDA)
+
+	getMatch(region, match.matchId);
 }
 
+function getMatch(region, matchId){
+	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+	$.ajax({
+			
+			url: matchurl,
+			type: 'GET',
+			dataType: 'json',
+			success: function(data){
+				console.log(data);
+			}
+		})
+}
 
 function getKDA(matchId,playerId,region){
 	var participantId
@@ -297,12 +312,14 @@ function getKDA(matchId,playerId,region){
 }
 
 function KDACallback(KDA){
-	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + "Deaths: " + KDA[1] + "Assists: " + KDA[2]+ "</br>" 
+	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
 }
 
 // Below code is for champion related functions
+// Retrieves all of the champion's data and stores it into the champIdMap
 function getChampIdMap(callback){
 
+	// May need to find a better way to do this since it's bad when the internet is slow
 	$.ajax({
 		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
 		type: 'GET',
@@ -312,11 +329,6 @@ function getChampIdMap(callback){
 			champIdMap = data;
 		}
 	})
-	//Current work around right now.
- 	//Issue is ajax call is asynchronous so if the ajax call
- 	//doesn't finish and put the data in champIdMap then it is
- 	//undefined when the button is pressed
- 	//Especially bad if the internet is slow and the ajax call takes awhile.
 }
 
 // Gets the champion's name (full name with punctuation)
