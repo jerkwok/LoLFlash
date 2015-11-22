@@ -262,8 +262,8 @@ function displayGame(playerID, match, region){
 		" Champion Played Id:" + match.champion + " Name:" + name
 	//displayChampPic(name);
 	document.getElementById("content").innerHTML +="</br>" 
-	var KDA = getKDA(match.matchId, playerID, region)
-	console.log(KDA)
+	// var KDA = getKDA(match.matchId, playerID, region)
+	// console.log(KDA)
 
 	getMatchInfo(region, match.matchId);
 }
@@ -272,6 +272,7 @@ function getMatchInfo(region, matchId){
 	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
+	var KDA = [0,0,0];
 	$.ajax({
 			
 			url: matchurl,
@@ -282,52 +283,63 @@ function getMatchInfo(region, matchId){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
 					champPic = getChampPic(champKey);
+					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
 						document.getElementById("teamA").innerHTML += 
-						data.participantIdentities[i].player.summonerName +champPic + "</br>";
+						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" ;
 					} else{
 						document.getElementById("teamB").innerHTML += 
-						data.participantIdentities[i].player.summonerName +champPic + "</br>";
-
+						data.participantIdentities[i].player.summonerName +champPic + "</br>"+
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" ;
 					}
 				}
 			}
 		})
 }
 
-function getKDA(matchId,playerId,region){
-	var participantId
-
-	$.ajax({
-		url: "https://na.api.pvp.net/api/lol/"+region+"/v2.2/match/"+matchId+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
-		type: 'GET',
-		dataType: 'json',
-		success: function(data){
-			console.log(data)
-			//first, need to match the PlayerID to the summonerID located in 
-			//participantIdentities->[number]->player->summonerId. that participantIdentities->[number] object 
-			//has participantId. This is what we need. 
-			//Then look in participants->[participantId]->stats->(kills/assists/deaths)
-
-			//Find participantId
-			for(var key in data.participantIdentities){
-				if(data.participantIdentities[key].player.summonerId == playerId){
-					participantId = data.participantIdentities[key].participantId
-					console.log(participantId)
-				}
-			}
-			KDACallback(
-			 [data.participants[participantId].stats.kills,
-			 			 data.participants[participantId].stats.deaths,
-			 			 data.participants[participantId].stats.assists])
-	}	
-	})
-
+function getKDA(data,participantId){
+	return [data.stats.kills,
+			 			 data.stats.deaths,
+			 			 data.stats.assists]
+			// KDACallback(
+			//  [data.participants[participantId].stats.kills,
+			//  			 data.participants[participantId].stats.deaths,
+			//  			 data.participants[participantId].stats.assists],container)
 }
 
-function KDACallback(KDA){
-	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
+// function getKDA(matchId,playerId,region){
+// 	var participantId
+
+// 	$.ajax({
+// 		url: "https://na.api.pvp.net/api/lol/"+region+"/v2.2/match/"+matchId+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+// 		type: 'GET',
+// 		dataType: 'json',
+// 		success: function(data){
+// 			console.log(data)
+// 			//first, need to match the PlayerID to the summonerID located in 
+// 			//participantIdentities->[number]->player->summonerId. that participantIdentities->[number] object 
+// 			//has participantId. This is what we need. 
+// 			//Then look in participants->[participantId]->stats->(kills/assists/deaths)
+
+// 			//Find participantId
+// 			for(var key in data.participantIdentities){
+// 				if(data.participantIdentities[key].player.summonerId == playerId){
+// 					participantId = data.participantIdentities[key].participantId
+// 					console.log(participantId)
+// 				}
+// 			}
+// 			KDACallback(
+// 			 [data.participants[participantId].stats.kills,
+// 			 			 data.participants[participantId].stats.deaths,
+// 			 			 data.participants[participantId].stats.assists])
+// 	}	
+// 	})
+
+// }
+function KDACallback(KDA,container){
+	document.getElementById(container).innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
 }
 
 // Below code is for champion related functions
