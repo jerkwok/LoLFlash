@@ -328,7 +328,7 @@ function getMatchInfo(region, matchId){
 						//end game items
 						playerdivdest = "blue_player_items" + i
 
-						for (var itemnum = 0; itemnum < 6; itemnum++){
+						for (var itemnum = 0; itemnum < 7; itemnum++){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
@@ -380,7 +380,7 @@ function getMatchInfo(region, matchId){
 						//end game items
 						playerdivdest = "red_player_items" + teamplayernum
 
-						for (var itemnum = 0; itemnum < 6; itemnum++){
+						for (var itemnum = 0; itemnum < 7; itemnum++){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
@@ -412,6 +412,7 @@ function getMatchInfo(region, matchId){
 }
 
 function createTable(){
+	document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
 
 	var table = document.createElement('TABLE');
