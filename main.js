@@ -264,19 +264,22 @@ function displayGame(playerID, match, region){
 	var KDA = getKDA(match.matchId, playerID, region)
 	console.log(KDA)
 
-	getMatch(region, match.matchId);
+	getMatchInfo(region, match.matchId);
 }
 
-function getMatch(region, matchId){
+function getMatchInfo(region, matchId){
 	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
+	var champKey;
 	$.ajax({
 			
 			url: matchurl,
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
-				console.log(data);
+				for(var i = 0; i < data.participants.length; i++){
+					champKey = getChampKey(data.participants[i].championId);
+					displayChampPic(champKey);
+				}
 			}
 		})
 }
