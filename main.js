@@ -28,6 +28,7 @@ getItemIdMap()
  $("#clearButton").click(function(){
  	clear("teamA")
  	clear("teamB")
+ 	clear("userstats")
  });
 
 });
@@ -57,9 +58,9 @@ function getID(user,region,season){
 			// console.log("Level: " + sLevel);
 			// console.log("Name: " + user);
 			// console.log("ID: " + sID);
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Name: " + user + "</br>";
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Level: " + sLevel + "</br>";
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "ID: " + sID + "</br>";
+			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
+			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
+			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
 			var region = "na"
 			// var statsurl = "https://na.api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
@@ -92,9 +93,9 @@ function getcurrentgame (id,region) {
 		data: {
 			success: function(data){
 				//console.log("Current Game:")
-				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Current Game:" + "</br>"
+				document.getElementById("userstats").innerHTML += "Current Game:" + "</br>"
 				//console.log(data)
-				document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data + "</br>"
+				document.getElementById("userstats").innerHTML += data + "</br>"
 			}
 		}
 	})
@@ -116,10 +117,10 @@ function getwinstats (id,region,season) {
 			// console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
 			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
 			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Win Stats:" + "</br>"
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
-			document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
+			document.getElementById("userstats").innerHTML += "Win Stats:" + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
+			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
 
 		}
 	})
@@ -147,8 +148,8 @@ function getrankedsolostats(id, region){
 function displayrankedsolostats(id,data,place){
 	// console.log("Ranked League:")
 	// console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
-	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Ranked League:" + "</br>"
-	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
+	document.getElementById("userstats").innerHTML += "Ranked League:" + "</br>"
+	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
 
 }
 
@@ -178,8 +179,8 @@ function displayaramstats(id,data,place){
 	totwins = data.playerStatSummaries[place].wins;
 	// console.log("ARAM Stats:");
 	// console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
-	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "ARAM Stats:" + "</br>"
-	document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
+	document.getElementById("userstats").innerHTML += "ARAM Stats:" + "</br>"
+	document.getElementById("userstats").innerHTML += "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
 
 }
 
@@ -243,7 +244,7 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 			success: function(data){
 				// console.log("Match History:")
 				// console.log("Last 10 Games:")
-				document.getElementById("content").innerHTML += "Match History:" + "</br>"
+				document.getElementById("userstats").innerHTML += "Match History:" + "</br>"
 				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
 				// 	if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
@@ -260,10 +261,10 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 function displayGame(playerID, match, region){
 
 	var name = getChampName(match.champion)
-	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + 
+	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
 		" Champion Played Id:" + match.champion + " Name:" + name
 	//displayChampPic(name);
-	document.getElementById("content").innerHTML +="</br>" 
+	document.getElementById("userstats").innerHTML +="</br>" 
 	// var KDA = getKDA(match.matchId, playerID, region)
 	// console.log(KDA)
 
@@ -309,10 +310,10 @@ function getMatchInfo(region, matchId){
 						"Items: </br>";
 						for (var itemnum = 0; itemnum < 6; itemnum++){
 							var itemstring = "item"+itemnum
-							console.log(itemstring)
+							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById("teamA").innerHTML +=
-								"Item " + itemnum+1 +": Id:" + data.participants[i].stats[itemstring] + 
+								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
@@ -329,9 +330,10 @@ function getMatchInfo(region, matchId){
 						"Items: </br>";
 						for (var itemnum = 0; itemnum < 6; itemnum++){
 							var itemstring = "item"+itemnum
+							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById("teamB").innerHTML +=
-								"Item " + itemnum+1 +": Id:" + data.participants[i].stats[itemstring] + 
+								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
