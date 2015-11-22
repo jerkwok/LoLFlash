@@ -283,9 +283,12 @@ function getMatchInfo(region, matchId){
 					champPic = getChampPic(champKey);
 
 					if(data.participants[i].teamId == 100){
-						document.getElementById("teamA").innerHTML += champPic;
+						document.getElementById("teamA").innerHTML += 
+						data.participantIdentities[i].player.summonerName +champPic;
 					} else{
-						document.getElementById("teamB").innerHTML += champPic;
+						document.getElementById("teamB").innerHTML += 
+						data.participantIdentities[i].player.summonerName +champPic;
+
 					}
 				}
 			}
