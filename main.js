@@ -1,11 +1,13 @@
 var champIdMap
+var itemIdMap
 
 $(document).ready(function(){
 getChampIdMap()
+getItemIdMap()
 //Calls the ajax at the start
 
  $("#goButton").click(function(){
- 	//console.log(champIdMap)
+ 	console.log(itemIdMap)
 
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -286,13 +288,42 @@ function getMatchInfo(region, matchId){
 					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
-						document.getElementById("teamA").innerHTML += 
+						document.getElementById("teamA").innerHTML +=
+						//name and picture 
 						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" ;
+						//KDA
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						//end game items
+						"Items: </br>";
+						for (var itemnum = 0; itemnum < 6; itemnum++){
+							var itemstring = "item"+itemnum
+							console.log(itemstring)
+							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+								document.getElementById("teamA").innerHTML +=
+								"Item " + itemnum+1 +": Id:" + data.participants[i].stats[itemstring] + 
+									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}
+						}
+
+						;
+
 					} else{
 						document.getElementById("teamB").innerHTML += 
-						data.participantIdentities[i].player.summonerName +champPic + "</br>"+
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" ;
+						//name and picture 
+						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						//KDA
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						//end game items
+						"Items: </br>";
+						for (var itemnum = 0; itemnum < 6; itemnum++){
+							var itemstring = "item"+itemnum
+							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+								document.getElementById("teamB").innerHTML +=
+								"Item " + itemnum+1 +": Id:" + data.participants[i].stats[itemstring] + 
+									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}
+						}
+						;
 					}
 				}
 			}
@@ -354,6 +385,21 @@ function getChampIdMap(callback){
 		success: function(data){
 
 			champIdMap = data;
+		}
+	})
+}
+
+//Retrieves all of the item data and stores it into the itemIdMap
+function getItemIdMap(callback){
+
+	// May need to find a better way to do this since it's bad when the internet is slow
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+
+			itemIdMap = data;
 		}
 	})
 }
