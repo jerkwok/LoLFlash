@@ -305,17 +305,29 @@ function getMatchInfo(region, matchId){
 					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
-						var playerdivdest = "blue_player" + i
-						document.getElementById(playerdivdest).innerHTML +=
-						//name and picture 
-						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
-						//Summoner Spells
+						//Champ
+						var playerdivdest = "blue_player_champ" + i
+						document.getElementById(playerdivdest).innerHTML = champPic;
+
+						//Summoners
+						playerdivdest = "blue_player_spells" + i
+						document.getElementById(playerdivdest).innerHTML = 
 						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
-						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>"
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]);
+
+						//Name
+						playerdivdest = "blue_player_name" + i
+						document.getElementById(playerdivdest).innerHTML =
+						data.participantIdentities[i].player.summonerName; 
+
 						//KDA
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						playerdivdest = "blue_player_kda" + i
+						document.getElementById(playerdivdest).innerHTML = 
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+
 						//end game items
-						"Items: </br>";
+						playerdivdest = "blue_player_items" + i
+
 						for (var itemnum = 0; itemnum < 6; itemnum++){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
@@ -326,29 +338,48 @@ function getMatchInfo(region, matchId){
 							}
 						}
 
-						document.getElementById(playerdivdest).innerHTML +=
 						//CS
-						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
-						//Gold
-						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
-						//Wards
-						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>"
+						playerdivdest = "blue_player_cs" + i
+						document.getElementById(playerdivdest).innerHTML = 
+						"CS: " + data.participants[i].stats.minionsKilled ;
 
-						;
+						//Gold
+						playerdivdest = "blue_player_gold" + i
+						document.getElementById(playerdivdest).innerHTML = 
+						"Gold: " + data.participants[i].stats.goldEarned;
+
+						//Wards
+						playerdivdest = "blue_player_gold" + i
+						document.getElementById(playerdivdest).innerHTML = 
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced;
+
+						
 
 					} else{
 						var teamplayernum = i-5
-						var playerdivdest = "red_player" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML += 
-						//name and picture 
-						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
-						//Summoner Spells
+						//Champ
+						var playerdivdest = "red_player_champ" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = champPic;
+
+						//Summoners
+						playerdivdest = "red_player_spells" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = 
 						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
-						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>" +
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]);
+
+						//Name
+						playerdivdest = "red_player_name" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML =
+						data.participantIdentities[i].player.summonerName; 
+
 						//KDA
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
+						playerdivdest = "red_player_kda" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = 
+						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+
 						//end game items
-						"Items: </br>";
+						playerdivdest = "red_player_items" + teamplayernum
+
 						for (var itemnum = 0; itemnum < 6; itemnum++){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
@@ -359,14 +390,20 @@ function getMatchInfo(region, matchId){
 							}
 						}
 
-						document.getElementById(playerdivdest).innerHTML +=
 						//CS
-						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
+						playerdivdest = "red_player_cs" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = 
+						"CS: " + data.participants[i].stats.minionsKilled ;
+
 						//Gold
-						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
+						playerdivdest = "red_player_gold" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = 
+						"Gold: " + data.participants[i].stats.goldEarned;
+
 						//Wards
-						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>";
-						;
+						playerdivdest = "red_player_gold" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML = 
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced;
 					}
 				}
 				document.getElementById("matchlist").appendChild(match);
@@ -408,25 +445,123 @@ function createTable(){
 		player_row.setAttribute("class", rowID)
 		player_row.setAttribute("id", rowID)
 
+		//blue player table
 		var player_a = document.createElement('TD')
 
 		var playerDivId = "blue_player"+playernum
 		player_a.setAttribute("class", playerDivId)
 		player_a.setAttribute("id", playerDivId)
 
-		var player_b = document.createElement('TD')
+		var player_a_champ = document.createElement('TD')
+
+		DivId = "blue_player_champ"+playernum
+		player_a_champ.setAttribute("class", DivId)
+		player_a_champ.setAttribute("id", DivId)
+		player_a.appendChild(player_a_champ)
+
+		var player_a_spells = document.createElement('TD')
+
+		DivId = "blue_player_spells"+playernum
+		player_a_spells.setAttribute("class", DivId)
+		player_a_spells.setAttribute("id", DivId)
+		player_a.appendChild(player_a_spells)
+
+		var player_a_name = document.createElement('TD')
+
+		DivId = "blue_player_name"+playernum
+		player_a_name.setAttribute("class", DivId)
+		player_a_name.setAttribute("id", DivId)
+		player_a.appendChild(player_a_name)
+
+		var player_a_kda = document.createElement('TD')
+
+		DivId = "blue_player_kda"+playernum
+		player_a_kda.setAttribute("class", DivId)
+		player_a_kda.setAttribute("id", DivId)
+		player_a.appendChild(player_a_kda)
+
+		var player_a_items = document.createElement('TD')
+
+		DivId = "blue_player_items"+playernum
+		player_a_items.setAttribute("class", DivId)
+		player_a_items.setAttribute("id", DivId)
+		player_a.appendChild(player_a_items)
+
+		var player_a_cs = document.createElement('TD')
+
+		DivId = "blue_player_cs"+playernum
+		player_a_cs.setAttribute("class", DivId)
+		player_a_cs.setAttribute("id", DivId)
+		player_a.appendChild(player_a_cs)
+
+		var player_a_gold = document.createElement('TD')
+
+		DivId = "blue_player_gold"+playernum
+		player_a_gold.setAttribute("class", DivId)
+		player_a_gold.setAttribute("id", DivId)
+		player_a.appendChild(player_a_gold)
+
+		//red player table
+				var player_b = document.createElement('TD')
 
 		var playerDivId = "red_player"+playernum
 		player_b.setAttribute("class", playerDivId)
 		player_b.setAttribute("id", playerDivId)
 
-		player_a.appendChild(document.createTextNode(player_a.id))
-		player_b.appendChild(document.createTextNode(player_b.id))
+		var player_b_champ = document.createElement('TD')
+
+		DivId = "red_player_champ"+playernum
+		player_b_champ.setAttribute("class", DivId)
+		player_b_champ.setAttribute("id", DivId)
+		player_b.appendChild(player_b_champ)
+
+		var player_b_spells = document.createElement('TD')
+
+		DivId = "red_player_spells"+playernum
+		player_b_spells.setAttribute("class", DivId)
+		player_b_spells.setAttribute("id", DivId)
+		player_b.appendChild(player_b_spells)
+
+		var player_b_name = document.createElement('TD')
+
+		DivId = "red_player_name"+playernum
+		player_b_name.setAttribute("class", DivId)
+		player_b_name.setAttribute("id", DivId)
+		player_b.appendChild(player_b_name)
+
+		var player_b_kda = document.createElement('TD')
+
+		DivId = "red_player_kda"+playernum
+		player_b_kda.setAttribute("class", DivId)
+		player_b_kda.setAttribute("id", DivId)
+		player_b.appendChild(player_b_kda)
+
+		var player_b_items = document.createElement('TD')
+
+		DivId = "red_player_items"+playernum
+		player_b_items.setAttribute("class", DivId)
+		player_b_items.setAttribute("id", DivId)
+		player_b.appendChild(player_b_items)
+
+		var player_b_cs = document.createElement('TD')
+
+		DivId = "red_player_cs"+playernum
+		player_b_cs.setAttribute("class", DivId)
+		player_b_cs.setAttribute("id", DivId)
+		player_b.appendChild(player_b_cs)
+
+		var player_b_gold = document.createElement('TD')
+
+		DivId = "red_player_gold"+playernum
+		player_b_gold.setAttribute("class", DivId)
+		player_b_gold.setAttribute("id", DivId)
+		player_b_gold.appendChild(document.createTextNode("player_b_gold"))
+		player_b.appendChild(player_b_gold)
 
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
 	}
-	console.log("append table")
+	// console.log(document.getElementById('player_row0').children)
 	document.getElementById('resultstablediv').appendChild(table);
 }
 
