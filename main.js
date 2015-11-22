@@ -437,10 +437,21 @@ function createTable(){
 	icons_row.setAttribute("class", "icons_row")
 	icons_row.setAttribute("id", "icons_row")
 
-	var td = document.createElement('TD');
-    td.appendChild(document.createTextNode("Summary"))
-    summary_row.appendChild(td)
+	//Icons
+	var iconslist = ["champion","spells","name","score","items","gold","minion","wards"]
+	for (var i = 0; i < 2; i++) {
+		var teamcolour = "blue"
+		for (var icon in iconslist){
+			var td = document.createElement('TD');
+			var tag = teamcolour + "_" + icon + "icon"
+		    td.setAttribute("class", tag)
+			td.setAttribute("id", tag)
+			td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"http://ddragon.leagueoflegends.com/cdn/5.5.1/img/ui/"+iconslist[icon]+".png\"></img>"
+		    summary_row.appendChild(td)
+		}
+	}
 
+	var colslist = ["champ","spells","name","kda","items","cs","gold"]
 	for (var playernum = 0; playernum < 5; playernum++){
 		var player_row = document.createElement('TR');
 		tableBody.appendChild(player_row);
@@ -456,111 +467,30 @@ function createTable(){
 		player_a.setAttribute("class", playerDivId)
 		player_a.setAttribute("id", playerDivId)
 
-		var player_a_champ = document.createElement('TD')
+		for(var col in colslist){
+			var currTD = document.createElement('TD')
+			DivId = "blue_player_"+ colslist[col] +playernum
 
-		DivId = "blue_player_champ"+playernum
-		player_a_champ.setAttribute("class", DivId)
-		player_a_champ.setAttribute("id", DivId)
-		player_a.appendChild(player_a_champ)
-
-		var player_a_spells = document.createElement('TD')
-
-		DivId = "blue_player_spells"+playernum
-		player_a_spells.setAttribute("class", DivId)
-		player_a_spells.setAttribute("id", DivId)
-		player_a.appendChild(player_a_spells)
-
-		var player_a_name = document.createElement('TD')
-
-		DivId = "blue_player_name"+playernum
-		player_a_name.setAttribute("class", DivId)
-		player_a_name.setAttribute("id", DivId)
-		player_a.appendChild(player_a_name)
-
-		var player_a_kda = document.createElement('TD')
-
-		DivId = "blue_player_kda"+playernum
-		player_a_kda.setAttribute("class", DivId)
-		player_a_kda.setAttribute("id", DivId)
-		player_a.appendChild(player_a_kda)
-
-		var player_a_items = document.createElement('TD')
-
-		DivId = "blue_player_items"+playernum
-		player_a_items.setAttribute("class", DivId)
-		player_a_items.setAttribute("id", DivId)
-		player_a.appendChild(player_a_items)
-
-		var player_a_cs = document.createElement('TD')
-
-		DivId = "blue_player_cs"+playernum
-		player_a_cs.setAttribute("class", DivId)
-		player_a_cs.setAttribute("id", DivId)
-		player_a.appendChild(player_a_cs)
-
-		var player_a_gold = document.createElement('TD')
-
-		DivId = "blue_player_gold"+playernum
-		player_a_gold.setAttribute("class", DivId)
-		player_a_gold.setAttribute("id", DivId)
-		player_a.appendChild(player_a_gold)
+			currTD.setAttribute("class", DivId)
+			currTD.setAttribute("id", DivId)
+			player_a.appendChild(currTD)
+		}
 
 		//red player table
-				var player_b = document.createElement('TD')
+		var player_b = document.createElement('TD')
 
 		var playerDivId = "red_player"+playernum
 		player_b.setAttribute("class", playerDivId)
 		player_b.setAttribute("id", playerDivId)
 
-		var player_b_champ = document.createElement('TD')
+		for(var col in colslist){
+			var currTD = document.createElement('TD')
+			DivId = "red_player_"+ colslist[col] +playernum
 
-		DivId = "red_player_champ"+playernum
-		player_b_champ.setAttribute("class", DivId)
-		player_b_champ.setAttribute("id", DivId)
-		player_b.appendChild(player_b_champ)
-
-		var player_b_spells = document.createElement('TD')
-
-		DivId = "red_player_spells"+playernum
-		player_b_spells.setAttribute("class", DivId)
-		player_b_spells.setAttribute("id", DivId)
-		player_b.appendChild(player_b_spells)
-
-		var player_b_name = document.createElement('TD')
-
-		DivId = "red_player_name"+playernum
-		player_b_name.setAttribute("class", DivId)
-		player_b_name.setAttribute("id", DivId)
-		player_b.appendChild(player_b_name)
-
-		var player_b_kda = document.createElement('TD')
-
-		DivId = "red_player_kda"+playernum
-		player_b_kda.setAttribute("class", DivId)
-		player_b_kda.setAttribute("id", DivId)
-		player_b.appendChild(player_b_kda)
-
-		var player_b_items = document.createElement('TD')
-
-		DivId = "red_player_items"+playernum
-		player_b_items.setAttribute("class", DivId)
-		player_b_items.setAttribute("id", DivId)
-		player_b.appendChild(player_b_items)
-
-		var player_b_cs = document.createElement('TD')
-
-		DivId = "red_player_cs"+playernum
-		player_b_cs.setAttribute("class", DivId)
-		player_b_cs.setAttribute("id", DivId)
-		player_b.appendChild(player_b_cs)
-
-		var player_b_gold = document.createElement('TD')
-
-		DivId = "red_player_gold"+playernum
-		player_b_gold.setAttribute("class", DivId)
-		player_b_gold.setAttribute("id", DivId)
-		player_b_gold.appendChild(document.createTextNode("player_b_gold"))
-		player_b.appendChild(player_b_gold)
+			currTD.setAttribute("class", DivId)
+			currTD.setAttribute("id", DivId)
+			player_a.appendChild(currTD)
+		}
 
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
@@ -673,9 +603,9 @@ function getChampPic(champKey,champName){
 }
 
 function getSpellPic(spellName,spellRealName){
-	return "<img title=\""+ spellRealName +"\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+	return "<img title=\""+ spellRealName +"\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
 
 function getItemPic (itemId,itemName) {
-	return "<img title=\""+ itemName +"\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
+	return "<img title=\""+ itemName +"\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
 }
