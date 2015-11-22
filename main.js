@@ -5,7 +5,7 @@ getchampidmap()
 //Calls the ajax at the start
 
  $("#goButton").click(function(){
- 	console.log(champidmap)
+ 	// console.log(champidmap)
 
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -239,7 +239,7 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 			},
 			success: function(data){
 				// console.log("Match History:")
-				console.log("Last 10 Games:")
+				// console.log("Last 10 Games:")
 				document.getElementById("content").innerHTML += "Match History:" + "</br>"
 				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
@@ -247,20 +247,23 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
-				for(var i = 0; i < 10; i++){
-					displayGame(data.matches[i]);
+				for(var i = 0; i < 1; i++){
+					displayGame(id, data.matches[i], region);
 				}
 			}
 		})
 }
 
-function displayGame(match){
-	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + " Champion Played Id:" + match.champion + "</br>" 
+function displayGame(playerID, match, region){
 
 	var name = getChampName(match.champion)
+	document.getElementById("content").innerHTML += "Match Id:" + match.matchId + 
+		" Champion Played Id:" + match.champion + " Name:" + name
 	displayChampPic(name);
-
-	// document.getElementById("content").innerHTML += " Match Id:" + match.matchId
+	document.getElementById("content").innerHTML +="</br>" 
+	var KDA = getKDA(match.matchId, playerID, region)
+	console.log(KDA)
+	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + "Deaths: " + KDA[1] + "Assists: " + KDA[2]+ "</br>" 
 }
 
 function displayChampPic(champName){
@@ -296,4 +299,45 @@ function getChampName(champId){
 			return champidmap.data[key].key;
 		}
 	}
+}
+
+function getKDA(matchId,playerId,region){
+	var participantId
+	var k = 1
+	var d = 2
+	var a = 3
+	$.ajax({
+		url: "https://na.api.pvp.net/api/lol/"+region+"/v2.2/match/"+matchId+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+			console.log(data)
+			//first, need to match the PlayerID to the summonerID located in 
+			//participantIdentities->[number]->player->summonerId. that participantIdentities->[number] object 
+			//has participantId. This is what we need. 
+			//Then look in participants->[participantId]->stats->(kills/assists/deaths)
+
+			//Find participantId
+			for(var key in data.participantIdentities){
+				if(data.participantIdentities[key].player.summonerId == playerId){
+					participantId = data.participantIdentities[key].participantId
+					console.log(participantId)
+				}
+			}
+			 k = data.participants[participantId].stats.kills
+			 d = data.participants[participantId].stats.deaths
+			 a = data.participants[participantId].stats.assists
+
+			console.log("Kills:" + k)
+			console.log("D:" + d)
+			console.log("A:" + a)
+
+			// return[data.participants[participantId].stats.kills,
+			// data.participants[participantId].stats.deaths,
+			// data.participants[participantId].stats.assists];
+			// return [k, d, a]
+	}	
+	})
+
+			return [k, d, a]
 }
