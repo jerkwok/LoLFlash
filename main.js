@@ -239,7 +239,7 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 			},
 			success: function(data){
 				// console.log("Match History:")
-				console.log("Last 10 Games:")
+				// console.log("Last 10 Games:")
 				document.getElementById("content").innerHTML += "Match History:" + "</br>"
 				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
@@ -272,7 +272,7 @@ function displayChampPic(champId){
 			break;
 		}
 	}
-	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png></img>"
+	document.getElementById("content").innerHTML += "<img class=\"champpic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champion + ".png\"></img>"
 }
 
 function getchampidmap(callback){
