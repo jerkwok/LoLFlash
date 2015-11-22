@@ -1,9 +1,12 @@
 var champIdMap
 var itemIdMap
+var spellIdMap = {}
+var spellImgMap = {}
 
 $(document).ready(function(){
 getChampIdMap()
 getItemIdMap()
+getSpellIdMap()
 //Calls the ajax at the start
 
  $("#goButton").click(function(){
@@ -282,6 +285,7 @@ function getMatchInfo(region, matchId){
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
+				createTable();
 
 				var match = document.createElement("div");
 				match.setAttribute("class", "match");
@@ -293,7 +297,7 @@ function getMatchInfo(region, matchId){
 
 				match.appendChild(teamA);
 				match.appendChild(teamB);
-
+				console.log(data.participants)	
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
@@ -301,9 +305,13 @@ function getMatchInfo(region, matchId){
 					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
-						document.getElementById("teamA").innerHTML +=
+						var playerdivdest = "blue_player" + i
+						document.getElementById(playerdivdest).innerHTML +=
 						//name and picture 
 						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						//Summoner Spells
+						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>"
 						//KDA
 						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
 						//end game items
@@ -312,18 +320,31 @@ function getMatchInfo(region, matchId){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
-								document.getElementById("teamA").innerHTML +=
+								document.getElementById(playerdivdest).innerHTML +=
 								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
+
+						document.getElementById(playerdivdest).innerHTML +=
+						//CS
+						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
+						//Gold
+						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
+						//Wards
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>"
 
 						;
 
 					} else{
-						document.getElementById("teamB").innerHTML += 
+						var teamplayernum = i-5
+						var playerdivdest = "red_player" + teamplayernum
+						document.getElementById(playerdivdest).innerHTML += 
 						//name and picture 
 						data.participantIdentities[i].player.summonerName +champPic + "</br>" +
+						//Summoner Spells
+						"Spell 1:" + getSpellPic(spellImgMap[data.participants[i].spell1Id]) + 
+						" Spell 2:" + getSpellPic(spellImgMap[data.participants[i].spell2Id]) + "</br>" +
 						//KDA
 						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" +
 						//end game items
@@ -332,17 +353,81 @@ function getMatchInfo(region, matchId){
 							var itemstring = "item"+itemnum
 							var itemnump = itemnum+1
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
-								document.getElementById("teamB").innerHTML +=
+								document.getElementById(playerdivdest).innerHTML +=
 								"Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									" Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
 							}
 						}
+
+						document.getElementById(playerdivdest).innerHTML +=
+						//CS
+						"CS: " + data.participants[i].stats.minionsKilled + "</br>" +
+						//Gold
+						"Gold: " + data.participants[i].stats.goldEarned + "</br>" +
+						//Wards
+						"Wards Placed: " +data.participants[i].stats.wardsPlaced + "</br>";
 						;
 					}
 				}
-				document.getElementById("content").appendChild(match);
+				document.getElementById("matchlist").appendChild(match);
 			}
 		})
+}
+
+function createTable(){
+	//Create the table
+
+	var table = document.createElement('TABLE');
+	table.setAttribute("class","resultstable")
+	table.setAttribute("id","resultstable")
+
+	var tableBody = document.createElement('TBODY');
+	table.appendChild(tableBody);
+	tableBody.setAttribute("class", "resultstablebody")
+	tableBody.setAttribute("id", "resultstablebody")
+
+	var summary_row = document.createElement('TR');
+	tableBody.appendChild(summary_row);
+	summary_row.setAttribute("class", "summary_row")
+	summary_row.setAttribute("id", "summary_row")
+
+	var icons_row = document.createElement('TR');
+	tableBody.appendChild(summary_row);
+	icons_row.setAttribute("class", "icons_row")
+	icons_row.setAttribute("id", "icons_row")
+
+	var td = document.createElement('TD');
+    td.appendChild(document.createTextNode("Summary"))
+    summary_row.appendChild(td)
+
+	for (var playernum = 0; playernum < 5; playernum++){
+		var player_row = document.createElement('TR');
+		tableBody.appendChild(player_row);
+
+		var rowID = "player_row"+playernum
+		player_row.setAttribute("class", rowID)
+		player_row.setAttribute("id", rowID)
+
+		var player_a = document.createElement('TD')
+
+		var playerDivId = "blue_player"+playernum
+		player_a.setAttribute("class", playerDivId)
+		player_a.setAttribute("id", playerDivId)
+
+		var player_b = document.createElement('TD')
+
+		var playerDivId = "red_player"+playernum
+		player_b.setAttribute("class", playerDivId)
+		player_b.setAttribute("id", playerDivId)
+
+		player_a.appendChild(document.createTextNode(player_a.id))
+		player_b.appendChild(document.createTextNode(player_b.id))
+
+        player_row.appendChild(player_a)
+        player_row.appendChild(player_b)
+	}
+	console.log("append table")
+	document.getElementById('resultstablediv').appendChild(table);
 }
 
 function getKDA(data,participantId){
@@ -355,35 +440,6 @@ function getKDA(data,participantId){
 			//  			 data.participants[participantId].stats.assists],container)
 }
 
-// function getKDA(matchId,playerId,region){
-// 	var participantId
-
-// 	$.ajax({
-// 		url: "https://na.api.pvp.net/api/lol/"+region+"/v2.2/match/"+matchId+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
-// 		type: 'GET',
-// 		dataType: 'json',
-// 		success: function(data){
-// 			console.log(data)
-// 			//first, need to match the PlayerID to the summonerID located in 
-// 			//participantIdentities->[number]->player->summonerId. that participantIdentities->[number] object 
-// 			//has participantId. This is what we need. 
-// 			//Then look in participants->[participantId]->stats->(kills/assists/deaths)
-
-// 			//Find participantId
-// 			for(var key in data.participantIdentities){
-// 				if(data.participantIdentities[key].player.summonerId == playerId){
-// 					participantId = data.participantIdentities[key].participantId
-// 					console.log(participantId)
-// 				}
-// 			}
-// 			KDACallback(
-// 			 [data.participants[participantId].stats.kills,
-// 			 			 data.participants[participantId].stats.deaths,
-// 			 			 data.participants[participantId].stats.assists])
-// 	}	
-// 	})
-
-// }
 function KDACallback(KDA,container){
 	document.getElementById(container).innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
 }
@@ -415,6 +471,24 @@ function getItemIdMap(callback){
 		success: function(data){
 
 			itemIdMap = data;
+		}
+	})
+}
+
+//Retrieves all of the spell data and stores it into the spellIdMap
+function getSpellIdMap(callback){
+
+	// May need to find a better way to do this since it's bad when the internet is slow
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(response){
+			for (var i in response.data){
+				//Make our own map. Their json data doesn't work with what we want.
+				spellIdMap[response.data[i].id] = response.data[i].name
+				spellImgMap[response.data[i].id] = response.data[i].key
+			}
 		}
 	})
 }
@@ -452,5 +526,8 @@ function getChampTitle(champId){
 // Displays the champion's picture using the champion's key
 function getChampPic(champKey){
 	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
-	//document.getElementById("content").innerHTML += "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+}
+
+function getSpellPic(spellName){
+	return "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
