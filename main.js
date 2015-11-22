@@ -1,11 +1,11 @@
-var champidmap
+var champIdMap
 
 $(document).ready(function(){
-getchampidmap()
+getChampIdMap()
 //Calls the ajax at the start
 
  $("#goButton").click(function(){
- 	// console.log(champidmap)
+ 	//console.log(champIdMap)
 
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -265,40 +265,6 @@ function displayGame(playerID, match, region){
 	console.log(KDA)
 }
 
-function displayChampPic(champName){
-	
-	document.getElementById("content").innerHTML += "<img src=http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champName + ".png></img>"
-}
-
-function getchampidmap(callback){
-
-	$.ajax({
-		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
-		type: 'GET',
-		dataType: 'json',
-		success: function(data){
-
-			//champidmap is a global variable defined at the top
-			champidmap = data;
-		}
-	})
-	//Current work around right now.
- 	//Issue is ajax call is asynchronous so if the ajax call
- 	//doesn't finish and put the data in champidmap then it is
- 	//undefined when the button is pressed
- 	//Especially bad if the internet is slow and the ajax call takes awhile.
-}
-
-function getChampName(champId){
-	var champion;
-	// May be a more efficient way to do this instead
-	// of looping through all the champions til the id matches
-	for(var key in champidmap.data){
-		if(champidmap.data[key].id == champId){
-			return champidmap.data[key].key;
-		}
-	}
-}
 
 function getKDA(matchId,playerId,region){
 	var participantId
@@ -332,4 +298,58 @@ function getKDA(matchId,playerId,region){
 
 function KDACallback(KDA){
 	document.getElementById("content").innerHTML += "Kills: " + KDA[0] + "Deaths: " + KDA[1] + "Assists: " + KDA[2]+ "</br>" 
+}
+
+// Below code is for champion related functions
+function getChampIdMap(callback){
+
+	$.ajax({
+		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+
+			champIdMap = data;
+		}
+	})
+	//Current work around right now.
+ 	//Issue is ajax call is asynchronous so if the ajax call
+ 	//doesn't finish and put the data in champIdMap then it is
+ 	//undefined when the button is pressed
+ 	//Especially bad if the internet is slow and the ajax call takes awhile.
+}
+
+// Gets the champion's name (full name with punctuation)
+function getChampName(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].name;
+		}
+	}
+}
+
+// Gets the champion's key (no punctuation, used for links and data)
+function getChampKey(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].key;
+		}
+	}
+}
+
+// Gets the champion's title (full punctuation)
+function getChampTitle(champId){
+	var champion;
+	for(var key in champIdMap.data){
+		if(champIdMap.data[key].id == champId){
+			return champIdMap.data[key].title;
+		}
+	}
+}
+
+// Displays the champion's picture using the champion's key
+function displayChampPic(champKey){
+	document.getElementById("content").innerHTML += "<img class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
 }
