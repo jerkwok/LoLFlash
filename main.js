@@ -395,15 +395,16 @@ function createTable(){
 	//Icons
 	var iconslist = ["champion","spells","name","score","items","gold","minion","wards"]
 	for (var i = 0; i < 2; i++) {
-		var teamcolour = "blue"
+		var tdContainer = document.createElement('TD');
 		for (var icon in iconslist){
 			var td = document.createElement('TD');
-			var tag = teamcolour + "_" + icon + "icon"
+			var tag = "icon" + "_" + icon;
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
 			td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
-		    summary_row.appendChild(td)
+		    tdContainer.appendChild(td);
 		}
+		summary_row.appendChild(tdContainer);
 	}
 
 	var colslist = ["champ","spells","name","kda","items","cs","gold"]

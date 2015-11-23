@@ -121,7 +121,6 @@ table, tbody, th, tr, td{
 
 .blue_player_champ, .red_player_champ{
 	width: 50px;
-	height: 75px;
 }
 
 .blue_player_spells, .red_player_spells{
@@ -138,6 +137,7 @@ table, tbody, th, tr, td{
 
 .blue_player_items, .red_player_items{
 	width: 50px;
+	height: 100px;
 	text-align: center;
 }
 
@@ -147,6 +147,38 @@ table, tbody, th, tr, td{
 
 .blue_player_gold, .red_player_gold{
 	width: 50px;
+}
+
+.icon_0{
+	width: 50px;
+}
+
+.icon_1{
+	width: 25px;
+}
+
+.icon_2{
+	width: 75px;
+}
+
+.icon_3{
+	width: 35px;
+}
+
+.icon_4{
+	width: 50px;
+}
+
+.icon_5{
+	width: 50px;
+}
+
+.icon_6{
+	width: 50px;
+}
+
+.icon_0, .icon_1, .icon_2, .icon_3, .icon_4, .icon_5, .icon_6{
+	text-align: center;
 }
 
 .blue_player_name, .blue_player_kda, .blue_player_cs, .blue_player_gold, .red_player_name, .red_player_kda, .red_player_cs, .red_player_gold{
