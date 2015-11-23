@@ -29,8 +29,7 @@ $(document).ready(function(){
   });
 
  $("#clearButton").click(function(){
- 	// clear("teamA")
- 	// clear("teamB")
+ 	clear
  	clear("userstats")
  });
 
@@ -63,7 +62,7 @@ function getID(user,region,season){
 			// console.log("ID: " + sID);
 			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
 			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
-			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
+			//document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
 			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
@@ -270,8 +269,8 @@ function displayGame(playerID, match, region){
 	getMatchInfo(region, match.matchId);
 
 	var name = getChampName(match.champion,false)
-	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
-		" Champion Played Id:" + match.champion + " Name:" + name
+	// document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
+	// 	" Champion Played Id:" + match.champion + " Name:" + name
 	//displayChampPic(name);
 	document.getElementById("userstats").innerHTML +="</br>" 
 	// var KDA = getKDA(match.matchId, playerID, region)
@@ -377,7 +376,7 @@ function getMatchInfo(region, matchId){
 
 //argument is the number of players per team
 function createTable(teamplayersNum){
-	document.getElementById('resultstablediv').innerHTML = ""
+	// document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
 
 	var table = document.createElement('TABLE');
