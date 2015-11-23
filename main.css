@@ -138,6 +138,7 @@ table, tbody, th, tr, td{
 
 .blue_player_items, .red_player_items{
 	width: 50px;
+	text-align: center;
 }
 
 .blue_player_cs, .red_player_cs{
