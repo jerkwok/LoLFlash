@@ -104,11 +104,14 @@ html, body{
 	height: 25px;	
 }
 
+table{
+	margin: 0 auto;
+}
+
 table, tbody, th, tr, td{
 	border: 1px solid #6B6565;
 	border-spacing: 0;
 	border-collapse: collapse;
-	margin: 0;
 }
 
 .blue_player_champ, .blue_player_spells, .blue_player_items, .red_player_champ, .red_player_spells, .red_player_items{

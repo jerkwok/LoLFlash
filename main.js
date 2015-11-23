@@ -29,8 +29,8 @@ getSpellIdMap()
   });
 
  $("#clearButton").click(function(){
- 	clear("teamA")
- 	clear("teamB")
+ 	// clear("teamA")
+ 	// clear("teamB")
  	clear("userstats")
  });
 
@@ -290,14 +290,14 @@ function getMatchInfo(region, matchId){
 				var match = document.createElement("div");
 				match.setAttribute("class", "match");
 
-				var teamA = document.createElement("div");
-				teamA.setAttribute("class", "teamA");
-				var teamB = document.createElement("div");
-				teamB.setAttribute("class", "teamB");
+				// var teamA = document.createElement("div");
+				// teamA.setAttribute("class", "teamA");
+				// var teamB = document.createElement("div");
+				// teamB.setAttribute("class", "teamB");
 
-				match.appendChild(teamA);
-				match.appendChild(teamB);
-				console.log(champIdMap)	
+				// match.appendChild(teamA);
+				// match.appendChild(teamB);
+				// console.log(champIdMap)	
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
