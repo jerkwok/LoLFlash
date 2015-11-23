@@ -42,8 +42,8 @@ function clear(id){
 
 
 function getID(user,region,season){
-	var summonerurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	// console.log(url);
+	var summonerurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	//console.log(summonerurl);
 
 	$.ajax({
 		url: summonerurl,
@@ -65,8 +65,7 @@ function getID(user,region,season){
 			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
 			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
-			var region = "na"
-			// var statsurl = "https://na.api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			// getwinstats(sID,region,season);
 			// getrankedsolostats(sID,region);
@@ -87,7 +86,7 @@ function getcurrentgame (id,region) {
 		region = "NA1"
 	};
 
-	var currgameurl = "https://na.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/"+region+"/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var currgameurl = "https://" + region + ".api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/"+region+"/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
 		url: currgameurl,
@@ -105,7 +104,7 @@ function getcurrentgame (id,region) {
 }
 
 function getwinstats (id,region,season) {
-	var winurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var winurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
 		url: winurl,
@@ -130,7 +129,7 @@ function getwinstats (id,region,season) {
 }
 
 function getrankedsolostats(id, region){
-	var rankedsolourl = "https://na.api.pvp.net/api/lol/"+region+"/v2.5/league/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var rankedsolourl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.5/league/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	$.ajax({
 		url: rankedsolourl,
 			type: 'GET',
@@ -157,7 +156,7 @@ function displayrankedsolostats(id,data,place){
 }
 
 function getaramstats(id,region,season){
-	var statsurl = "https://na.api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	$.ajax({
 		url: statsurl,
 			type: 'GET',
@@ -223,7 +222,7 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 	// if (region == "na") {
 	// 	region = "NA1"
 	// };
-	var matchhisturl = "https://na.api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+	var matchhisturl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
 	//Posts the match history url to the main.php
 	// $.ajax({
@@ -275,7 +274,7 @@ function displayGame(playerID, match, region){
 }
 
 function getMatchInfo(region, matchId){
-	var matchurl = "https://na.api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var matchurl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
 	var KDA = [0,0,0];
