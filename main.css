@@ -116,6 +116,35 @@ table, td{
 	margin: 0;
 }
 
+.blue_player0{
+	width: 350px;
+}
+
+.blue_player_items0{
+	width: 75px;
+	height: 75px;
+}
+
+.blue_player_spells0{
+	width: 25px;
+	height: 50px;
+}
+
+.red_player0{
+	width: 350px;
+}
+
+.red_player_items0{
+	width: 75px;
+	height: 75px;
+}
+
+.red_player_spells0{
+	width: 25px;
+	height: 50px;
+}
+
+
 .blue_player_name0, .blue_player_kda0, .blue_player_cs0, .blue_player_gold0, .red_player_name0, .red_player_kda0, .red_player_cs0, .red_player_gold0{
 	font-size: 11px;
 	white-space: nowrap;
