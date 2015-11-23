@@ -267,8 +267,6 @@ function getMatchHistory (id,region,seasons) {
 
 function displayGame(playerID, match, region){
 
-	getMatchInfo(region, match.matchId);
-
 	var name = getChampName(match.champion,false)
 	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
 		" Champion Played Id:" + match.champion + " Name:" + name
@@ -303,7 +301,7 @@ function getMatchInfo(region, matchId){
 
 				// match.appendChild(teamA);
 				// match.appendChild(teamB);
-				console.log(data)	
+				// console.log(data)	
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
@@ -394,11 +392,6 @@ function createTable(teamplayersNum){
 	summary_row.setAttribute("class", "summary_row")
 	summary_row.setAttribute("id", "summary_row")
 
-	var icons_row = document.createElement('TR');
-	tableBody.appendChild(summary_row);
-	icons_row.setAttribute("class", "icons_row")
-	icons_row.setAttribute("id", "icons_row")
-
 	//Icons
 	var iconslist = ["champion","spells","name","score","items","gold","minion","wards"]
 	for (var i = 0; i < 2; i++) {
@@ -408,21 +401,19 @@ function createTable(teamplayersNum){
 			var tag = "icon" + "_" + icon;
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
+
 			if( i == 0 ){
 				td.style.backgroundColor = "#0b3d59";
-				if (iconslist[icon] != "name"){
-					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
-				}else{
-					td.innerHTML = "Name"
-				}
 			} else{
 				td.style.backgroundColor = "#6F0007";
-				if (iconslist[icon] != "name"){
-					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
-				}else{
-					td.innerHTML = "Name"
-				}
 			}
+
+			if (iconslist[icon] != "name"){
+				td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+			}else{
+				td.innerHTML = "Name"
+			}
+
 		    tdContainer.appendChild(td);
 		}
 		summary_row.appendChild(tdContainer);
