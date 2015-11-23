@@ -120,7 +120,7 @@ table, tbody, th, tr, td{
 }
 
 .blue_player, .red_player{
-	width: 350px;
+	width: 400px;
 }
 
 .blue_player_champ, .red_player_champ, .icon_0{
@@ -140,11 +140,11 @@ table, tbody, th, tr, td{
 }
 
 .blue_player_items, .red_player_items, .icon_4{
-	width: 55px;
+	width: 100px;
 }
 
 .blue_player_items, .red_player_items{
-	height: 100px;
+	height: 50px;
 	text-align: center;
 }
 
