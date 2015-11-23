@@ -55,7 +55,7 @@ function getID(user,region,season){
 
 		},
 		success: function(data){
-			// console.log(data)
+			console.log(data)
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
