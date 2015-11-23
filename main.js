@@ -45,6 +45,8 @@ function getID(user,region,season){
 	var summonerurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	//console.log(summonerurl);
 
+	rawUser = user;
+
 	$.ajax({
 		url: summonerurl,
 		type: 'GET',
@@ -61,16 +63,17 @@ function getID(user,region,season){
 			// console.log("Level: " + sLevel);
 			// console.log("Name: " + user);
 			// console.log("ID: " + sID);
-			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
-			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
-			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
+
+			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
+			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
+			//document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
 			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			// getwinstats(sID,region,season);
 			// getrankedsolostats(sID,region);
 			// getaramstats(sID,region,season);
-			getMatchHistory(sID,region)
+			getMatchHistory(rawUser, sID,region)
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
 			//so we need to make a new web script that forwards the request, adds the api key, 
@@ -186,7 +189,7 @@ function displayaramstats(id,data,place){
 
 }
 
-function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
+function getMatchHistory (user, id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
 	//last 7 args are optional.
 	var optargs = ""
 
@@ -254,26 +257,26 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 				// 	}
 				// };
 				for(var i = 0; i < 1; i++){
-					displayGame(id, data.matches[i], region);
+					displayGame(user, id, data.matches[i], region);
 				}
 			}
 		})
 }
 
-function displayGame(playerID, match, region){
+function displayGame(user, playerID, match, region){
+
+	getMatchInfo(region, match.matchId, user);
 
 	var name = getChampName(match.champion,false)
-	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
-		" Champion Played Id:" + match.champion + " Name:" + name
+	// document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
+	// 	" Champion Played Id:" + match.champion + " Name:" + name
 	//displayChampPic(name);
 	document.getElementById("userstats").innerHTML +="</br>" 
 	// var KDA = getKDA(match.matchId, playerID, region)
 	// console.log(KDA)
-
-	getMatchInfo(region, match.matchId);
 }
 
-function getMatchInfo(region, matchId){
+function getMatchInfo(region, matchId, currPlayer){
 	var matchurl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
@@ -325,6 +328,11 @@ function getMatchInfo(region, matchId){
 					playerdivdest = team + "_player_name" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML =
 					data.participantIdentities[i].player.summonerName; 
+					
+					//Highlights the currPlayer
+					if(data.participantIdentities[i].player.summonerName == currPlayer){
+						document.getElementById(playerdivdest).style.backgroundColor = "#0b3d59";
+					}
 
 					//KDA
 					playerdivdest = team + "_player_kda" + teamplayernum
