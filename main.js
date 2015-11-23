@@ -2,6 +2,7 @@ var champIdMap
 var itemIdMap
 var spellIdMap = {}
 var spellImgMap = {}
+var tableNum = 0;
 
 $(document).ready(function(){
 	getChampIdMap()
@@ -260,7 +261,8 @@ function getMatchHistory (id,region,seasons){
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
-				for(var i = 0; i < 1; i++){
+				//NUMBER OF GAMES
+				for(var i = 0; i < 2; i++){
 					displayGame(id, data.matches[i], region);
 				}
 			}
@@ -268,6 +270,8 @@ function getMatchHistory (id,region,seasons){
 }
 
 function displayGame(playerID, match, region){
+
+	getMatchInfo(region,match.matchId);
 
 	var name = getChampName(match.champion,false)
 	// document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
@@ -289,8 +293,8 @@ function getMatchInfo(region, matchId){
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
-				createTable((data.participants.length/2));
-
+				createTable((data.participants.length/2),tableNum);
+				var tableId = tableNum + ""
 				var match = document.createElement("div");
 				match.setAttribute("class", "match");
 
@@ -317,28 +321,29 @@ function getMatchInfo(region, matchId){
 						var teamplayernum = i-(data.participants.length/2)
 					}
 					//Champ
-					var playerdivdest = team + "_player_champ" + teamplayernum
+					var playerdivdest = team + "_player_champ"  + tableId + teamplayernum
+					console.log("PDD:"+playerdivdest)
 					document.getElementById(playerdivdest).innerHTML = champPic;
 
 					//Summoners
-					playerdivdest = team + "_player_spells" + teamplayernum
+					playerdivdest = team + "_player_spells" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
 					getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
 
 					//Name
-					playerdivdest = team + "_player_name" + teamplayernum
+					playerdivdest = team + "_player_name" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML =
 					data.participantIdentities[i].player.summonerName; 
 
 					//KDA
-					playerdivdest = team + "_player_kda" + teamplayernum
+					playerdivdest = team + "_player_kda" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					KDA[0] + "/" + KDA[1] + "/" + KDA[2];
 					//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
 
 					//end game items
-					playerdivdest = team + "_player_items" + teamplayernum
+					playerdivdest = team + "_player_items" + tableId + teamplayernum
 
 					for (var itemnum = 0; itemnum < 7; itemnum++){
 						var itemstring = "item"+itemnum
@@ -354,32 +359,34 @@ function getMatchInfo(region, matchId){
 					}
 
 					//Gold
-					playerdivdest = team + "_player_gold" + teamplayernum
+					playerdivdest = team + "_player_gold" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.goldEarned;
 
 					//CS
-					playerdivdest = team + "_player_cs" + teamplayernum
+					playerdivdest = team + "_player_cs" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.minionsKilled ;
 
 					//Wards
-					playerdivdest = team + "_player_wards" + teamplayernum
+					playerdivdest = team + "_player_wards" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.wardsPlaced;				
 				}
 				document.getElementById("matchlist").appendChild(match);
+				tableNum++;
 			}
 		})
 }
 
 //argument is the number of players per team
-function createTable(teamplayersNum){
+function createTable(teamplayersNum,tableNum){
 	// document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
+	tableId = tableNum + ""
 	var table = document.createElement('TABLE');
-	table.setAttribute("class","resultstable")
-	table.setAttribute("id","resultstable")
+	table.setAttribute("class","resultstable" + tableId)
+	table.setAttribute("id","resultstable" + tableId)
 
 	var tableBody = document.createElement('TBODY');
 	table.appendChild(tableBody);
@@ -423,23 +430,20 @@ function createTable(teamplayersNum){
 		var player_row = document.createElement('TR');
 		tableBody.appendChild(player_row);
 
-		var rowID = "player_row"+playernum
-		player_row.setAttribute("class", rowID)
-		player_row.setAttribute("id", rowID)
+		player_row.setAttribute("class",  "player_row" +playernum)
+		player_row.setAttribute("id",  "player_row"+ tableId +playernum)
 
 		//blue player table
 		var player_a = document.createElement('TD')
 
-		var playerDivId = "blue_player"+playernum
-		player_a.setAttribute("class", playerDivId)
-		player_a.setAttribute("id", playerDivId)
+		player_a.setAttribute("class", "blue_player" +playernum)
+		player_a.setAttribute("id", "blue_player"+ tableId +playernum)
 
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
-			DivId = "blue_player_"+ colslist[col] +playernum
 
 			// currTD.setAttribute("class", DivId)
-			currTD.setAttribute("id", DivId)
+			currTD.setAttribute("id", "blue_player_"+ colslist[col] + tableId +playernum)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
 			player_a.appendChild(currTD)
@@ -448,16 +452,14 @@ function createTable(teamplayersNum){
 		//red player table
 		var player_b = document.createElement('TD')
 
-		var playerDivId = "red_player"+playernum
-		player_b.setAttribute("class", playerDivId)
-		player_b.setAttribute("id", playerDivId)
+		player_b.setAttribute("class", "red_player" +playernum)
+		player_b.setAttribute("id", "red_player"+ tableId +playernum)
 
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
-			DivId = "red_player_"+ colslist[col] +playernum
 
 			// currTD.setAttribute("class", DivId)
-			currTD.setAttribute("id", DivId)
+			currTD.setAttribute("id", "red_player_"+ colslist[col] + tableId +playernum)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#6F0007";
 			player_b.appendChild(currTD)
