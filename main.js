@@ -261,11 +261,8 @@ function getMatchHistory (id,region,seasons){
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
-<<<<<<< HEAD
-=======
 
 				// Change this value based on how many games you want
->>>>>>> 415efcae2e1f8c7e4d006541bef709965597612c
 				var gamesToDisplay = 3;
 
 				if(data.totalGames > gamesToDisplay-1){
