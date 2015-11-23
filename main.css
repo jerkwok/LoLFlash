@@ -141,6 +141,7 @@ button:hover{
 
 table{
 	margin: 0 auto;
+	background-color: black;
 }
 
 table, td > td{

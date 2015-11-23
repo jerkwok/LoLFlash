@@ -70,6 +70,7 @@ function getID(user,region,season){
 			// getwinstats(sID,region,season);
 			// getrankedsolostats(sID,region);
 			// getaramstats(sID,region,season);
+
 			getMatchHistory(sID,region,season)
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
@@ -266,6 +267,8 @@ function getMatchHistory (id,region,seasons) {
 
 function displayGame(playerID, match, region){
 
+	getMatchInfo(region, match.matchId);
+
 	var name = getChampName(match.champion,false)
 	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
 		" Champion Played Id:" + match.champion + " Name:" + name
@@ -405,10 +408,20 @@ function createTable(teamplayersNum){
 			var tag = "icon" + "_" + icon;
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
-			if (iconslist[icon] != "name"){
-				td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
-			}else{
-				td.innerHTML = "Name"
+			if( i == 0 ){
+				td.style.backgroundColor = "#0b3d59";
+				if (iconslist[icon] != "name"){
+					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+				}else{
+					td.innerHTML = "Name"
+				}
+			} else{
+				td.style.backgroundColor = "#6F0007";
+				if (iconslist[icon] != "name"){
+					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+				}else{
+					td.innerHTML = "Name"
+				}
 			}
 		    tdContainer.appendChild(td);
 		}
@@ -438,6 +451,7 @@ function createTable(teamplayersNum){
 			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
+			currTD.style.backgroundColor = "#0b3d59";
 			player_a.appendChild(currTD)
 		}
 
@@ -455,7 +469,9 @@ function createTable(teamplayersNum){
 			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
+			currTD.style.backgroundColor = "#6F0007";
 			player_b.appendChild(currTD)
+			//document.getElementById("DivId").style.backgroundColor = "red";
 		}
 
         player_row.appendChild(player_a)
