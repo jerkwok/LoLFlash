@@ -187,7 +187,7 @@ function displayaramstats(id,data,place){
 }
 
 // function getMatchHistory (id,region,seasons,rankedQueues,champids,seasons,begintime,endtime,beginindex,endindex) {
-function getMatchHistory (id,region,seasons) {
+function getMatchHistory (id,region,seasons){
 	console.log(seasons)
 	//last 7 args are optional.
 	var optargs = ""
@@ -275,8 +275,6 @@ function displayGame(playerID, match, region){
 	document.getElementById("userstats").innerHTML +="</br>" 
 	// var KDA = getKDA(match.matchId, playerID, region)
 	// console.log(KDA)
-
-	getMatchInfo(region, match.matchId);
 }
 
 function getMatchInfo(region, matchId){
@@ -378,7 +376,6 @@ function getMatchInfo(region, matchId){
 function createTable(teamplayersNum){
 	// document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
-
 	var table = document.createElement('TABLE');
 	table.setAttribute("class","resultstable")
 	table.setAttribute("id","resultstable")
