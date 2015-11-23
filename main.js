@@ -37,8 +37,6 @@ function clear(id){
 function getID(user,region,season){
 	var summonerurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
-	rawUser = user;
-
 	$.ajax({
 		url: summonerurl,
 		type: 'GET',
@@ -60,7 +58,7 @@ function getID(user,region,season){
 			// getwinstats(sID,region,season);
 			// getrankedsolostats(sID,region);
 			// getaramstats(sID,region,season);
-			getMatchHistory(rawUser, sID,region)
+			getMatchHistory(sID,region)
 			
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
@@ -171,7 +169,7 @@ function displayaramstats(id,data,place){
 
 }
 
-function getMatchHistory (user, id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
+function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
 	//last 7 args are optional.
 	var optargs = ""
 
@@ -224,15 +222,15 @@ function getMatchHistory (user, id,region,champids,rankedQueues, seasons,beginti
 				// 	}
 				// };
 				for(var i = 0; i < 1; i++){
-					displayGame(user, id, data.matches[i], region);
+					displayGame(id, data.matches[i], region);
 				}
 			}
 		})
 }
 
-function displayGame(user, playerID, match, region){
+function displayGame(playerID, match, region){
 
-	getMatchInfo(region, match.matchId, user);
+	getMatchInfo(region, match.matchId);
 
 	var name = getChampName(match.champion,false)
 
@@ -240,7 +238,7 @@ function displayGame(user, playerID, match, region){
 
 }
 
-function getMatchInfo(region, matchId, currPlayer){
+function getMatchInfo(region, matchId){
 	var matchurl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
@@ -284,11 +282,6 @@ function getMatchInfo(region, matchId, currPlayer){
 					playerdivdest = team + "_player_name" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML =
 					data.participantIdentities[i].player.summonerName; 
-					
-					//Highlights the currPlayer
-					if(data.participantIdentities[i].player.summonerName == currPlayer){
-						document.getElementById(playerdivdest).style.backgroundColor = "#0b3d59";
-					}
 
 					//KDA
 					playerdivdest = team + "_player_kda" + teamplayernum
@@ -364,10 +357,20 @@ function createTable(){
 			var tag = "icon" + "_" + icon;
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
-			if (iconslist[icon] != "name"){
-				td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
-			}else{
-				td.innerHTML = "Name"
+			if( i == 0 ){
+				td.style.backgroundColor = "#0b3d59";
+				if (iconslist[icon] != "name"){
+					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+				}else{
+					td.innerHTML = "Name"
+				}
+			} else{
+				td.style.backgroundColor = "#6F0007";
+				if (iconslist[icon] != "name"){
+					td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+				}else{
+					td.innerHTML = "Name"
+				}
 			}
 		    tdContainer.appendChild(td);
 		}
@@ -396,6 +399,7 @@ function createTable(){
 
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
+			currTD.style.backgroundColor = "#0b3d59";
 			player_a.appendChild(currTD)
 		}
 
@@ -412,7 +416,9 @@ function createTable(){
 
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
+			currTD.style.backgroundColor = "#6F0007";
 			player_b.appendChild(currTD)
+			//document.getElementById("DivId").style.backgroundColor = "red";
 		}
 
         player_row.appendChild(player_a)
