@@ -489,7 +489,7 @@ function createTable(){
 
 			currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
-			player_a.appendChild(currTD)
+			player_b.appendChild(currTD)
 		}
 
         player_row.appendChild(player_a)
