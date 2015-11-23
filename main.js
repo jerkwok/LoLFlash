@@ -254,14 +254,16 @@ function getMatchHistory (id,region,seasons){
 			success: function(data){
 				// console.log("Match History:")
 				// console.log("Last 10 Games:")
-				document.getElementById("userstats").innerHTML += "Match History:" + "</br>"
+				document.getElementById("resultstablediv").innerHTML += "<p class=\"matchTitle\">" + "Match History:" + "</p>"
 				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
 				// 	if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
-				var gamesToDisplay = 1;
+
+				// Change this value based on how many games you want
+				var gamesToDisplay = 3;
 
 				if(data.totalGames > gamesToDisplay-1){
 					for(var i = 0; i < gamesToDisplay; i++){
@@ -298,8 +300,8 @@ function getMatchInfo(region, matchId){
 			success: function(data){
 				createTable((data.participants.length/2),tableNum);
 				var tableId = tableNum + ""
-				var match = document.createElement("div");
-				match.setAttribute("class", "match");
+				// var match = document.createElement("div");
+				// match.setAttribute("class", "match");
 
 				// var teamA = document.createElement("div");
 				// teamA.setAttribute("class", "teamA");
@@ -325,7 +327,7 @@ function getMatchInfo(region, matchId){
 					}
 					//Champ
 					var playerdivdest = team + "_player_champ"  + tableId + teamplayernum
-					console.log("PDD:"+playerdivdest)
+					//console.log("PDD:"+playerdivdest)
 					document.getElementById(playerdivdest).innerHTML = champPic;
 
 					//Summoners
@@ -376,7 +378,7 @@ function getMatchInfo(region, matchId){
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.wardsPlaced;				
 				}
-				document.getElementById("matchlist").appendChild(match);
+				// document.getElementById("matchlist").appendChild(match);
 				tableNum++;
 			}
 		})
@@ -388,7 +390,7 @@ function createTable(teamplayersNum,tableNum){
 	//Create the table
 	tableId = tableNum + ""
 	var table = document.createElement('TABLE');
-	table.setAttribute("class","resultstable" + tableId)
+	table.setAttribute("class","resultstable")
 	table.setAttribute("id","resultstable" + tableId)
 
 	var tableBody = document.createElement('TBODY');
