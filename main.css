@@ -88,3 +88,30 @@ html, body{
 	width: 50px;
 	height: 50px;
 }
+
+.spellPic{
+	width: 25px;
+	height: 25px;
+}
+
+.itemPic{
+	width: 25px;
+	height: 25px;
+}
+
+table, tr, td{
+/*	border: 1px solid white;*/
+	border-collapse: collapse;
+	margin: 0;
+}
+
+.blue_player_champ0, .blue_player_spells0, .blue_player_items0, .red_player_champ0, .red_player_spells0, .red_player_items0{
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.blue_player_name0, .blue_player_kda0, .blue_player_cs0, .blue_player_gold0, .red_player_name0, .red_player_kda0, .red_player_cs0, .red_player_gold0{
+	font-size: 11px;
+	white-space: nowrap;
+}

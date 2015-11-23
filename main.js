@@ -323,7 +323,8 @@ function getMatchInfo(region, matchId){
 						//KDA
 						playerdivdest = "blue_player_kda" + i
 						document.getElementById(playerdivdest).innerHTML = 
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+						KDA[0] + "/" + KDA[1] + "/" + KDA[2];
+						//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
 
 						//end game items
 						playerdivdest = "blue_player_items" + i
@@ -377,7 +378,8 @@ function getMatchInfo(region, matchId){
 						//KDA
 						playerdivdest = "red_player_kda" + teamplayernum
 						document.getElementById(playerdivdest).innerHTML = 
-						"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+						KDA[0] + "/" + KDA[1] + "/" + KDA[2];
+						//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
 
 						//end game items
 						playerdivdest = "red_player_items" + teamplayernum
