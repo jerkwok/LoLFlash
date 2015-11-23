@@ -408,7 +408,11 @@ function createTable(){
 			var tag = "icon" + "_" + icon;
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
-			td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+			if (iconslist[icon] != "name"){
+				td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+			}else{
+				td.innerHTML = "Name"
+			}
 		    tdContainer.appendChild(td);
 		}
 		summary_row.appendChild(tdContainer);
