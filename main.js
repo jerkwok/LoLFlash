@@ -4,10 +4,10 @@ var spellIdMap = {}
 var spellImgMap = {}
 
 $(document).ready(function(){
-getChampIdMap()
-getItemIdMap()
-getSpellIdMap()
-//Calls the ajax at the start
+	getChampIdMap()
+	getItemIdMap()
+	getSpellIdMap()
+	//Calls the ajax at the start
 
  $("#goButton").click(function(){
  	console.log(itemIdMap)

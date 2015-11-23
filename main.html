@@ -11,13 +11,25 @@
 
 <body>
 	<div class="navbar">	   	
-	   	<div>
+	   	<div class="menu">
 		   	<ul>
-		   		<li><a href="#">NotOP.gg</a></li>
-		   		<li><a href="#">Stats</a></li>
-		       	<li><a href="#">Game Status</a></li>
-		       	<li><a href="#">Competitive</a></li>
+		   		<li><a href="#">Summoner</a></li>
+		   		<li><a href="#">Rankings</a></li>
 		   	</ul>
+		</div>
+		<div class="regionSelect">
+		   	<select id="region">
+				<option value="na">North America</option>
+			  	<option value="euw">Europe West</option>
+			  	<option value="eune">Europe Nordic & East</option>
+			  	<option value="br">Brazil</option>
+				<option value="kr">Korea</option>
+				<option value="tr">Turkey</option>
+				<option value="ru">Russia</option>
+				<option value="lan">Latin America North</option>
+				<option value="las">Latin America South</option>
+				<option value="oce">Oceania</option>
+			</select>
 	    </div>
 	</div>
 
@@ -25,7 +37,7 @@
 		<label for="username">Username:</label>
 		<input type="text" id="username" value="feed l0rd">
 
-		<label for="region">Region:</label>
+<!-- 		<label for="region">Region:</label>
 		<select id="region">
 		  <option value="na">North America</option>
 		  <option value="euw">Europe West</option>
@@ -37,10 +49,10 @@
 		  <option value="lan">Latin America North</option>
 		  <option value="las">Latin America South</option>
 		  <option value="oce">Oceania</option>
-		</select>
+		</select> -->
 
 
-		<label for="season">Season:</label>
+		<!-- <label for="season">Season:</label>
 		<select id="season">
 		  <option value="PRESEASON3">Preseason 3</option>
 		  <option value="SEASON3">Season 3</option>
@@ -56,10 +68,10 @@
 		  <option value="RANKED_SOLO_5x5">Solo Queue</option>
 		  <option value="RANKED_TEAM_3x3">Ranked 3's Team</option>
 		  <option value="RANKED_TEAM_5x5">Ranked 5's Team</option>
-		</select>
+		</select> -->
 
-		<button type="button" id="goButton">Find Summoner</button>
-		<button type="button" id="clearButton">Clear</button>
+		<button type="submit" id="goButton">Find Summoner</button>
+		<button type="submit" id="clearButton">Clear</button>
 	</div>
 
 	<div class="container">

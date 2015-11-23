@@ -3,6 +3,27 @@ html, body{
 	background-color: #222;
 	font-family: Arial;
 	color: #9d9d9d;
+	margin: 0;
+	padding: 0;
+}
+
+input{
+    border: 1px solid #9d9d9d; 
+    border-radius: 8px;
+    padding: 4px;
+}
+
+button{
+    border: 1px solid #222; 
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+button:hover{
+	background-color: #9d9d9d;
 }
 
 .container{
@@ -16,11 +37,22 @@ html, body{
 
 .navbar{
 	background-color: #222;
-	font-size: 18px;
-	padding-left: 4%;
-	padding-right: 4%;
-	padding-top: 15px;
-	padding-bottom: 15px;
+	font-size: 12px;
+	padding-left: 12%;
+	padding-right: 12%;
+	border-bottom: 1px solid #6B6565;
+	left: 0;
+}
+
+.menu{
+	display: inline-block;
+	padding: 10px;
+}
+
+.regionSelect{
+	padding: 8px;
+	float: right;
+	display: inline-block;
 }
 
 .navbar ul{
@@ -31,7 +63,12 @@ html, body{
 
 .navbar li{
 	display: inline;
-	margin-right: 20px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.navbar li:first-child{
+	border-right: 1px solid #6B6565;
 }
 
 .navbar a{
@@ -44,16 +81,13 @@ html, body{
 }
 
 .search{
+	text-align: center;
 	background-color: #222;
-	font-size: 14px;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #6B6565;
-	padding-right: 4%;
-	padding-left: 4%;
-}
-
-.search > label:first-child{
-	margin-left: 8%;
+	font-size: 12px;
+	padding-right: 12%;
+	padding-left: 12%;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .search > label{
