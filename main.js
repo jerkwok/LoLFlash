@@ -374,7 +374,7 @@ function getMatchInfo(region, matchId){
 
 //argument is the number of players per team
 function createTable(teamplayersNum){
-	document.getElementById('resultstablediv').innerHTML = ""
+	// document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
 
 	var table = document.createElement('TABLE');
