@@ -330,7 +330,8 @@ function getMatchInfo(region, matchId){
 					//KDA
 					playerdivdest = team + "_player_kda" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
-					"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+					KDA[0] + "/" + KDA[1] + "/" + KDA[2];
+					//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
 
 					//end game items
 					playerdivdest = team + "_player_items" + teamplayernum
