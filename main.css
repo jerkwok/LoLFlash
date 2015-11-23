@@ -139,12 +139,13 @@ button:hover{
 	height: 25px;	
 }
 
-table{
+.resultstable{
 	margin: 0 auto;
 	background-color: black;
+	margin-bottom: 25px
 }
 
-table, td > td{
+.resultstable, td > td{
 	border: 1px solid #6B6565;
 	border-spacing: 0;
 	border-collapse: collapse;
@@ -221,4 +222,8 @@ table, td > td{
 	padding-left: 5px;
 	font-size: 12px;
 	display: inline-block;
+}
+
+.matchTitle{
+	padding-left: 4%;
 }
