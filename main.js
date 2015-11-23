@@ -304,7 +304,7 @@ function getMatchInfo(region, matchId){
 					champPic = getChampPic(champKey,getChampName(data.participants[i].championId,true));
 					KDA = getKDA(data.participants[i],i);
 
-					if(data.participants[i].teamId == 100){
+					if(data.participants[i].teamId == 100)
 						//Champ
 						var playerdivdest = "blue_player_champ" + i
 						document.getElementById(playerdivdest).innerHTML = champPic;
@@ -334,8 +334,10 @@ function getMatchInfo(region, matchId){
 							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 								document.getElementById(playerdivdest).innerHTML +=
 								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
-								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
-									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}else{
+								//need to make a empty item slot picture
+								document.getElementById(playerdivdest).innerHTML += "Empty"
+
 							}
 						}
 
@@ -390,6 +392,10 @@ function getMatchInfo(region, matchId){
 								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
 									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
+							}else{
+								//need to make a empty item slot picture
+								console.log("Empty Item")
+								document.getElementById(playerdivdest).innerHTML += "Empty"
 							}
 						}
 
