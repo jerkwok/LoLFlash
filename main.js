@@ -13,7 +13,7 @@ $(document).ready(function(){
  	clear("resultstablediv")
  	clear("userstats")
 
- 	console.log(itemIdMap)
+ 	//console.log(itemIdMap)
 
 	var username = $("#username").val()
 	var region = $('#region').val()
@@ -55,7 +55,7 @@ function getID(user,region,season){
 
 		},
 		success: function(data){
-			console.log(data)
+			//console.log(data)
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
@@ -63,8 +63,8 @@ function getID(user,region,season){
 			// console.log("Level: " + sLevel);
 			// console.log("Name: " + user);
 			// console.log("ID: " + sID);
-			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
-			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
+			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
+			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
 			//document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
 			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
@@ -191,7 +191,7 @@ function displayaramstats(id,data,place){
 
 // function getMatchHistory (id,region,seasons,rankedQueues,champids,seasons,begintime,endtime,beginindex,endindex) {
 function getMatchHistory (id,region,seasons){
-	console.log(seasons)
+	//console.log(seasons)
 	//last 7 args are optional.
 	var optargs = ""
 
@@ -224,12 +224,12 @@ function getMatchHistory (id,region,seasons){
 	// 	optargs += "&endIndex=" + endindex;
 	// };
 
-	console.log(optargs)
+	//console.log(optargs)
 	// if (region == "na") {
 	// 	region = "NA1"
 	// };
 	var matchhisturl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
-	console.log(matchhisturl)
+	//console.log(matchhisturl)
 
 	//Posts the match history url to the main.php
 	// $.ajax({
@@ -260,8 +260,13 @@ function getMatchHistory (id,region,seasons){
 				// 		displayaramstats(id,data,i);
 				// 	}
 				// };
-				for(var i = 0; i < 1; i++){
-					displayGame(id, data.matches[i], region);
+
+				var gamesToDisplay = 1;
+
+				if(data.totalGames > gamesToDisplay-1){
+					for(var i = 0; i < gamesToDisplay; i++){
+				 		displayGame(id, data.matches[i], region);
+				 	}
 				}
 			}
 		})
@@ -303,9 +308,9 @@ function getMatchInfo(region, matchId){
 
 				// match.appendChild(teamA);
 				// match.appendChild(teamB);
-				console.log(data)	
+				//console.log(data)	
 				for(var i = 0; i < data.participants.length; i++){
-					console.log(data.participants[i]);
+					//console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
 					champPic = getChampPic(champKey,getChampName(data.participants[i].championId,true));
 					KDA = getKDA(data.participants[i],i);
