@@ -19,3 +19,5 @@ I think for the main.js file, we should put functions that are of the same theme
 Going to get ready for work.
 
 **JK:**Images in the table are okay, but there is no image in DDragon for name and ward. Might need to make them ourselves and dl the icons locally. NBD.
+
+**JK:**Also need to make an empty item slot image

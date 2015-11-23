@@ -99,8 +99,13 @@ html, body{
 	height: 25px;
 }
 
-table, tr, td{
-/*	border: 1px solid white;*/
+.iconPic{
+	width: 25px;
+	height: 25px;	
+}
+
+table, td{
+	border: 1px solid white;
 	border-collapse: collapse;
 	margin: 0;
 }

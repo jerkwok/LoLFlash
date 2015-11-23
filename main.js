@@ -305,111 +305,63 @@ function getMatchInfo(region, matchId){
 					KDA = getKDA(data.participants[i],i);
 
 					if(data.participants[i].teamId == 100){
-						//Champ
-						var playerdivdest = "blue_player_champ" + i
-						document.getElementById(playerdivdest).innerHTML = champPic;
-
-						//Summoners
-						playerdivdest = "blue_player_spells" + i
-						document.getElementById(playerdivdest).innerHTML = 
-						getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
-						getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
-
-						//Name
-						playerdivdest = "blue_player_name" + i
-						document.getElementById(playerdivdest).innerHTML =
-						data.participantIdentities[i].player.summonerName; 
-
-						//KDA
-						playerdivdest = "blue_player_kda" + i
-						document.getElementById(playerdivdest).innerHTML = 
-						KDA[0] + "/" + KDA[1] + "/" + KDA[2];
-						//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
-
-						//end game items
-						playerdivdest = "blue_player_items" + i
-
-						for (var itemnum = 0; itemnum < 7; itemnum++){
-							var itemstring = "item"+itemnum
-							var itemnump = itemnum+1
-							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
-								document.getElementById(playerdivdest).innerHTML +=
-								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
-								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
-									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
-							}
-						}
-
-						//CS
-						playerdivdest = "blue_player_cs" + i
-						document.getElementById(playerdivdest).innerHTML = 
-						"CS: " + data.participants[i].stats.minionsKilled ;
-
-						//Gold
-						playerdivdest = "blue_player_gold" + i
-						document.getElementById(playerdivdest).innerHTML = 
-						"Gold: " + data.participants[i].stats.goldEarned;
-
-						//Wards
-						playerdivdest = "blue_player_gold" + i
-						document.getElementById(playerdivdest).innerHTML = 
-						"Wards Placed: " +data.participants[i].stats.wardsPlaced;
-
-						
+						var team = "blue"
+						var teamplayernum = i
 
 					} else{
+						var team = "red"
 						var teamplayernum = i-5
-						//Champ
-						var playerdivdest = "red_player_champ" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = champPic;
-
-						//Summoners
-						playerdivdest = "red_player_spells" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = 
-						getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
-						getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
-
-
-						//Name
-						playerdivdest = "red_player_name" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML =
-						data.participantIdentities[i].player.summonerName; 
-
-						//KDA
-						playerdivdest = "red_player_kda" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = 
-						KDA[0] + "/" + KDA[1] + "/" + KDA[2];
-						//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
-
-						//end game items
-						playerdivdest = "red_player_items" + teamplayernum
-
-						for (var itemnum = 0; itemnum < 7; itemnum++){
-							var itemstring = "item"+itemnum
-							var itemnump = itemnum+1
-							if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
-								document.getElementById(playerdivdest).innerHTML +=
-								getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
-								// "Item " + itemnump +": Id:" + data.participants[i].stats[itemstring] + 
-									// " Name: " + itemIdMap.data[data.participants[i].stats[itemstring]].name + "</br>"							
-							}
-						}
-
-						//CS
-						playerdivdest = "red_player_cs" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = 
-						"CS: " + data.participants[i].stats.minionsKilled ;
-
-						//Gold
-						playerdivdest = "red_player_gold" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = 
-						"Gold: " + data.participants[i].stats.goldEarned;
-
-						//Wards
-						playerdivdest = "red_player_gold" + teamplayernum
-						document.getElementById(playerdivdest).innerHTML = 
-						"Wards Placed: " +data.participants[i].stats.wardsPlaced;
 					}
+					//Champ
+					var playerdivdest = team + "_player_champ" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = champPic;
+
+					//Summoners
+					playerdivdest = team + "_player_spells" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
+					getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
+
+					//Name
+					playerdivdest = team + "_player_name" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML =
+					data.participantIdentities[i].player.summonerName; 
+
+					//KDA
+					playerdivdest = team + "_player_kda" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
+
+					//end game items
+					playerdivdest = team + "_player_items" + teamplayernum
+
+					for (var itemnum = 0; itemnum < 7; itemnum++){
+						var itemstring = "item"+itemnum
+						var itemnump = itemnum+1
+						if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+							document.getElementById(playerdivdest).innerHTML +=
+							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
+						}else{
+							//need to make a empty item slot picture
+							document.getElementById(playerdivdest).innerHTML += 
+								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+						}
+					}
+
+					//CS
+					playerdivdest = team + "_player_cs" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					"CS: " + data.participants[i].stats.minionsKilled ;
+
+					//Gold
+					playerdivdest = team + "_player_gold" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					"Gold: " + data.participants[i].stats.goldEarned;
+
+					//Wards
+					playerdivdest = team + "_player_gold" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					"Wards Placed: " +data.participants[i].stats.wardsPlaced;				
 				}
 				document.getElementById("matchlist").appendChild(match);
 			}
@@ -448,7 +400,7 @@ function createTable(){
 			var tag = teamcolour + "_" + icon + "icon"
 		    td.setAttribute("class", tag)
 			td.setAttribute("id", tag)
-			td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"http://ddragon.leagueoflegends.com/cdn/5.5.1/img/ui/"+iconslist[icon]+".png\"></img>"
+			td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
 		    summary_row.appendChild(td)
 		}
 	}
