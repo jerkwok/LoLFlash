@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>webLOL</title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- // <script type="text/javascript" src="asmt3.js"></script> -->
+	<script type="text/javascript" src="home.js"></script>
+	<link rel="stylesheet" type="text/css" href="home.css">
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+</head>
+
+<body>
+	<div class="navbar">	   	
+	   	<div>
+		   	<ul>
+		   		<li><a href="./main.html">NotOP.gg</a></li>
+		   		<li><a href="./profile.html">Profile</a></li>
+		   		<li><a href="./history.html">History</a></li>
+		       	<li><a href="./leagues.html">Leagues</a></li>
+		   	</ul>
+	    </div>
+	</div>
+
+	<div class="logo">
+		<img alt="Logo"title="Logo"class="logo"src="./images/logo.jpg"></img>
+
+	</div>
+
+	<div class="search">
+		<label for="username">Username:</label>
+		<input type="text" id="username" value="feed l0rd">
+
+		<label for="region">Region:</label>
+		<select id="region">
+		  <option value="na">North America</option>
+		  <option value="euw">Europe West</option>
+		  <option value="eune">Europe Nordic & East</option>
+		  <option value="br">Brazil</option>
+		  <option value="kr">Korea</option>
+		  <option value="tr">Turkey</option>
+		  <option value="ru">Russia</option>
+		  <option value="lan">Latin America North</option>
+		  <option value="las">Latin America South</option>
+		  <option value="oce">Oceania</option>
+		</select>	
+
+		<label for="season">Season:</label>
+		<select id="season">
+		  <option value="PRESEASON3">Preseason 3</option>
+		  <option value="SEASON3">Season 3</option>
+		  <option value="PRESEASON2014">Preseason 4</option>
+		  <option value="SEASON2014">Season 4</option>
+		  <option value="PRESEASON2015">Preseason 5</option>
+		  <option selected value="SEASON2015">Season 5</option>
+		  <option value="PRESEASON2016">Preseason 6</option>
+		</select>
+
+		<label for="season">Ranked Queue:</label>
+		<select id="queueType">
+		  <option value="RANKED_SOLO_5x5">Solo Queue</option>
+		  <option value="RANKED_TEAM_3x3">Ranked 3's Team</option>
+		  <option value="RANKED_TEAM_5x5">Ranked 5's Team</option>
+		</select>
+	</div>
+
+	<div class="buttons">
+		<button type="button" id="findButton">Profile</button>
+		<button type="button" id="historyButton">Match History</button>
+		<button type="button" id="leaguesButton">Leagues</button>
+		<button type="button" id="clearButton">Clear</button>
+	</div>
+
+
+</body>
+</html>
