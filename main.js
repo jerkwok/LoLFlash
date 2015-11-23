@@ -362,7 +362,7 @@ function getMatchInfo(region, matchId){
 					//Wards
 					playerdivdest = team + "_player_gold" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
-					"Wards Placed: " +data.participants[i].stats.wardsPlaced;				
+					"Wards: " +data.participants[i].stats.wardsPlaced;				
 				}
 				document.getElementById("matchlist").appendChild(match);
 			}
@@ -426,8 +426,9 @@ function createTable(){
 			var currTD = document.createElement('TD')
 			DivId = "blue_player_"+ colslist[col] +playernum
 
-			currTD.setAttribute("class", DivId)
+			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
+			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			player_a.appendChild(currTD)
 		}
 
@@ -442,8 +443,9 @@ function createTable(){
 			var currTD = document.createElement('TD')
 			DivId = "red_player_"+ colslist[col] +playernum
 
-			currTD.setAttribute("class", DivId)
+			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
+			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			player_b.appendChild(currTD)
 		}
 

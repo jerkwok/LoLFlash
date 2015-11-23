@@ -104,48 +104,51 @@ html, body{
 	height: 25px;	
 }
 
-table, td{
-	border: 1px solid white;
+table, th, tr, td{
+	border: 1px solid #6B6565;
 	border-collapse: collapse;
 	margin: 0;
 }
 
-.blue_player_champ0, .blue_player_spells0, .blue_player_items0, .red_player_champ0, .red_player_spells0, .red_player_items0{
+.blue_player_champ, .blue_player_spells, .blue_player_items, .red_player_champ, .red_player_spells, .red_player_items{
 	font-size: 0;
-	padding: 0;
-	margin: 0;
 }
 
-.blue_player0{
+.blue_player, .red_player{
 	width: 350px;
 }
 
-.blue_player_items0{
-	width: 75px;
+.blue_player_champ, .red_player_champ{
+	width: 50px;
 	height: 75px;
 }
 
-.blue_player_spells0{
+.blue_player_spells, .red_player_spells{
 	width: 25px;
-	height: 50px;
 }
 
-.red_player0{
-	width: 350px;
-}
-
-.red_player_items0{
+.blue_player_name, .red_player_name{
 	width: 75px;
-	height: 75px;
 }
 
-.red_player_spells0{
-	width: 25px;
-	height: 50px;
+.blue_player_kda, .red_player_kda{
+	width: 35px;
 }
 
+.blue_player_items, .red_player_items{
+	width: 50px;
+}
 
-.blue_player_name0, .blue_player_kda0, .blue_player_cs0, .blue_player_gold0, .red_player_name0, .red_player_kda0, .red_player_cs0, .red_player_gold0{
+.blue_player_cs, .red_player_cs{
+	width: 50px;
+}
+
+.blue_player_gold, .red_player_gold{
+	width: 50px;
+}
+
+.blue_player_name, .blue_player_kda, .blue_player_cs, .blue_player_gold, .red_player_name, .red_player_kda, .red_player_cs, .red_player_gold{
 	font-size: 11px;
+	text-align: center;
 	white-space: nowrap;
 }
