@@ -7,24 +7,31 @@ $(document).ready(function(){
 	getChampIdMap()
 	getItemIdMap()
 	getSpellIdMap()
+	//Calls the ajax at the start
 
  $("#goButton").click(function(){
- 	clear("userstats")
- 	clear("resultstablediv")
+ 	console.log(itemIdMap)
 
 	var username = $("#username").val()
 	var region = $('#region').val()
 	var season = $('#season').val()
+	// console.log(season);
+
+	// if (isNaN(username)){
+	// 	username = "Megaman703"
+	// }
 	
 	getID(username,region,season);
 
+ 	// $('#goButton').hide();
  	$("#data").show();
 
   });
 
  $("#clearButton").click(function(){
+ 	// clear("teamA")
+ 	// clear("teamB")
  	clear("userstats")
- 	clear("resultstablediv")
  });
 
 });
@@ -36,6 +43,7 @@ function clear(id){
 
 function getID(user,region,season){
 	var summonerurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	// console.log(season);
 
 	$.ajax({
 		url: summonerurl,
@@ -45,26 +53,31 @@ function getID(user,region,season){
 
 		},
 		success: function(data){
+			// console.log(data)
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
-
-			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
-			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
+			// console.log("Level: " + sLevel);
+			// console.log("Name: " + user);
+			// console.log("ID: " + sID);
+			document.getElementById("userstats").innerHTML += "Name: " + user + "</br>";
+			document.getElementById("userstats").innerHTML += "Level: " + sLevel + "</br>";
+			document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
 
 			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			// getwinstats(sID,region,season);
 			// getrankedsolostats(sID,region);
 			// getaramstats(sID,region,season);
-			getMatchHistory(sID,region)
-			
+
+			getMatchHistory(sID,region,season)
 			//current game does NOT currently work.
 			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
 			//so we need to make a new web script that forwards the request, adds the api key, 
 			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");	
-			//getcurrentgame(sID,region);
+
+			// getcurrentgame(sID,region);
 		}
 	})
 }
@@ -91,7 +104,7 @@ function getcurrentgame (id,region) {
 	})
 }
 
-function getwinstats(id,region,season){
+function getwinstats (id,region,season) {
 	var winurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
@@ -136,6 +149,8 @@ function getrankedsolostats(id, region){
 }
 
 function displayrankedsolostats(id,data,place){
+	// console.log("Ranked League:")
+	// console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
 	document.getElementById("userstats").innerHTML += "Ranked League:" + "</br>"
 	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
 
@@ -151,6 +166,7 @@ function getaramstats(id,region,season){
 
 			},
 			success: function(data){
+				// console.log(data)
 				for (var i = 0; i < data.playerStatSummaries.length; i++) {
 					if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
 						displayaramstats(id,data,i);
@@ -164,45 +180,65 @@ function displayaramstats(id,data,place){
 	totkills = data.playerStatSummaries[place].aggregatedStats.totalChampionKills;
 	totassists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
 	totwins = data.playerStatSummaries[place].wins;
+	// console.log("ARAM Stats:");
+	// console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
 	document.getElementById("userstats").innerHTML += "ARAM Stats:" + "</br>"
 	document.getElementById("userstats").innerHTML += "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
 
 }
 
-function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,endtime,beginindex,endindex) {
+// function getMatchHistory (id,region,seasons,rankedQueues,champids,seasons,begintime,endtime,beginindex,endindex) {
+function getMatchHistory (id,region,seasons) {
+	console.log(seasons)
 	//last 7 args are optional.
 	var optargs = ""
 
 	//these need to be comma separated values
-	if (champids != undefined) {
-		optargs += "&champids=" + starttime;
-	};
+	// if (champids != undefined) {
+	// 	optargs += "&champids=" + champids;
+	// };
 
-	if (rankedQueues != undefined) {
-		optargs += "&rankedQueues=" + starttime;
-	};
+	// if (rankedQueues != undefined) {
+	// 	optargs += "&rankedQueues=" + starttime;
+	// };
 
 	if (seasons != undefined) {
 		optargs += "&seasons=" + seasons;
 	};
 
-	if (begintime != undefined) {
-		optargs += "&beginTime=" + begintime;
-	};
+	// if (begintime != undefined) {
+	// 	optargs += "&beginTime=" + begintime;
+	// };
 
-	if (endtime != undefined) {
-		optargs += "&endTime=" + endtime;
-	};
+	// if (endtime != undefined) {
+	// 	optargs += "&endTime=" + endtime;
+	// };
 
-	if (beginindex != undefined) {
-		optargs += "?&beginIndex=" + beginindex;
-	};
+	// if (beginindex != undefined) {
+	// 	optargs += "?&beginIndex=" + beginindex;
+	// };
 
-	if (endindex != undefined) {
-		optargs += "&endIndex=" + endindex;
-	};
+	// if (endindex != undefined) {
+	// 	optargs += "&endIndex=" + endindex;
+	// };
 
+	console.log(optargs)
+	// if (region == "na") {
+	// 	region = "NA1"
+	// };
 	var matchhisturl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+	console.log(matchhisturl)
+
+	//Posts the match history url to the main.php
+	// $.ajax({
+	// 	url: "main.php",
+	// 	type: "POST",
+	// 	data: { data: matchhisturl },
+	// 	success: function(response) {
+ //        	alert(response);
+ //        	console.log(matchhisturl);
+ //    	}
+	// });
 
 	$.ajax({
 			
@@ -213,7 +249,8 @@ function getMatchHistory (id,region,champids,rankedQueues, seasons,begintime,end
 
 			},
 			success: function(data){
-
+				// console.log("Match History:")
+				// console.log("Last 10 Games:")
 				document.getElementById("userstats").innerHTML += "Match History:" + "</br>"
 				// console.log(data)
 				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
@@ -233,9 +270,14 @@ function displayGame(playerID, match, region){
 	getMatchInfo(region, match.matchId);
 
 	var name = getChampName(match.champion,false)
-
+	document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
+		" Champion Played Id:" + match.champion + " Name:" + name
+	//displayChampPic(name);
 	document.getElementById("userstats").innerHTML +="</br>" 
+	// var KDA = getKDA(match.matchId, playerID, region)
+	// console.log(KDA)
 
+	getMatchInfo(region, match.matchId);
 }
 
 function getMatchInfo(region, matchId){
@@ -249,11 +291,19 @@ function getMatchInfo(region, matchId){
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
-				createTable();
+				createTable((data.participants.length/2));
 
 				var match = document.createElement("div");
 				match.setAttribute("class", "match");
 
+				// var teamA = document.createElement("div");
+				// teamA.setAttribute("class", "teamA");
+				// var teamB = document.createElement("div");
+				// teamB.setAttribute("class", "teamB");
+
+				// match.appendChild(teamA);
+				// match.appendChild(teamB);
+				console.log(data)	
 				for(var i = 0; i < data.participants.length; i++){
 					console.log(data.participants[i]);
 					champKey = getChampKey(data.participants[i].championId);
@@ -266,7 +316,7 @@ function getMatchInfo(region, matchId){
 
 					} else{
 						var team = "red"
-						var teamplayernum = i-5
+						var teamplayernum = i-(data.participants.length/2)
 					}
 					//Champ
 					var playerdivdest = team + "_player_champ" + teamplayernum
@@ -325,7 +375,8 @@ function getMatchInfo(region, matchId){
 		})
 }
 
-function createTable(){
+//argument is the number of players per team
+function createTable(teamplayersNum){
 	document.getElementById('resultstablediv').innerHTML = ""
 	//Create the table
 
@@ -378,7 +429,7 @@ function createTable(){
 	}
 
 	var colslist = ["champ","spells","name","kda","items","gold", "cs","wards"]
-	for (var playernum = 0; playernum < 5; playernum++){
+	for (var playernum = 0; playernum < teamplayersNum; playernum++){
 		var player_row = document.createElement('TR');
 		tableBody.appendChild(player_row);
 
@@ -397,6 +448,7 @@ function createTable(){
 			var currTD = document.createElement('TD')
 			DivId = "blue_player_"+ colslist[col] +playernum
 
+			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
@@ -414,6 +466,7 @@ function createTable(){
 			var currTD = document.createElement('TD')
 			DivId = "red_player_"+ colslist[col] +playernum
 
+			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", DivId)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#6F0007";
@@ -424,6 +477,7 @@ function createTable(){
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
 	}
+	// console.log(document.getElementById('player_row0').children)
 	document.getElementById('resultstablediv').appendChild(table);
 }
 
@@ -497,7 +551,7 @@ function getChampName(champId, title){
 	for(var key in champIdMap.data){
 		if(champIdMap.data[key].id == champId){
 			if (title = false){
-				return champIdMap.data[key].name;	
+				return champIdMap.data[key].name;
 			}else{
 				return champIdMap.data[key].name + ", " + champIdMap.data[key].title;				
 			}
