@@ -10,6 +10,9 @@ $(document).ready(function(){
 	//Calls the ajax at the start
 
  $("#goButton").click(function(){
+ 	clear("resultstablediv")
+ 	clear("userstats")
+
  	console.log(itemIdMap)
 
 	var username = $("#username").val()
@@ -29,7 +32,7 @@ $(document).ready(function(){
   });
 
  $("#clearButton").click(function(){
- 	clear
+ 	clear("resultstablediv")
  	clear("userstats")
  });
 
