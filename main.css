@@ -1,6 +1,5 @@
 /*http://www.color-hex.com/color-palette/12449*/
 
-
 html, body{
 	background-color: #424242;
 	font-family: Arial;
@@ -96,10 +95,10 @@ button:hover{
 }
 
 .search > input{
-	width: 20%;
+	width: 140px;
 	border: 1px solid #9d9d9d; 
     border-radius: 5px;
-    padding: 5px;
+    padding: 4px;
 }
 
 .search > button{
