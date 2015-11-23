@@ -349,20 +349,20 @@ function getMatchInfo(region, matchId){
 						}
 					}
 
-					//CS
-					playerdivdest = team + "_player_cs" + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
-					"CS: " + data.participants[i].stats.minionsKilled ;
-
 					//Gold
 					playerdivdest = team + "_player_gold" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
-					"Gold: " + data.participants[i].stats.goldEarned;
+					data.participants[i].stats.goldEarned;
+
+					//CS
+					playerdivdest = team + "_player_cs" + teamplayernum
+					document.getElementById(playerdivdest).innerHTML = 
+					data.participants[i].stats.minionsKilled ;
 
 					//Wards
-					playerdivdest = team + "_player_gold" + teamplayernum
+					playerdivdest = team + "_player_wards" + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
-					"Wards: " +data.participants[i].stats.wardsPlaced;				
+					data.participants[i].stats.wardsPlaced;				
 				}
 				document.getElementById("matchlist").appendChild(match);
 			}
@@ -407,7 +407,7 @@ function createTable(){
 		summary_row.appendChild(tdContainer);
 	}
 
-	var colslist = ["champ","spells","name","kda","items","cs","gold"]
+	var colslist = ["champ","spells","name","kda","items","gold", "cs","wards"]
 	for (var playernum = 0; playernum < 5; playernum++){
 		var player_row = document.createElement('TR');
 		tableBody.appendChild(player_row);
