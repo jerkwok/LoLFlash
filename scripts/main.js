@@ -11,6 +11,16 @@ $(document).ready(function(){
 
 	var loc = window.location.pathname;
 	var dir = loc.substring(0, loc.lastIndexOf('/'));
+		var parameters = location.search.substring(1).split("&");
+	if (parameters != ""){
+		var splitParams = parameters[0].split("=");
+
+		var username = unescape(parameters[0].split("=")[1])
+		var region = parameters[1].split("=")[1]
+		var season = parameters[2].split("=")[1]
+
+		getID(username, region, season);
+	}
 
 	$("#goButton").click(function(){
  		clear("resultsTableDiv")
@@ -25,6 +35,7 @@ $(document).ready(function(){
 	$("#clearButton").click(function(){
 		clear("resultsTableDiv")
 	});
+
 });
 
 function clear(id){
@@ -32,8 +43,8 @@ function clear(id){
 }
 
 function getID(user, region, season){
-	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
+	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	$.ajax({
 		url: summonerUrl,
 		type: 'GET',
