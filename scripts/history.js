@@ -309,8 +309,18 @@ function createTable(teamplayersNum, tableNum){
 	minitableBody.setAttribute("class", "miniresultstablebody")
 	minitableBody.setAttribute("id", "miniresultstablebody")
 
+	var minisummary = document.createElement('TABLE');
+	minisummary.setAttribute("class","minisummary")
+	minisummary.setAttribute("id","miniresultstableS" + tableId)
+	minisummary.setAttribute("onclick","tableClick("+tableId+")")
+
+	var minisummaryBody = document.createElement('TBODY');
+	minisummary.appendChild(minisummaryBody);
+	minisummaryBody.setAttribute("class", "miniresultstableSbody")
+	minisummaryBody.setAttribute("id", "miniresultstableSbody")
+
 	var minisummary_row = document.createElement('TR');
-	minitableBody.appendChild(minisummary_row);
+	minisummaryBody.appendChild(minisummary_row);
 	minisummary_row.setAttribute("class", "minisummary_row")
 	minisummary_row.setAttribute("id", "minisummary_row")
 
@@ -425,6 +435,7 @@ function createTable(teamplayersNum, tableNum){
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
 	}
+	document.getElementById('resultsTableDiv').appendChild(minisummary);
 	document.getElementById('resultsTableDiv').appendChild(minitable);
 	document.getElementById('resultsTableDiv').appendChild(table);
 	$("#resultstable" + tableId).hide();
