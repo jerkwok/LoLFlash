@@ -28,7 +28,7 @@ $(document).ready(function(){
 		var region = $('#region').val()
 		var season = $('#season').val()
 	
-		getID(username,region,season);
+		getID(username, region, season);
   	});
 
  	$("#clearButton").click(function(){
