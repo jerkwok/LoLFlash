@@ -8,6 +8,19 @@ $(document).ready(function(){
 	getItemIdMap()
 	getSpellIdMap()
 
+	var parameters = location.search.substring(1).split("&");
+	
+	if(parameters != ""){
+		var splitParams = parameters[0].split("=");
+
+		var username = unescape(parameters[0].split("=")[1])
+		var region = parameters[1].split("=")[1]
+		var season = parameters[2].split("=")[1]
+
+		getID(username, region, season);
+	}
+
+
 	$("#goButton").click(function(){
  		clear("userstats")
 

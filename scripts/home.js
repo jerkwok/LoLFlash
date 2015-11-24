@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 	    if (name != undefined && name != null) {
 	        window.location = './profile.html?username=' + name+'&region=' 
-	        + $("#region").val() + '&queue=' +  $("#queueType").val();
+	        + $("#region").val() + '&season=' +  $("#season").val();
 	    }
 	    console.log(name)
 	});
