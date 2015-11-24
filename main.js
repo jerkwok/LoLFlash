@@ -8,259 +8,68 @@ $(document).ready(function(){
 	getChampIdMap()
 	getItemIdMap()
 	getSpellIdMap()
-	//Calls the ajax at the start
 
- $("#goButton").click(function(){
- 	clear("resultstablediv")
- 	clear("userstats")
+	$("#goButton").click(function(){
+ 		clear("resultsTableDiv")
 
- 	//console.log(itemIdMap)
-
-	var username = $("#username").val()
-	var region = $('#region').val()
-	var season = $('#season').val()
-	// console.log(season);
-
-	// if (isNaN(username)){
-	// 	username = "Megaman703"
-	// }
+		var username = $("#username").val()
+		var region = $('#region').val()
+		var season = $('#season').val()
 	
-	getID(username,region,season);
+		getID(username, region, season);
+	});
 
- 	// $('#goButton').hide();
- 	$("#data").show();
-
-  });
-
- $("#clearButton").click(function(){
- 	clear("resultstablediv")
- 	clear("userstats")
- });
-
+	$("#clearButton").click(function(){
+		clear("resultsTableDiv")
+	});
 });
 
 function clear(id){
 	document.getElementById(id).innerHTML = ""
 }
 
-
-function getID(user,region,season){
-	var summonerurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	// console.log(season);
+function getID(user, region, season){
+	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
-		url: summonerurl,
+		url: summonerUrl,
 		type: 'GET',
 		dataType: 'json',
 		data: {
 
 		},
 		success: function(data){
-			//console.log(data)
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
-			// console.log("Level: " + sLevel);
-			// console.log("Name: " + user);
-			// console.log("ID: " + sID);
-			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
-			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
-			//document.getElementById("userstats").innerHTML += "ID: " + sID + "</br>";
-
-			// var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
-			// getwinstats(sID,region,season);
-			// getrankedsolostats(sID,region);
-			// getaramstats(sID,region,season);
 
 			getMatchHistory(sID,region,season)
-			//current game does NOT currently work.
-			//Getting a Access Control Allow Origin error. observer doesn't support JSONP, 
-			//so we need to make a new web script that forwards the request, adds the api key, 
-			//and returns the api data with the CORS header header("Access-Control-Allow-Origin: *");	
-
-			// getcurrentgame(sID,region);
 		}
 	})
 }
 
-function getcurrentgame (id,region) {
-	if (region == "na") {
-		region = "NA1"
-	};
+function getMatchHistory(id, region, season){
 
-	var currgameurl = "https://" + region + ".api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/"+region+"/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
-	$.ajax({
-		url: currgameurl,
-		type: 'GET',
-		dataType: 'json',	
-		data: {
-			success: function(data){
-				//console.log("Current Game:")
-				document.getElementById("userstats").innerHTML += "Current Game:" + "</br>"
-				//console.log(data)
-				document.getElementById("userstats").innerHTML += data + "</br>"
-			}
-		}
-	})
-}
-
-function getwinstats (id,region,season) {
-	var winurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
-	$.ajax({
-		url: winurl,
-		type: 'GET',
-		dataType: 'json',
-		data: {
-
-		},
-		success: function(data){
-			// console.log("Win Stats:")
-			// console.log(data["playerStatSummaries"])
-			// console.log(data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins)
-			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins)
-			// console.log(data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins)
-			document.getElementById("userstats").innerHTML += "Win Stats:" + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
-
-		}
-	})
-}
-
-function getrankedsolostats(id, region){
-	var rankedsolourl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.5/league/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	$.ajax({
-		url: rankedsolourl,
-			type: 'GET',
-			dataType: 'json',
-			data: {
-
-			},
-			success: function(data){
-				for (var i = 0; i < data[id].length - 1; i++) {
-					if (data[id][i].queue == "RANKED_SOLO_5x5") {
-						displayrankedsolostats(id,data,i);
-					}
-				};
-			}
-		})
-}
-
-function displayrankedsolostats(id,data,place){
-	// console.log("Ranked League:")
-	// console.log(data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP")	
-	document.getElementById("userstats").innerHTML += "Ranked League:" + "</br>"
-	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
-
-}
-
-function getaramstats(id,region,season){
-	var statsurl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	$.ajax({
-		url: statsurl,
-			type: 'GET',
-			dataType: 'json',
-			data: {
-
-			},
-			success: function(data){
-				// console.log(data)
-				for (var i = 0; i < data.playerStatSummaries.length; i++) {
-					if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
-						displayaramstats(id,data,i);
-					}
-				};
-			}
-		})
-}
-
-function displayaramstats(id,data,place){
-	totkills = data.playerStatSummaries[place].aggregatedStats.totalChampionKills;
-	totassists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
-	totwins = data.playerStatSummaries[place].wins;
-	// console.log("ARAM Stats:");
-	// console.log("Kills: " + totkills + " Assists: " + totassists  + " Wins: " + totwins);
-	document.getElementById("userstats").innerHTML += "ARAM Stats:" + "</br>"
-	document.getElementById("userstats").innerHTML += "Kills: " + totkills + "</br>" + " Assists: " + totassists  + "</br>" + " Wins: " + totwins + "</br>"
-
-}
-
-// function getMatchHistory (id,region,seasons,rankedQueues,champids,seasons,begintime,endtime,beginindex,endindex) {
-function getMatchHistory (id,region,seasons){
-	//console.log(seasons)
-	//last 7 args are optional.
 	var optargs = ""
 
-	//these need to be comma separated values
-	// if (champids != undefined) {
-	// 	optargs += "&champids=" + champids;
-	// };
-
-	// if (rankedQueues != undefined) {
-	// 	optargs += "&rankedQueues=" + starttime;
-	// };
-
-	if (seasons != undefined) {
-		optargs += "&seasons=" + seasons;
+	if (season != undefined) {
+		optargs += "&season=" + season;
 	};
 
-	// if (begintime != undefined) {
-	// 	optargs += "&beginTime=" + begintime;
-	// };
-
-	// if (endtime != undefined) {
-	// 	optargs += "&endTime=" + endtime;
-	// };
-
-	// if (beginindex != undefined) {
-	// 	optargs += "?&beginIndex=" + beginindex;
-	// };
-
-	// if (endindex != undefined) {
-	// 	optargs += "&endIndex=" + endindex;
-	// };
-
-	//console.log(optargs)
-	// if (region == "na") {
-	// 	region = "NA1"
-	// };
-	var matchhisturl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
-	//console.log(matchhisturl)
-
-	//Posts the match history url to the main.php
-	// $.ajax({
-	// 	url: "main.php",
-	// 	type: "POST",
-	// 	data: { data: matchhisturl },
-	// 	success: function(response) {
- //        	alert(response);
- //        	console.log(matchhisturl);
- //    	}
-	// });
+	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
 	$.ajax({
 			
-			url: matchhisturl,
+			url: matchHistUrl,
 			type: 'GET',
 			dataType: 'json',
 			data: {
 
 			},
 			success: function(data){
-				// console.log("Match History:")
-				// console.log("Last 10 Games:")
-				document.getElementById("resultstablediv").innerHTML += "<p class=\"matchTitle\">" + "Match History:" + "</p>"
-				// console.log(data)
-				// for (var i = 0; i < data.playerStatSummaries.length; i++) {
-				// 	if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
-				// 		displayaramstats(id,data,i);
-				// 	}
-				// };
+
+				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History:" + "</p>"
 
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
@@ -279,40 +88,24 @@ function displayGame(playerID, match, region){
 	getMatchInfo(region,match.matchId);
 
 	var name = getChampName(match.champion,false)
-	// document.getElementById("userstats").innerHTML += "Match Id:" + match.matchId + 
-	// 	" Champion Played Id:" + match.champion + " Name:" + name
-	//displayChampPic(name);
-	document.getElementById("userstats").innerHTML +="</br>" 
-	// var KDA = getKDA(match.matchId, playerID, region)
-	// console.log(KDA)
 }
 
 function getMatchInfo(region, matchId){
-	var matchurl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var matchUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
 	var KDA = [0,0,0];
 	$.ajax({
 			
-			url: matchurl,
+			url: matchUrl,
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
 				createTable((data.participants.length/2),tableNum);
 				var tableId = tableNum + ""
-				// var match = document.createElement("div");
-				// match.setAttribute("class", "match");
 
-				// var teamA = document.createElement("div");
-				// teamA.setAttribute("class", "teamA");
-				// var teamB = document.createElement("div");
-				// teamB.setAttribute("class", "teamB");
-
-				// match.appendChild(teamA);
-				// match.appendChild(teamB);
-				// console.log(data)	
 				for(var i = 0; i < data.participants.length; i++){
-					//console.log(data.participants[i]);
+
 					champKey = getChampKey(data.participants[i].championId);
 					champPic = getChampPic(champKey,getChampName(data.participants[i].championId,true));
 					KDA = getKDA(data.participants[i],i);
@@ -327,7 +120,7 @@ function getMatchInfo(region, matchId){
 					}
 					//Champ
 					var playerdivdest = team + "_player_champ"  + tableId + teamplayernum
-					//console.log("PDD:"+playerdivdest)
+
 					document.getElementById(playerdivdest).innerHTML = champPic;
 
 					//Summoners
@@ -345,9 +138,8 @@ function getMatchInfo(region, matchId){
 					playerdivdest = team + "_player_kda" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					KDA[0] + "/" + KDA[1] + "/" + KDA[2];
-					//"Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2];
 
-					//end game items
+					//End game items
 					playerdivdest = team + "_player_items" + tableId + teamplayernum
 
 					for (var itemnum = 0; itemnum < 7; itemnum++){
@@ -357,7 +149,7 @@ function getMatchInfo(region, matchId){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 						}else{
-							//need to make a empty item slot picture
+							//Need to make a empty item slot picture
 							document.getElementById(playerdivdest).innerHTML += 
 								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
@@ -378,15 +170,15 @@ function getMatchInfo(region, matchId){
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.wardsPlaced;				
 				}
-				// document.getElementById("matchlist").appendChild(match);
+
 				tableNum++;
 			}
 		})
 }
 
-//argument is the number of players per team
-function createTable(teamplayersNum,tableNum){
-	// document.getElementById('resultstablediv').innerHTML = ""
+//Argument is the number of players per team
+function createTable(teamplayersNum, tableNum){
+
 	//Create the table
 	tableId = tableNum + ""
 	var table = document.createElement('TABLE');
@@ -438,7 +230,7 @@ function createTable(teamplayersNum,tableNum){
 		player_row.setAttribute("class",  "player_row" +playernum)
 		player_row.setAttribute("id",  "player_row"+ tableId +playernum)
 
-		//blue player table
+		// Blue player table
 		var player_a = document.createElement('TD')
 
 		player_a.setAttribute("class", "blue_player" +playernum)
@@ -447,14 +239,13 @@ function createTable(teamplayersNum,tableNum){
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
 
-			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", "blue_player_"+ colslist[col] + tableId +playernum)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
 			player_a.appendChild(currTD)
 		}
 
-		//red player table
+		// Red player table
 		var player_b = document.createElement('TD')
 
 		player_b.setAttribute("class", "red_player" +playernum)
@@ -463,40 +254,31 @@ function createTable(teamplayersNum,tableNum){
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
 
-			// currTD.setAttribute("class", DivId)
 			currTD.setAttribute("id", "red_player_"+ colslist[col] + tableId +playernum)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#6F0007";
 			player_b.appendChild(currTD)
-			//document.getElementById("DivId").style.backgroundColor = "red";
 		}
 
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
 	}
-	// console.log(document.getElementById('player_row0').children)
-	document.getElementById('resultstablediv').appendChild(table);
+	document.getElementById('resultsTableDiv').appendChild(table);
 }
 
 function getKDA(data,participantId){
 	return [data.stats.kills,
 			 			 data.stats.deaths,
 			 			 data.stats.assists]
-			// KDACallback(
-			//  [data.participants[participantId].stats.kills,
-			//  			 data.participants[participantId].stats.deaths,
-			//  			 data.participants[participantId].stats.assists],container)
 }
 
 function KDACallback(KDA,container){
 	document.getElementById(container).innerHTML += "Kills: " + KDA[0] + " Deaths: " + KDA[1] + " Assists: " + KDA[2]+ "</br>" 
 }
 
-// Below code is for champion related functions
 // Retrieves all of the champion's data and stores it into the champIdMap
 function getChampIdMap(callback){
 
-	// May need to find a better way to do this since it's bad when the internet is slow
 	$.ajax({
 		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
 		type: 'GET',
@@ -511,7 +293,6 @@ function getChampIdMap(callback){
 //Retrieves all of the item data and stores it into the itemIdMap
 function getItemIdMap(callback){
 
-	// May need to find a better way to do this since it's bad when the internet is slow
 	$.ajax({
 		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
 		type: 'GET',
@@ -526,7 +307,6 @@ function getItemIdMap(callback){
 //Retrieves all of the spell data and stores it into the spellIdMap
 function getSpellIdMap(callback){
 
-	// May need to find a better way to do this since it's bad when the internet is slow
 	$.ajax({
 		url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec",
 		type: 'GET',
@@ -542,7 +322,7 @@ function getSpellIdMap(callback){
 }
 
 // Gets the champion's name (full name with punctuation)
-//title is a boolean to return the title as well
+// Title is a boolean to return the title as well
 function getChampName(champId, title){
 	var champion;
 	for(var key in champIdMap.data){
