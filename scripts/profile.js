@@ -49,6 +49,8 @@ function clear(id){
 function getID(user, region, season){
 	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
+	rawUser = user;
+
 	$.ajax({
 		url: summonerUrl,
 		type: 'GET',
@@ -64,25 +66,58 @@ function getID(user, region, season){
 			sID = data[user].id;
 			icon = data[user].profileIconId
 
-			dispSum(icon, user, sLevel);
+			dispSum(icon, rawUser, sLevel, sID, region);
 
 			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			getWinStats(sID, region, season);
-			getRankedSoloStats(sID, region);
 			getAramStats(sID, region, season);
+
+			if(sLevel == 30){
+				getRankedSoloStats(sID, region);
+			}
 		}
 	})
 }
 
-function dispSum(icon, user, sLevel){
+function dispSum(icon, user, sLevel, sID, region){
 	
 	document.getElementById("userSum").innerHTML += getIconPic(icon);
 	document.getElementById("userSum").innerHTML += "<p class=\"userName\">" + user + "</p>";
 	document.getElementById("userSum").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
+
+	if(sLevel == 30){
+
+		// Errors if they are unranked?
+		var leagueUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + sID + "/entry?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
+		$.ajax({
+			url: leagueUrl,
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+
+				console.log(data)
+				tier = data[sID][0].tier
+				tier = tier.toLowerCase().trim() + "Tier";
+
+				//document.getElementById("userSum").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img>"
+				//document.getElementById("userSum").innerHTML += (data[sID][0].tier + " " + data[sID][0].entries[0].division);
+
+			},
+			error:function (xhr, ajaxOptions, thrownError){
+    			if(xhr.status==404) {
+        			document.getElementById("userSum").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+    			}
+			}
+		})
+	}
 }
 
-function getWinStats(id, region, season) {
+function getWinStats(id, region, season){
 	var winUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
