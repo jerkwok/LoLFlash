@@ -98,12 +98,12 @@ function getMatchHistory(id, region, queue){
 
 function displayGame(playerID, match, region){
 
-	getMatchInfo(region,match.matchId);
+	getMatchInfo(region,match.matchId,playerID);
 
 	var name = getChampName(match.champion,false)
 }
 
-function getMatchInfo(region, matchId){
+function getMatchInfo(region, matchId,playerID){
 	var matchUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
@@ -114,15 +114,52 @@ function getMatchInfo(region, matchId){
 			type: 'GET',
 			dataType: 'json',
 			success: function(data){
+
+				//find out who's game we're looking at
+				for(var i = 0; i < data.participantIdentities.length; i++){
+					if (data.participantIdentities[i].player.summonerId == playerID)
+					spotlightID = data.participantIdentities[i].participantId - 1
+				}
 				createTable((data.participants.length/2),tableNum);
 				var tableId = tableNum + ""
 
+				//create mini match table
+
+				console.log(data)
+
+				//minitable summary
+				document.getElementById("miniresultstable"+tableId).firstChild.firstChild.innerHTML=
+					"miniresultstable" + tableId + "summary"
+
+				//minitable elements
+				var playerdivdest = "miniplayer_" + "champ" + tableId
+				document.getElementById(playerdivdest).innerHTML = 
+				getChampPic(getChampKey(data.participants[spotlightID].championId),
+					getChampName(data.participants[spotlightID].championId,true))
+				
+				var playerdivdest = "miniplayer_" + "spells" + tableId
+				document.getElementById(playerdivdest).innerHTML = 
+					getSpellPic(spellImgMap[data.participants[spotlightID].spell1Id],spellIdMap[data.participants[spotlightID].spell1Id]) + 
+					getSpellPic(spellImgMap[data.participants[spotlightID].spell2Id],spellIdMap[data.participants[spotlightID].spell2Id]);
+				
+				var playerdivdest = "miniplayer_" + "kda" + tableId
+				document.getElementById(playerdivdest).innerHTML = playerdivdest
+				
+				var playerdivdest = "miniplayer_" + "items" + tableId
+				document.getElementById(playerdivdest).innerHTML = playerdivdest
+
+				var playerdivdest = "miniplayer_" + "stats" + tableId
+				document.getElementById(playerdivdest).innerHTML = playerdivdest
+
+
+				//Create full match table
 				for(var i = 0; i < data.participants.length; i++){
 
 					champKey = getChampKey(data.participants[i].championId);
 					champPic = getChampPic(champKey,getChampName(data.participants[i].championId,true));
 					KDA = getKDA(data.participants[i],i);
 
+					//Team variables
 					if(data.participants[i].teamId == 100){
 						var team = "blue"
 						var teamplayernum = i
@@ -218,7 +255,7 @@ function createTable(teamplayersNum, tableNum){
 		for(var col in minicolslist){
 			var currTD = document.createElement('TD')
 
-			currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId + playernum)
+			currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId)
 			currTD.setAttribute("class", "miniplayer_" + minicolslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
 			miniplayer_row.appendChild(currTD)
