@@ -31,3 +31,8 @@
 	height: 80px;
 	float: left;
 }
+
+#profileLink{
+	background-color: #595959;
+	border-radius: 5px;
+}

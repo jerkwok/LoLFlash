@@ -90,3 +90,8 @@
 	text-align: center;
 	white-space: nowrap;
 }
+
+#historyLink{
+	background-color: #595959;
+	border-radius: 5px;
+}

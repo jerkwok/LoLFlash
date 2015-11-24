@@ -62,7 +62,7 @@ button:hover{
 }
 
 .navbar li:first-child{
-	border-right: 1px solid #6B6565;
+	/*border-right: 1px solid #6B6565;*/
 }
 
 .navbar a{
@@ -70,8 +70,10 @@ button:hover{
 	color: #bdbcbc;
 }
 
-.navbar a:hover{
+.navbar li:hover{
 	color: #ffffff;
+	background-color: #4d4d4d;
+	border-radius: 5px;
 }
 
 .search{

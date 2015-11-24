@@ -9,3 +9,8 @@
 .logo{
 	text-align: center;
 }
+
+#homeLink{
+	background-color: #595959;
+	border-radius: 5px;
+}
