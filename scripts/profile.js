@@ -101,7 +101,7 @@ function displayRankedSoloStats(id, data, place){
 	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
 }
 
-function getAramStats(id,region,season){
+function getAramStats(id, region, season){
 	var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	
 	$.ajax({
