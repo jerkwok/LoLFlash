@@ -88,7 +88,6 @@ function dispSum(icon, user, sLevel, sID, region){
 
 	if(sLevel == 30){
 
-		// Errors if they are unranked?
 		var leagueUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + sID + "/entry?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 		$.ajax({
@@ -109,6 +108,7 @@ function dispSum(icon, user, sLevel, sID, region){
 
 			},
 			error:function (xhr, ajaxOptions, thrownError){
+				// Errors if they are unranked throwing a 404
     			if(xhr.status==404) {
         			document.getElementById("userSum").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
     			}

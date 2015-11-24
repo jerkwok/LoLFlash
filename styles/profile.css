@@ -2,14 +2,45 @@
 	padding-left: 4%;
 }
 
-.userSum{
-	display: none;
+.player{
 	margin-top: 2%;
+	width: 100%;
+	display: table;
+	border-collapse: collapse;
+}
+
+.userSum{
+	display: table-cell;
 	border: 1px solid #6B6565;
 	margin-left: 4%;
 	margin-right: 4%;
+	margin: 0;
 	height: 80px;
-	width: 220px;
+	width: 25%;
+}
+
+.solo{
+	margin: 0;
+	height: 100%;
+	border: 1px solid #6B6565;
+	width: 25%;
+	display: table-cell;	
+}
+
+.threes{
+	margin: 0;
+	height: 100%;
+	border: 1px solid #6B6565;;
+	width: 25%;
+	display: table-cell;	
+}
+
+.fives{
+	margin: 0;	
+	height: 100%;
+	border: 1px solid #6B6565;
+	width: 25%;
+	display: table-cell;
 }
 
 .userName{
