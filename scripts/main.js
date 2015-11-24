@@ -71,7 +71,7 @@ function getMatchHistory(id, region, season){
 		optargs += "&season=" + season;
 	};
 
-	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.2/matchlist/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchlist/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
 	$.ajax({
 			
@@ -226,7 +226,7 @@ function createTable(teamplayersNum, tableNum){
 			}
 
 			if (iconslist[icon] != "name"){
-				td.innerHTML = "<img alt=\""+iconslist[icon]+"\"title=\""+iconslist[icon]+"\"class=\"iconPic\"src=\"./images/"+iconslist[icon]+".png\"></img>"
+				td.innerHTML = "<img alt=\"" + iconslist[icon] + "\"title=\"" + iconslist[icon] + "\"class=\"iconPic\"src=\"./images/" + iconslist[icon] + ".png\"></img>"
 			}else{
 				td.innerHTML = "Name"
 			}
@@ -241,19 +241,19 @@ function createTable(teamplayersNum, tableNum){
 		var player_row = document.createElement('TR');
 		tableBody.appendChild(player_row);
 
-		player_row.setAttribute("class",  "player_row" +playernum)
-		player_row.setAttribute("id",  "player_row"+ tableId +playernum)
+		player_row.setAttribute("class",  "player_row" + playernum)
+		player_row.setAttribute("id",  "player_row" + tableId + playernum)
 
 		// Blue player table
 		var player_a = document.createElement('TD')
 
-		player_a.setAttribute("class", "blue_player" +playernum)
-		player_a.setAttribute("id", "blue_player"+ tableId +playernum)
+		player_a.setAttribute("class", "blue_player" + playernum)
+		player_a.setAttribute("id", "blue_player" + tableId + playernum)
 
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
 
-			currTD.setAttribute("id", "blue_player_"+ colslist[col] + tableId +playernum)
+			currTD.setAttribute("id", "blue_player_" + colslist[col] + tableId + playernum)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
 			player_a.appendChild(currTD)
@@ -262,13 +262,13 @@ function createTable(teamplayersNum, tableNum){
 		// Red player table
 		var player_b = document.createElement('TD')
 
-		player_b.setAttribute("class", "red_player" +playernum)
-		player_b.setAttribute("id", "red_player"+ tableId +playernum)
+		player_b.setAttribute("class", "red_player" + playernum)
+		player_b.setAttribute("id", "red_player"+ tableId + playernum)
 
 		for(var col in colslist){
 			var currTD = document.createElement('TD')
 
-			currTD.setAttribute("id", "red_player_"+ colslist[col] + tableId +playernum)
+			currTD.setAttribute("id", "red_player_" + colslist[col] + tableId + playernum)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#6F0007";
 			player_b.appendChild(currTD)
@@ -372,13 +372,13 @@ function getChampTitle(champId){
 
 // Displays the champion's picture using the champion's key
 function getChampPic(champKey,champName){
-	return "<img title=\""+ champName + "\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+	return "<img title=\"" + champName + "\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
 }
 
 function getSpellPic(spellName,spellRealName){
-	return "<img title=\""+ spellRealName +"\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+	return "<img title=\"" + spellRealName + "\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
 
 function getItemPic (itemId,itemName) {
-	return "<img title=\""+ itemName +"\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
+	return "<img title=\"" + itemName + "\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
 }
