@@ -4,7 +4,7 @@ $(document).ready(function(){
 	    var name = $("#username").val();
 
 	    if (name != undefined && name != null) {
-	        window.location = './main.html?username=' + name+'&region=' 
+	        window.location = './profile.html?username=' + name+'&region=' 
 	        + $("#region").val() + '&queue=' +  $("#queueType").val();
 	    }
 	    console.log(name)
@@ -14,7 +14,7 @@ $(document).ready(function(){
 	    var name = $("#username").val();
 
 	    if (name != undefined && name != null) {
-			window.location = './main.html?username=' + name+'&region=' 
+			window.location = './history.html?username=' + name+'&region=' 
 				        + $("#region").val() + '&queue=' +  $("#queueType").val();
 		}
 	    
