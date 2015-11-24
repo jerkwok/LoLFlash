@@ -2,7 +2,6 @@ var champIdMap
 var itemIdMap
 var spellIdMap = {}
 var spellImgMap = {}
-var tableNum = 0;
 
 $(document).ready(function(){
 	getChampIdMap()
@@ -49,7 +48,7 @@ function getID(user, region, season){
 			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
 			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
 
-			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/"+ region +"/v1.3/stats/by-summoner/" + sID + "/ranked?season="+ season +"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			getWinStats(sID, region, season);
 			getRankedSoloStats(sID, region);
@@ -59,7 +58,7 @@ function getID(user, region, season){
 }
 
 function getWinStats(id, region, season) {
-	var winUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var winUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 	$.ajax({
 		url: winUrl,
@@ -80,7 +79,7 @@ function getWinStats(id, region, season) {
 }
 
 function getRankedSoloStats(id, region){
-	var rankedSoloUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v2.5/league/by-summoner/"+id+"?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var rankedSoloUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	$.ajax({
 		url: rankedSoloUrl,
 		type: 'GET',
@@ -103,7 +102,7 @@ function displayRankedSoloStats(id, data, place){
 }
 
 function getAramStats(id,region,season){
-	var statsUrl = "https://" + region + ".api.pvp.net/api/lol/"+region+"/v1.3/stats/by-summoner/"+id+"/summary?season="+season+"&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+	var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	
 	$.ajax({
 		url: statsUrl,
@@ -213,13 +212,13 @@ function getChampTitle(champId){
 
 // Displays the champion's picture using the champion's key
 function getChampPic(champKey,champName){
-	return "<img title=\""+ champName + "\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
+	return "<img title=\"" + champName + "\"class=\"champPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/champion/" + champKey + ".png\"></img>"
 }
 
 function getSpellPic(spellName,spellRealName){
-	return "<img title=\""+ spellRealName +"\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
+	return "<img title=\"" + spellRealName + "\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
 
 function getItemPic (itemId,itemName) {
-	return "<img title=\""+ itemName +"\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
+	return "<img title=\"" + itemName + "\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
 }
