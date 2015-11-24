@@ -193,8 +193,40 @@ function getMatchInfo(region, matchId){
 //Argument is the number of players per team
 function createTable(teamplayersNum, tableNum){
 
-	//Create the table
 	tableId = tableNum + ""
+	//Create mini table
+	var minitable = document.createElement('TABLE');
+	minitable.setAttribute("class","minitable")
+	minitable.setAttribute("id","miniresultstable" + tableId)
+
+	var minitableBody = document.createElement('TBODY');
+	minitable.appendChild(minitableBody);
+	minitableBody.setAttribute("class", "miniresultstablebody")
+	minitableBody.setAttribute("id", "miniresultstablebody")
+
+	var minisummary_row = document.createElement('TR');
+	minitableBody.appendChild(minisummary_row);
+	minisummary_row.setAttribute("class", "minisummary_row")
+	minisummary_row.setAttribute("id", "minisummary_row")
+
+	var minicolslist = ["champ","spells","kda","items","stats"]
+		var miniplayer_row = document.createElement('TR');
+		minitableBody.appendChild(miniplayer_row);
+
+		miniplayer_row.setAttribute("class", "miniplayer_row")
+		miniplayer_row.setAttribute("id",  "miniplayer_row" + tableId)
+
+		for(var col in minicolslist){
+			var currTD = document.createElement('TD')
+
+			currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId + playernum)
+			currTD.setAttribute("class", "miniplayer_" + minicolslist[col]);
+			currTD.style.backgroundColor = "#0b3d59";
+			miniplayer_row.appendChild(currTD)
+		}
+	
+
+	//Create the table
 	var table = document.createElement('TABLE');
 	table.setAttribute("class","resultstable")
 	table.setAttribute("id","resultstable" + tableId)
@@ -277,6 +309,7 @@ function createTable(teamplayersNum, tableNum){
         player_row.appendChild(player_a)
         player_row.appendChild(player_b)
 	}
+	document.getElementById('resultsTableDiv').appendChild(minitable);
 	document.getElementById('resultsTableDiv').appendChild(table);
 }
 
