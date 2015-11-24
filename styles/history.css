@@ -23,7 +23,13 @@
 	height: 25px;	
 }
 
-.resultstable{
+.resultstable, {
+	margin: 0 auto;
+	background-color: black;
+	margin-bottom: 25px
+}
+
+.miniresultstable, {
 	margin: 0 auto;
 	background-color: black;
 	margin-bottom: 25px

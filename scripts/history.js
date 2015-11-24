@@ -128,8 +128,44 @@ function getMatchInfo(region, matchId,playerID){
 				console.log(data)
 
 				//minitable summary
-				document.getElementById("miniresultstable"+tableId).firstChild.firstChild.innerHTML=
-					"miniresultstable" + tableId + "summary"
+				//match id
+				var playerdivdest = "minisummary_" + "id" + tableId
+				document.getElementById(playerdivdest).innerHTML = 				
+					"MatchId: " + matchId
+
+				//date of game
+				var playerdivdest = "minisummary_" + "date" + tableId
+
+				var d = new Date(data.matchCreation);
+
+				document.getElementById(playerdivdest).innerHTML = 				
+					d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear();
+
+				//duration
+				var playerdivdest = "minisummary_" + "duration" + tableId
+				var formattedDate = ""
+				if (data.matchDuration > 3600){
+					formattedDate = formattedDate + Math.floor(data.matchDuration/60) + ":" +
+					Math.floor(data.matchDuration - 3600 / 60) + ":" +
+					(data.matchDuration - 3600) % 60 
+				} else{
+					formattedDate = formattedDate +
+					Math.floor(data.matchDuration / 60) + ":" +
+					(data.matchDuration) % 60 
+				}
+				document.getElementById(playerdivdest).innerHTML = 				
+					"duration: " + formattedDate;
+
+				//result
+				var playerdivdest = "minisummary_" + "result" + tableId
+				// console.log((data.participants[spotlightID].teamId-100)/100)
+				if (data.teams[(data.participants[spotlightID].teamId-100)/100].winner == true){
+					document.getElementById(playerdivdest).innerHTML = 				
+						"Victory"
+				}else{
+					document.getElementById(playerdivdest).innerHTML = 				
+						"Defeat"
+				}
 
 				//minitable elements
 				var playerdivdest = "miniplayer_" + "champ" + tableId
@@ -143,13 +179,33 @@ function getMatchInfo(region, matchId,playerID){
 					getSpellPic(spellImgMap[data.participants[spotlightID].spell2Id],spellIdMap[data.participants[spotlightID].spell2Id]);
 				
 				var playerdivdest = "miniplayer_" + "kda" + tableId
-				document.getElementById(playerdivdest).innerHTML = playerdivdest
+				KDA = getKDA(data.participants[spotlightID],spotlightID);
+				var ratio=parseFloat((KDA[0]+KDA[2])/KDA[1]).toFixed(2);
+				document.getElementById(playerdivdest).innerHTML = KDA[0] + "/" + KDA[1] + "/" + KDA[2] +"</br>" +" KDA:" 
+				+ ratio;
 				
 				var playerdivdest = "miniplayer_" + "items" + tableId
-				document.getElementById(playerdivdest).innerHTML = playerdivdest
+				console.log(data.participants[spotlightID])
+				for (var itemnum = 0; itemnum < 7; itemnum++){
+						var itemstring = "item"+itemnum
+						var itemnump = itemnum+1
+						console.log(data.participants[spotlightID].stats[itemstring])
+						if(itemIdMap.data.hasOwnProperty(data.participants[spotlightID].stats[itemstring])){
+							document.getElementById(playerdivdest).innerHTML +=
+							getItemPic(data.participants[spotlightID].stats[itemstring],itemIdMap.data[data.participants[spotlightID].stats[itemstring]].name)
+						}else{
+							//Need to make a empty item slot picture
+							document.getElementById(playerdivdest).innerHTML += 
+								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+						}
+				}
 
 				var playerdivdest = "miniplayer_" + "stats" + tableId
-				document.getElementById(playerdivdest).innerHTML = playerdivdest
+				document.getElementById(playerdivdest).innerHTML = 
+				"CS: "+
+				data.participants[spotlightID].stats.minionsKilled + 
+				" Wards: "+
+				data.participants[spotlightID].stats.wardsPlaced
 
 
 				//Create full match table
@@ -226,6 +282,18 @@ function getMatchInfo(region, matchId,playerID){
 		})
 }
 
+function tableClick(clickedNum){
+	console.log(clickedNum)
+	tablestring = "#resultstable"+clickedNum
+	if ($(tablestring).is(':visible')){
+		// $(tablestring).hide()		
+		$(tablestring).fadeOut('fast')		
+	}else{
+		// $(tablestring).show()
+		$(tablestring).fadeIn('fast')
+	}
+}
+
 //Argument is the number of players per team
 function createTable(teamplayersNum, tableNum){
 
@@ -234,6 +302,7 @@ function createTable(teamplayersNum, tableNum){
 	var minitable = document.createElement('TABLE');
 	minitable.setAttribute("class","minitable")
 	minitable.setAttribute("id","miniresultstable" + tableId)
+	minitable.setAttribute("onclick","tableClick("+tableId+")")
 
 	var minitableBody = document.createElement('TBODY');
 	minitable.appendChild(minitableBody);
@@ -245,21 +314,32 @@ function createTable(teamplayersNum, tableNum){
 	minisummary_row.setAttribute("class", "minisummary_row")
 	minisummary_row.setAttribute("id", "minisummary_row")
 
+	var minisumcolslist = ["id","date","duration","result"]
+
+	for(var col in minisumcolslist){
+		var currTD = document.createElement('TD')
+
+		currTD.setAttribute("id", "minisummary_" + minisumcolslist[col] + tableId)
+		currTD.setAttribute("class", "minisummary_" + minisumcolslist[col]);
+		currTD.style.backgroundColor = "#0b3d59";
+		minisummary_row.appendChild(currTD)
+	}
+
 	var minicolslist = ["champ","spells","kda","items","stats"]
-		var miniplayer_row = document.createElement('TR');
-		minitableBody.appendChild(miniplayer_row);
+	var miniplayer_row = document.createElement('TR');
+	minitableBody.appendChild(miniplayer_row);
 
-		miniplayer_row.setAttribute("class", "miniplayer_row")
-		miniplayer_row.setAttribute("id",  "miniplayer_row" + tableId)
+	miniplayer_row.setAttribute("class", "miniplayer_row")
+	miniplayer_row.setAttribute("id",  "miniplayer_row" + tableId)
 
-		for(var col in minicolslist){
-			var currTD = document.createElement('TD')
+	for(var col in minicolslist){
+		var currTD = document.createElement('TD')
 
-			currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId)
-			currTD.setAttribute("class", "miniplayer_" + minicolslist[col]);
-			currTD.style.backgroundColor = "#0b3d59";
-			miniplayer_row.appendChild(currTD)
-		}
+		currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId)
+		currTD.setAttribute("class", "miniplayer_" + minicolslist[col]);
+		currTD.style.backgroundColor = "#0b3d59";
+		miniplayer_row.appendChild(currTD)
+	}
 	
 
 	//Create the table
@@ -347,6 +427,7 @@ function createTable(teamplayersNum, tableNum){
 	}
 	document.getElementById('resultsTableDiv').appendChild(minitable);
 	document.getElementById('resultsTableDiv').appendChild(table);
+	$("#resultstable" + tableId).hide();
 }
 
 function getKDA(data,participantId){
@@ -381,7 +462,7 @@ function getItemIdMap(callback){
 		type: 'GET',
 		dataType: 'json',
 		success: function(data){
-
+			console.log(data)
 			itemIdMap = data;
 		}
 	})
