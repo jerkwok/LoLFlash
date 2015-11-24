@@ -18,11 +18,16 @@ $(document).ready(function(){
 		var season = parameters[2].split("=")[1]
 
 		getID(username, region, season);
+
+ 		$("#userSum").show();
 	}
 
 
 	$("#goButton").click(function(){
  		clear("userstats")
+ 		clear("userSum")
+
+ 		$("#userSum").show();
 
 		var username = $("#username").val()
 		var region = $('#region').val()
@@ -57,9 +62,9 @@ function getID(user, region, season){
 			user = user.toLowerCase().trim();
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
+			icon = data[user].profileIconId
 
-			document.getElementById("userstats").innerHTML += "<p class=\"userName\">" + user + "</p>";
-			document.getElementById("userstats").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
+			dispSum(icon, user, sLevel);
 
 			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
@@ -68,6 +73,13 @@ function getID(user, region, season){
 			getAramStats(sID, region, season);
 		}
 	})
+}
+
+function dispSum(icon, user, sLevel){
+	
+	document.getElementById("userSum").innerHTML += getIconPic(icon);
+	document.getElementById("userSum").innerHTML += "<p class=\"userName\">" + user + "</p>";
+	document.getElementById("userSum").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
 }
 
 function getWinStats(id, region, season) {
@@ -232,6 +244,10 @@ function getSpellPic(spellName,spellRealName){
 	return "<img title=\"" + spellRealName + "\"class=\"spellPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/spell/" + spellName + ".png\"></img>"
 }
 
-function getItemPic (itemId,itemName) {
+function getItemPic(itemId,itemName) {
 	return "<img title=\"" + itemName + "\"class=\"itemPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.22.3/img/item/" + itemId + ".png\"></img>"
+}
+
+function getIconPic(iconId){
+	return "<img class=\"iconPic\" src=\"http://ddragon.leagueoflegends.com/cdn/5.23.1/img/profileicon/" + iconId + ".png\"></img>"
 }
