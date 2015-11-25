@@ -1,11 +1,27 @@
 $(document).ready(function(){
 
 	$("#recentButton").click(function(){
-		console.log("recent")
-		data =  {'action': $(this).val()};
-		$.post('./scripts/searches.php', data, function(response){
-			document.getElementById("recent").innerHTML= "Recent Searches" + "</br>" + response
+		console.log($("#username").val())
+		var values = {
+			'username':$("#username").val(),
+			'region':$("#region").val(),
+			'season':$("#season").val(),
+			'type':"recent"
+		}
+		$.ajax({
+			url: "./scripts/searches.php",
+			type:"POST",
+			data:values,
+			success: function(response){
+				console.log("success")
+				console.log(response)
+				document.getElementById("recent").innerHTML = "Recent Searches" + "</br>" + response
+			}
 		})
+
+		// $.post('./scripts/searches.php', data, function(response){
+		// 	document.getElementById("recent").innerHTML= "Recent Searches" + "</br>" + response
+		// })
 	});
 
 
