@@ -86,24 +86,24 @@ function dispSum(icon, user, sLevel, sID, region){
 	document.getElementById("userSum").innerHTML += "<p class=\"userName\">" + user + "</p>";
 	document.getElementById("userSum").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
 
+	document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
+	document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+	document.getElementById("solo").innerHTML += "<h3>UNRANKED</h3>";
+	document.getElementById("solo").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
+
+	document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";
+	document.getElementById("threes").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+	document.getElementById("threes").innerHTML += "<h3>UNRANKED</h3>";
+	document.getElementById("threes").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";				
+
+	document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
+	document.getElementById("fives").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+	document.getElementById("fives").innerHTML += "<h3>UNRANKED</h3>";
+	document.getElementById("fives").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
+
 	if(sLevel == 30){
 
 		var leagueUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + sID + "/entry?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
-		document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
-		document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-		document.getElementById("solo").innerHTML += "<h3>UNRANKED</h3>";
-		document.getElementById("solo").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
-
-		document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";
-		document.getElementById("threes").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-		document.getElementById("threes").innerHTML += "<h3>UNRANKED</h3>";
-		document.getElementById("threes").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";				
-
-		document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
-		document.getElementById("fives").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-		document.getElementById("fives").innerHTML += "<h3>UNRANKED</h3>";
-		document.getElementById("fives").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
 
 		$.ajax({
 			url: leagueUrl,
@@ -123,23 +123,26 @@ function dispSum(icon, user, sLevel, sID, region){
 					//console.log(data);
 
 					if(queue == "RANKED_SOLO_5x5"){
+						console.log(data[sID][i].entries[0])
 						document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
 						document.getElementById("solo").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
-						document.getElementById("solo").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</h3>";
+						document.getElementById("solo").innerHTML += "<h3>" + data[sID][i].tier + " " + data[sID][i].entries[0].division + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
 						document.getElementById("solo").innerHTML += "<p>(Wins: " + (data[sID][i].entries[0].wins + " - Losses: " + data[sID][i].entries[0].losses) + ")</p>";
 					}
 
 					if(queue == "RANKED_TEAM_3x3"){
+											console.log(data[sID][i].entries[0])
 						document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";						
 						document.getElementById("threes").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
-						document.getElementById("threes").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</h3>";
+						document.getElementById("threes").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
 						document.getElementById("threes").innerHTML += "<p>(Wins: " + (data[sID][i].entries[0].wins + " - Losses: " + data[sID][i].entries[0].losses) + ")</p>";
 					}
 
 					if(queue == "RANKED_TEAM_5x5"){
+											console.log(data[sID][i].entries[0])
 						document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
 						document.getElementById("fives").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
-						document.getElementById("fives").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</h3>";
+						document.getElementById("fives").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
 						document.getElementById("fives").innerHTML += "<p>(Wins: " + (data[sID][i].entries[0].wins + " - Losses: " + data[sID][i].entries[0].losses) + ")</p>";
 					}
 				}
