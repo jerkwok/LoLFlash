@@ -49,23 +49,3 @@ $(document).ready(function(){
 	});
 
 });
-
-function writeDB(button){
-	var values = {
-		'username':$("#username").val(),
-		'region':$("#region").val(),
-		'season':$("#season").val(),
-		'type':button
-	}
-	$.ajax({
-		url: "./scripts/writesearch.php",
-		type:"POST",
-		data:values,
-		success: function(response){
-			console.log("success")
-			console.log(response)
-			document.getElementById("recent").innerHTML = "Recent Searches" + "</br>" + response
-			$("#recent").fadeIn('fast')
-		}
-	})
-}

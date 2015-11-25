@@ -28,6 +28,7 @@ $(document).ready(function(){
 		var region = $('#region').val()
 		var season = $('#season').val()
 	
+		writeDB("history")
 		getID(username, region, season);
 	});
 

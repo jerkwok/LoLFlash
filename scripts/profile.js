@@ -32,7 +32,7 @@ $(document).ready(function(){
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()
-	
+    	writeDB("profile")
 		getID(username, region, season);
   	});
 
