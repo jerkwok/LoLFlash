@@ -146,7 +146,7 @@ function dispSum(icon, user, sLevel, sID, region){
 			},
 			error:function (xhr, ajaxOptions, thrownError){
     			if(xhr.status==404) {
-    				console.log("Page does not exist (user is not ranked for this queue type)");
+    				console.log("404 Error: Page does not exist.");
     			}
 			}
 		})
