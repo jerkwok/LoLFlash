@@ -1,5 +1,14 @@
 $(document).ready(function(){
 
+	$("#recentButton").click(function(){
+		console.log("recent")
+		data =  {'action': $(this).val()};
+		$.post('./scripts/searches.php', data, function(response){
+			document.getElementById("recent").innerHTML= "Recent Searches" + "</br>" + response
+		})
+	});
+
+
 	$("#findButton").click(function(){
 	    var name = $("#username").val();
 
