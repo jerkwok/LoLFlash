@@ -71,11 +71,6 @@ function getID(user, region, season){
 			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			getWinStats(sID, region, season);
-			// getAramStats(sID, region, season);
-
-			// if(sLevel == 30){
-			// 	getRankedSoloStats(sID, region);
-			// }
 		}
 	})
 }
@@ -120,10 +115,7 @@ function dispSum(icon, user, sLevel, sID, region){
 					tier = data[sID][i].tier
 					tier = tier.toLowerCase().trim() + "Tier";
 
-					//console.log(data);
-
 					if(queue == "RANKED_SOLO_5x5"){
-						console.log(data[sID][i].entries[0])
 						document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
 						document.getElementById("solo").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("solo").innerHTML += "<h3>" + data[sID][i].tier + " " + data[sID][i].entries[0].division + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
@@ -131,7 +123,6 @@ function dispSum(icon, user, sLevel, sID, region){
 					}
 
 					if(queue == "RANKED_TEAM_3x3"){
-											console.log(data[sID][i].entries[0])
 						document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";						
 						document.getElementById("threes").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("threes").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
@@ -139,7 +130,6 @@ function dispSum(icon, user, sLevel, sID, region){
 					}
 
 					if(queue == "RANKED_TEAM_5x5"){
-											console.log(data[sID][i].entries[0])
 						document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
 						document.getElementById("fives").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("fives").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
@@ -197,58 +187,6 @@ function getWinStats(id, region, season){
 			}
 		}
 	})
-}
-
-function getRankedSoloStats(id, region){
-	var rankedSoloUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	$.ajax({
-		url: rankedSoloUrl,
-		type: 'GET',
-		dataType: 'json',
-	
-		success: function(data){
-			for (var i = 0; i < data[id].length - 1; i++) {
-				if (data[id][i].queue == "RANKED_SOLO_5x5") {
-					displayRankedSoloStats(id,data,i);
-				}
-			};
-		}
-	})
-}
-
-function displayRankedSoloStats(id, data, place){
-
-	document.getElementById("userStats").innerHTML += "Ranked League:" + "</br>"
-	document.getElementById("userStats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
-}
-
-function getAramStats(id, region, season){
-	var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + id + "/summary?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-	
-	$.ajax({
-		url: statsUrl,
-		type: 'GET',
-		dataType: 'json',
-
-		success: function(data){
-
-			for (var i = 0; i < data.playerStatSummaries.length; i++) {
-				if (data.playerStatSummaries[i].playerStatSummaryType == "AramUnranked5x5") {
-					displayAramStats(id,data,i);
-				}
-			};
-		}
-	})
-}
-
-function displayAramStats(id, data, place){
-	totKills = data.playerStatSummaries[place].aggregatedStats.totalChampionKills;
-	totAssists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
-	totWins = data.playerStatSummaries[place].wins;
-
-	document.getElementById("userStats").innerHTML += "ARAM Stats:" + "</br>"
-	document.getElementById("userStats").innerHTML += "Kills: " + totKills + "</br>" + " Assists: " + totAssists  + "</br>" + " Wins: " + totWins + "</br>"
-
 }
 
 // Retrieves all of the champion's data and stores it into the champIdMap
