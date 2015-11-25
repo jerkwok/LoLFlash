@@ -90,6 +90,21 @@ function dispSum(icon, user, sLevel, sID, region){
 
 		var leagueUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.5/league/by-summoner/" + sID + "/entry?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
+		document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
+		document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+		document.getElementById("solo").innerHTML += "<h3>UNRANKED</h3>";
+		document.getElementById("solo").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
+
+		document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";
+		document.getElementById("threes").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+		document.getElementById("threes").innerHTML += "<h3>UNRANKED</h3>";
+		document.getElementById("threes").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";				
+
+		document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
+		document.getElementById("fives").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+		document.getElementById("fives").innerHTML += "<h3>UNRANKED</h3>";
+		document.getElementById("fives").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
+
 		$.ajax({
 			url: leagueUrl,
 			type: 'GET',
@@ -98,21 +113,6 @@ function dispSum(icon, user, sLevel, sID, region){
 
 			},
 			success: function(data){
-
-				document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
-				document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-				document.getElementById("solo").innerHTML += "<h3>UNRANKED</h3>";
-				document.getElementById("solo").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
-
-				document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";
-				document.getElementById("threes").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-				document.getElementById("threes").innerHTML += "<h3>UNRANKED</h3>";
-				document.getElementById("threes").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";				
-
-				document.getElementById("fives").innerHTML = "<h3>Ranked Fives:</h3>";
-				document.getElementById("fives").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
-				document.getElementById("fives").innerHTML += "<h3>UNRANKED</h3>";
-				document.getElementById("fives").innerHTML += "<p>(Wins: 0 - Losses: 0)</p>";
 
 				for(var i = 0; i < data[sID].length; i++){
 
@@ -145,7 +145,6 @@ function dispSum(icon, user, sLevel, sID, region){
 				}
 			},
 			error:function (xhr, ajaxOptions, thrownError){
-				// Errors if they are unranked throwing a 404
     			if(xhr.status==404) {
     				console.log("Page does not exist (user is not ranked for this queue type)");
     			}
@@ -193,12 +192,6 @@ function getWinStats(id, region, season){
 
 				}
 			}
-
-			// document.getElementById("userStats").innerHTML += "Win Stats:" + "</br>"
-			// document.getElementById("userStats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
-			// document.getElementById("userStats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
-			// document.getElementById("userStats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
-
 		}
 	})
 }
