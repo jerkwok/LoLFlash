@@ -99,6 +99,18 @@ function dispSum(icon, user, sLevel, sID, region){
 			},
 			success: function(data){
 
+				document.getElementById("solo").innerHTML = "<p>Ranked Solo/Duo</p>";
+				document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+				document.getElementById("solo").innerHTML += "<p>Unranked</p>";
+
+				document.getElementById("threes").innerHTML = "<p>Ranked Threes/Duo</p>";
+				document.getElementById("threes").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+				document.getElementById("threes").innerHTML += "<p>Unranked</p>";
+
+				document.getElementById("fives").innerHTML = "<p>Ranked Fives</p>";
+				document.getElementById("fives").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+				document.getElementById("fives").innerHTML += "<p>Unranked</p>";
+
 				for(var i = 0; i < data[sID].length; i++){
 
 					queue = data[sID][i].queue
@@ -109,19 +121,19 @@ function dispSum(icon, user, sLevel, sID, region){
 
 					if(queue == "RANKED_SOLO_5x5"){
 						document.getElementById("solo").innerHTML = "<p>Ranked Solo/Duo</p>";
-						document.getElementById("solo").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("solo").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("solo").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
 					}
 
 					if(queue == "RANKED_TEAM_3x3"){
 						document.getElementById("threes").innerHTML = "<p>Ranked Threes</p>";						
-						document.getElementById("threes").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("threes").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("threes").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
 					}
 
 					if(queue == "RANKED_TEAM_5x5"){
 						document.getElementById("fives").innerHTML = "<p>Ranked Fives</p>";
-						document.getElementById("fives").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("fives").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
 						document.getElementById("fives").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
 					}
 				}
