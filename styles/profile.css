@@ -1,5 +1,22 @@
-.userstats{
-	padding-left: 4%;
+.userStats > p{
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-top: 0;
+	margin-left: 5%;
+}
+
+.userStats > p:first-child{
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-top: 2%;
+	margin-left: 5%;
+}
+
+.userStats > p:last-child{
+	margin-right: 0;
+	margin-bottom: 2%;
+	margin-top: 0;
+	margin-left: 5%;
 }
 
 .player{
@@ -14,6 +31,7 @@
 	margin: 0;
 	table-layout: fixed;
 	float: left;
+	margin-left: 4%;
 }
 
 .userSum{
@@ -32,9 +50,10 @@
 }
 
 .ranked{
-	width: 75%;
+	width: 60%;
 	border-spacing: 0;
 	float: right;
+	margin-right: 4%;
 }
 
 #solo{
@@ -52,16 +71,14 @@
 	margin: 0;
 }
 
-#solo > p{
+#solo > h3, #threes > h3, #fives > h3{
 	margin: 0;
+	font-size: 14px;
 }
 
-#threes > p{
+.ranked p{
 	margin: 0;
-}
-
-#fives > p{
-	margin: 0;
+	font-size: 12px;
 }
 
 #threes{
