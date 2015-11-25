@@ -5,49 +5,88 @@
 .player{
 	margin-top: 2%;
 	width: 100%;
-	display: table;
-	border-collapse: collapse;
+	display: inline-block;
+}
+
+.sumInfo{
+	width: 20%;
+	border-spacing: 0;
+	margin: 0;
+	table-layout: fixed;
+	float: left;
 }
 
 .userSum{
-	display: table-cell;
 	border: 1px solid #6B6565;
 	margin-left: 4%;
 	margin-right: 4%;
 	margin: 0;
+	width: 100%;
 	height: 80px;
-	width: 25%;
 }
 
-.solo{
+.userStats{
+	width: 100%;
+	border: 1px solid #6B6565;
+	height: 80px;
+}
+
+.ranked{
+	width: 75%;
+	border-spacing: 0;
+	float: right;
+}
+
+#solo{
 	margin: 0;
 	height: 100%;
 	border: 1px solid #6B6565;
-	width: 25%;
-	display: table-cell;	
+	width: 33%;
+	text-align: center;
+	font-weight: bold;
 }
 
-.threes{
+.rankPic{
+	margin-left: 20px;
+	height: 140px;
+	margin: 0;
+}
+
+#solo > p{
+	margin: 0;
+}
+
+#threes > p{
+	margin: 0;
+}
+
+#fives > p{
+	margin: 0;
+}
+
+#threes{
 	margin: 0;
 	height: 100%;
-	border: 1px solid #6B6565;;
-	width: 25%;
-	display: table-cell;	
+	border: 1px solid #6B6565;
+	width: 33%;
+	text-align: center;
+	font-weight: bold;
 }
 
-.fives{
-	margin: 0;	
+#fives{
+	margin: 0;
 	height: 100%;
 	border: 1px solid #6B6565;
-	width: 25%;
-	display: table-cell;
+	width: 33%;
+	text-align: center;
+	font-weight: bold;
 }
 
 .userName{
 	position: relative;
   	top: 50%;
   	transform: translateY(-50%);
-	width: 120px;
+	width: 55%;
 	height: 40px;
 	margin: 0;
 	padding-left: 10px;
@@ -60,7 +99,7 @@
 }
 
 .userLevel{
-	width: 120px;
+	width: 55%;
 	height: 40px;
 	margin: 0;
 	padding-left: 10px;
@@ -76,11 +115,6 @@
 	width: 80px;
 	height: 80px;
 	float: left;
-}
-
-.rankPic{
-	margin-left: 20px;
-	height: 60px;
 }
 
 #profileLink{

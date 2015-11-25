@@ -24,7 +24,7 @@ $(document).ready(function(){
 
 
 	$("#goButton").click(function(){
- 		clear("userstats")
+ 		clear("userStats")
  		clear("userSum")
 
  		$("#userSum").show();
@@ -37,7 +37,7 @@ $(document).ready(function(){
   	});
 
  	$("#clearButton").click(function(){
- 		clear("userstats")
+ 		clear("userStats")
  	});
 });
 
@@ -99,18 +99,52 @@ function dispSum(icon, user, sLevel, sID, region){
 			},
 			success: function(data){
 
-				console.log(data)
-				tier = data[sID][0].tier
-				tier = tier.toLowerCase().trim() + "Tier";
+				for(var i = 0; i < data[sID].length; i++){
 
-				//document.getElementById("userSum").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img>"
-				//document.getElementById("userSum").innerHTML += (data[sID][0].tier + " " + data[sID][0].entries[0].division);
+					queue = data[sID][i].queue
+					tier = data[sID][i].tier
+					tier = tier.toLowerCase().trim() + "Tier";
+
+					console.log(queue);
+
+					if(queue == "RANKED_SOLO_5x5"){
+						document.getElementById("solo").innerHTML = "<p>Ranked Solo/Duo</p>";
+						document.getElementById("solo").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("solo").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
+					}
+
+					if(queue == "RANKED_TEAM_3x3"){
+						document.getElementById("threes").innerHTML = "<p>Ranked Threes</p>";						
+						document.getElementById("threes").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("threes").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
+					}
+
+					if(queue == "RANKED_TEAM_5x5"){
+						document.getElementById("fives").innerHTML = "<p>Ranked Fives</p>";
+						document.getElementById("fives").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+						document.getElementById("fives").innerHTML += "<p>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + "</p>";
+					}
+				}
+
+				// tier = data[sID][0].tier
+				// tier = tier.toLowerCase().trim() + "Tier";
+
+
+				// document.getElementById("solo").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+				// document.getElementById("solo").innerHTML += "<p>" + (data[sID][0].tier + " " + data[sID][0].entries[0].division) + "</p>";
+
+				// document.getElementById("threes").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+				// document.getElementById("threes").innerHTML += "<p>" + (data[sID][1].tier + " " + data[sID][1].entries[1].division) + "</p>";
+
+				// document.getElementById("fives").innerHTML += "<br><img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
+				// document.getElementById("fives").innerHTML += "<p>" + (data[sID][2].tier + " " + data[sID][2].entries[2].division) + "</p>";
 
 			},
 			error:function (xhr, ajaxOptions, thrownError){
 				// Errors if they are unranked throwing a 404
     			if(xhr.status==404) {
-        			document.getElementById("userSum").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
+    				console.log("Page does not exist (user is not ranked for this queue type)");
+        			//document.getElementById("userSum").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
     			}
 			}
 		})
@@ -129,10 +163,10 @@ function getWinStats(id, region, season){
 		},
 		success: function(data){
 
-			document.getElementById("userstats").innerHTML += "Win Stats:" + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
-			document.getElementById("userstats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
+			document.getElementById("userStats").innerHTML += "Win Stats:" + "</br>"
+			document.getElementById("userStats").innerHTML += data["playerStatSummaries"][0].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][0].wins + "</br>"
+			document.getElementById("userStats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-2].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-2].wins + "</br>"
+			document.getElementById("userStats").innerHTML += data["playerStatSummaries"][data["playerStatSummaries"].length-1].playerStatSummaryType + " Wins:" + data["playerStatSummaries"][data["playerStatSummaries"].length-1].wins + "</br>"
 
 		}
 	})
@@ -157,8 +191,8 @@ function getRankedSoloStats(id, region){
 
 function displayRankedSoloStats(id, data, place){
 
-	document.getElementById("userstats").innerHTML += "Ranked League:" + "</br>"
-	document.getElementById("userstats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
+	document.getElementById("userStats").innerHTML += "Ranked League:" + "</br>"
+	document.getElementById("userStats").innerHTML += data[id][place].name + " " + data[id][place].tier + " - " + data[id][place].entries[0].division + " at " + data[id][0].entries[0].leaguePoints + " LP" + "</br>"
 }
 
 function getAramStats(id, region, season){
@@ -185,8 +219,8 @@ function displayAramStats(id, data, place){
 	totAssists = data.playerStatSummaries[place].aggregatedStats.totalAssists;
 	totWins = data.playerStatSummaries[place].wins;
 
-	document.getElementById("userstats").innerHTML += "ARAM Stats:" + "</br>"
-	document.getElementById("userstats").innerHTML += "Kills: " + totKills + "</br>" + " Assists: " + totAssists  + "</br>" + " Wins: " + totWins + "</br>"
+	document.getElementById("userStats").innerHTML += "ARAM Stats:" + "</br>"
+	document.getElementById("userStats").innerHTML += "Kills: " + totKills + "</br>" + " Assists: " + totAssists  + "</br>" + " Wins: " + totWins + "</br>"
 
 }
 
