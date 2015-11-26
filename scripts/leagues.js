@@ -123,7 +123,7 @@ function buildTable(tier, divisionList, sID){
 		newRow = document.createElement("tr");
 
 		if(divisionList[i].playerOrTeamId == sID){
-			newRow.setAttribute("style", "background-color: #424242;");
+			newRow.setAttribute("style", "background-color: #111;");
 		}
 
 
