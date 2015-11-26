@@ -40,37 +40,33 @@ $(document).ready(function(){
 
 
 	$(".findButton").click(function(){
-	    var name = $("#username").val();
-    	writeDB("profile")
-	    if (name != undefined && name != null) {
-	        window.location = './profile.html?username=' + name+'&region=' 
-	        + $("#region").val() + '&season=' +  $("#season").val();
-	    }
-	    console.log(name)
+		gotoPage("profile", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
 	});
 
 	$("#historyButton").click(function(){
-	    var name = $("#username").val();
-    	writeDB("history")
-	    if (name != undefined && name != null) {
-			window.location = './history.html?username=' + name+'&region=' 
-				        + $("#region").val() + '&queue=' +  $("#queueType").val();
-		}
-	    
+		gotoPage("history", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())	    
 	});
 
 	$("#leaguesButton").click(function(){
-	    var name = $("#username").val();
+		gotoPage("leagues", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
+	});
 
-	    if (name != undefined && name != null) {
-	    	writeDB("leagues")
-	        window.location = './leagues.html?username=' + name+'&region=' 
-	        + $("#region").val() + '&queue=' + $("#queueType").val();
-	    }
-	    console.log(name)
+	$("#searchButton").click(function(){
+		//Need to change these to grab the top bar values
+		gotoPage("profile", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
 	});
 
 });
+
+function gotoPage(destination, sourcename, region, season ,queue){
+	var name = sourcename;
+
+	    if (name != undefined && name != null) {
+	    	writeDB(destination)
+	        window.location = './'+destination+'.html?username=' + name +'&region=' 
+	        + region + '&queue=' + queue;
+	    }
+}
 
 function buildTable(responsedata){
 
