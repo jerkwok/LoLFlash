@@ -7,56 +7,65 @@
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 	<link rel="stylesheet" type="text/css" href="styles/leagues.css">
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 
 <body>
-	<div class="navbar">	   	
-	   	<div>
-		   	<ul>
-		   		<li id="homeLink"><a href="./home.html">NotOP.gg</a></li>
+	<div class="navbar navbar-inverse">	   	
+	   	<div class="container-fluid">
+	   		<div class="navbar-header">
+      			<a class="navbar-brand" id="homeLink" href="./home.html">NotOP.gg</a>
+   			</div>
+
+		   	<ul class="nav navbar-nav">
 		   		<li id="profileLink"><a href="./profile.html">Profile</a></li>
 		   		<li id="historyLink"><a href="./history.html">History</a></li>
-		       	<li id="leaguesLink"><a href="./leagues.html">Leagues</a></li>
+		       	<li class="active" id="leaguesLink"><a href="./leagues.html">Leagues</a></li>
 		   	</ul>
 	    </div>
 	</div>
 
-	<div class="search">
-		<label for="username">Username:</label>
-		<input type="text" id="username" value="feed l0rd">
+	<div class="container" id="search">
+		
+		<div class="text-center">
 
-		<label for="region">Region:</label>
-		<select id="region">
-		  <option value="na">North America</option>
-		  <option value="euw">Europe West</option>
-		  <option value="eune">Europe Nordic & East</option>
-		  <option value="br">Brazil</option>
-		  <option value="kr">Korea</option>
-		  <option value="tr">Turkey</option>
-		  <option value="ru">Russia</option>
-		  <option value="lan">Latin America North</option>
-		  <option value="las">Latin America South</option>
-		  <option value="oce">Oceania</option>
-		</select>	
+			<label for="username">Username:</label>
+			<input type="text" id="username" value="feed l0rd">
 
-		<label for="season">Season:</label>
-		<select id="season">
-		  <option value="PRESEASON3">Preseason 3</option>
-		  <option value="SEASON3">Season 3</option>
-		  <option value="PRESEASON2014">Preseason 4</option>
-		  <option value="SEASON2014">Season 4</option>
-		  <option value="PRESEASON2015">Preseason 5</option>
-		  <option selected value="SEASON2015">Season 5</option>
-		  <option value="PRESEASON2016">Preseason 6</option>
-		</select>
+			<label for="region">Region:</label>
+			<select id="region">
+			  <option value="na">North America</option>
+			  <option value="euw">Europe West</option>
+			  <option value="eune">Europe Nordic & East</option>
+			  <option value="br">Brazil</option>
+			  <option value="kr">Korea</option>
+			  <option value="tr">Turkey</option>
+			  <option value="ru">Russia</option>
+			  <option value="lan">Latin America North</option>
+			  <option value="las">Latin America South</option>
+			  <option value="oce">Oceania</option>
+			</select>	
 
-		<button type="button" id="goButton">Find Summoner</button>
-		<button type="button" id="clearButton">Clear</button>
+			<label for="season">Season:</label>
+			<select id="season">
+			  <option value="PRESEASON3">Preseason 3</option>
+			  <option value="SEASON3">Season 3</option>
+			  <option value="PRESEASON2014">Preseason 4</option>
+			  <option value="SEASON2014">Season 4</option>
+			  <option value="PRESEASON2015">Preseason 5</option>
+			  <option selected value="SEASON2015">Season 5</option>
+			  <option value="PRESEASON2016">Preseason 6</option>
+			</select>
+
+			<button type="button" id="goButton">Find Summoner</button>
+			<button type="button" id="clearButton">Clear</button>
+
+		</div>
+
 	</div>
 
-	<div class="container">
-		<div class="resultstablediv" id="resultstablediv">
-		</div>
+	<div class="container" id="container">
+
 	</div>
 
 </body>

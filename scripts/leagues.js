@@ -63,7 +63,7 @@ function getLeagues(region, sID){
 
 				if(data[sID][i].queue == "RANKED_SOLO_5x5"){
 					
-					//console.log(data)
+					tier = data[sID][i].tier
 
 					var divisionList = [];
 
@@ -84,12 +84,13 @@ function getLeagues(region, sID){
 					}
 
 					// Sorts the divison list
-					sortByPoints(divisionList)
+					divisionList.sort(function(a, b){
+    					return b.leaguePoints - a.leaguePoints;
+					});
 
-					// Prints to the html
-					for(j = 0; j < divisionList.length; j++){
-						document.getElementById("resultstablediv").innerHTML += "<p>" + divisionList[j].playerOrTeamName + " - " + divisionList[j].leaguePoints + " LP</p>";
-					}
+					// Builds the table
+					buildTable(tier, divisionList)
+
 					break;
 				}
 
@@ -99,9 +100,58 @@ function getLeagues(region, sID){
 	})
 }
 
-function sortByPoints(list){
-	list.sort(function(a, b){
-    	return a.leaguePoints - b.leaguePoints;
-	});
+function buildTable(tier, divisionList){
+
+	newTable = document.createElement("table");
+	newTable.setAttribute("class", "table table-inverse");
+	newBody = document.createElement("tbody");
+
+	for(i = 0; i < divisionList.length; i++){
+		
+		newRow = document.createElement("tr");
+		
+		for(j = 0; j < 5; j++){
+			newCol = document.createElement("td");
+			text = document.createTextNode("")
+
+			if(j == 0){
+
+				text.nodeValue = i+1
+
+			} else if(j == 1){
+
+				text.nodeValue = divisionList[i].playerOrTeamName
+
+			} else if(j == 2){
+
+				text.nodeValue = divisionList[i].isFreshBlood + ", " + divisionList[i].isHotStreak + ", " + divisionList[i].isVeteran
+
+			} else if(j == 3){
+
+				text.nodeValue = divisionList[i].wins
+
+			} else if(j == 4){
+
+				if(divisionList[i].leaguePoints == 100 && (tier != "CHALLENGER" || tier != "MASTER")){
+					
+					text.nodeValue = divisionList[i].miniSeries.progress
+
+				} else{
+
+					text.nodeValue = divisionList[i].leaguePoints
+
+				}
+			}
+
+			newCol.appendChild(text)
+			newRow.appendChild(newCol)
+		}
+		
+		newBody.appendChild(newRow)
+	}
+
+	newTable.appendChild(newBody);
+	document.getElementById("container").appendChild(newTable)
 }
+
 

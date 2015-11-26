@@ -1,11 +1,46 @@
 html, body{
-	background-color: #424242;
-	font-family: "Titillium Web", sans-serif, Arial;
-	color: #bdbcbc;
+	background-color: #222 !important;
+	font-family: "Titillium Web", sans-serif, Arial !important;
+	color: #9d9d9d !important;
 	margin: 0;
 	padding: 0;
+	z-index: -1;
 }
 
+.navbar li{
+	font-size: 12px;
+}
+
+.navbar-header{
+	font-size: 10px;
+}
+
+.navbar-brand {
+	font-size: 14px !important;
+}
+
+#search{
+	margin-bottom: 10px;
+}
+
+button{
+	color: black !important;
+}
+
+input{
+	color: black !important;
+}
+
+select{
+	color: black !important;
+}
+
+.table > tbody > tr > td{
+	border-top: 1px solid black !important;
+}
+
+
+/*
 button{
     border: 1px solid #6B6565; 
     background-color: #bdbcbc;
@@ -59,7 +94,7 @@ button:hover{
 }
 
 .navbar li:first-child{
-	/*border-right: 1px solid #6B6565;*/
+	/*border-right: 1px solid #6B6565;
 }
 
 .navbar a{
