@@ -151,7 +151,7 @@ function buildTable(tier, divisionList, sID){
 				fresh.setAttribute("id", "fresh")
 
 				hot.innerHTML = "<img title=\"Hot Streak (3 wins in a row)\" src=\"./images/hot.png\">"
-				fresh.innerHTML = "<img title=\"Fresh in this League\" src=\"./images/fresh.png\">"
+				fresh.innerHTML = "<img title=\"Fresh (New to this Divison)\" src=\"./images/fresh.png\">"
 
 				if(divisionList[i].isFreshBlood == false){
 					fresh.style.opacity = "0.1";
