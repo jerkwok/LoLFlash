@@ -21,3 +21,14 @@
 #fresh, #hot{
 	display: inline-block;
 }
+
+#image img{
+	width: 100%;
+	border: 1px solid black;
+}
+
+#mainWrap{
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 0;
+}

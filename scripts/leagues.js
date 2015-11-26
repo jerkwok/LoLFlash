@@ -99,7 +99,7 @@ function getLeagues(region, sID){
 
 function buildTable(tier, divisionList, sID){
 
-	clear("container")
+	clear("table")
 
 	newTable = document.createElement("table");
 	newTable.setAttribute("class", "table table-inverse");
@@ -206,7 +206,7 @@ function buildTable(tier, divisionList, sID){
 	}
 
 	newTable.appendChild(newBody);
-	document.getElementById("container").appendChild(newTable)
+	document.getElementById("table").appendChild(newTable)
 }
 
 
