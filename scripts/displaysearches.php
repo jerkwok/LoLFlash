@@ -13,7 +13,7 @@ $dbhost = 'localhost';
             //check if there are more than 5 rows 
 
             while($row = $results->fetch()) {  
-                echo $row['username'] . " " . $row['region'] . " " . $row['season'] . " " . $row['type'] . "<br />";
+                echo $row['username'] . "," . $row['region'] . "," . $row['season'] . "," . $row['type'] . "<br />";
             }  
 
             $id = $conn->lastInsertId();                    
