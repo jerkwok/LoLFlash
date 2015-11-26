@@ -39,7 +39,7 @@ $(document).ready(function(){
 	});
 
 
-	$("#findButton").click(function(){
+	$(".findButton").click(function(){
 	    var name = $("#username").val();
     	writeDB("profile")
 	    if (name != undefined && name != null) {
