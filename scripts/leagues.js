@@ -13,6 +13,8 @@ $(document).ready(function(){
 	}
 
 	$("#goButton").click(function(){
+		clear("container")
+
 
 		var username = $("#username").val()
 		var region = $('#region').val()
@@ -23,7 +25,7 @@ $(document).ready(function(){
 	});
 
 	$("#clearButton").click(function(){
-		
+		clear("container")
 	});
 });
 
@@ -34,6 +36,7 @@ function clear(id){
 function getID(user, region, season){
 
 	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
+
 	$.ajax({
 		url: summonerUrl,
 		type: 'GET',
@@ -89,7 +92,7 @@ function getLeagues(region, sID){
 					});
 
 					// Builds the table
-					buildTable(tier, divisionList)
+					buildTable(tier, divisionList, sID)
 
 					break;
 				}
@@ -100,16 +103,34 @@ function getLeagues(region, sID){
 	})
 }
 
-function buildTable(tier, divisionList){
+function buildTable(tier, divisionList, sID){
 
 	newTable = document.createElement("table");
 	newTable.setAttribute("class", "table table-inverse");
 	newBody = document.createElement("tbody");
 
+	titles = ["Rank", "Summoner Name", "Emblems", "Wins", "LP/Series"]
+
+	newRow = document.createElement("tr");
+
+	for(title in titles){
+		newCol = document.createElement("th");
+		text = document.createTextNode(titles[title]);
+		newCol.appendChild(text)
+		newRow.appendChild(newCol)
+	}
+
+	newBody.appendChild(newRow)
+
 	for(i = 0; i < divisionList.length; i++){
 		
 		newRow = document.createElement("tr");
-		
+
+		if(divisionList[i].playerOrTeamId == sID){
+			newRow.setAttribute("style", "background-color: #424242;");
+		}
+
+
 		for(j = 0; j < 5; j++){
 			newCol = document.createElement("td");
 			text = document.createTextNode("")
@@ -124,7 +145,24 @@ function buildTable(tier, divisionList){
 
 			} else if(j == 2){
 
-				text.nodeValue = divisionList[i].isFreshBlood + ", " + divisionList[i].isHotStreak + ", " + divisionList[i].isVeteran
+				hot = document.createElement("div")
+				hot.setAttribute("id", "hot")
+				fresh = document.createElement("fresh")
+				fresh.setAttribute("id", "fresh")
+
+				hot.innerHTML = "<img title=\"Hot Streak (3 wins in a row)\" src=\"./images/hot.png\">"
+				fresh.innerHTML = "<img title=\"Fresh in this League\" src=\"./images/fresh.png\">"
+
+				if(divisionList[i].isFreshBlood == false){
+					fresh.style.opacity = "0.1";
+				}
+
+				if(divisionList[i].isHotStreak == false){
+					hot.style.opacity = "0.1";
+				}
+
+				newCol.appendChild(hot)
+				newCol.appendChild(fresh)
 
 			} else if(j == 3){
 
@@ -132,9 +170,30 @@ function buildTable(tier, divisionList){
 
 			} else if(j == 4){
 
-				if(divisionList[i].leaguePoints == 100 && (tier != "CHALLENGER" || tier != "MASTER")){
-					
-					text.nodeValue = divisionList[i].miniSeries.progress
+				if(divisionList[i].leaguePoints == 100 && (tier != "CHALLENGER" && tier != "MASTER")){
+
+					progress = divisionList[i].miniSeries.progress
+
+					progress = progress.split("")
+
+					for(k = 0; k < progress.length; k++){
+
+						if(progress[k] == "N"){
+							progress[k] = "\u2610";	//box
+						}
+
+						if(progress[k] == "W"){
+							progress[k] = "\u2611";	//checkmark
+						}
+
+						if(progress[k] == "L"){
+							progress[k] = "\u2612";	//x
+						}
+					}
+
+					progress = progress.join("")
+
+					text.nodeValue = progress
 
 				} else{
 
