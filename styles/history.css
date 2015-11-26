@@ -137,3 +137,14 @@ table{
 	background-color: #595959;
 	border-radius: 5px;
 }
+
+#image img{
+	width: 100%;
+	border: 1px solid black;
+}
+
+#mainWrap{
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-top: 0;
+}
