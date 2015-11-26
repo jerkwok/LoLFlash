@@ -1,4 +1,4 @@
 # WebLOL
 LOL Thing for WebDev
 
-Moved all the .js files/ into scripts and all of the .css files into styles/
+Implemented bootstrap. Some styling needs to be redone (mainly the history.css) but it looks fine right now.

@@ -60,20 +60,10 @@ table{
 	margin:0 auto;
 }
 
-/*table, td, tr, th{
-	border: 1px solid black;
-	border-collapse: collapse;
-}*/
 .minisummary_result{
 	text-align: right;
 	padding-right: 5px;
 }
-
-/*.minisummary_row > td {
-	padding: 0px;
-}*/
-
-
 
 .minitable{
 	margin-bottom: 5px;
