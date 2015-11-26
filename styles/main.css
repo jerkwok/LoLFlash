@@ -34,3 +34,40 @@ input{
 select{
 	color: black !important;
 }
+
+.customSelect{
+	width: auto !important;
+  	margin: 10px !important;
+  	height: 30px !important;
+  	font-size: 12px !important;
+  	display: inline-block !important;
+  	padding: 3px !important;
+}
+
+.customBut{
+	width: auto !important;
+  	margin: 5px !important;
+  	height: 30px !important;
+  	font-size: 12px !important;
+  	display: inline-block !important;
+  	padding-top: 3px !important;
+  	padding-bottom: 3px !important;
+  	padding-left: 20px !important;
+  	padding-right: 20px !important;
+}
+
+.customInput{
+	margin: 10px !important;
+	height: 30px !important;
+	font-size: 12px !important;
+}
+
+.customNav{
+	margin: 0 !important;
+	padding-left: 0 !important;
+}
+
+#summoner{
+	font-size: 12px;
+	margin-bottom: 0;
+}

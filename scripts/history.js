@@ -21,7 +21,7 @@ $(document).ready(function(){
 		getID(username, region, queue);
 	}
 
-	$("#goButton").click(function(){
+	$(".goButton").click(function(){
  		clear("resultsTableDiv")
 
 		var username = $("#username").val()
@@ -31,11 +31,6 @@ $(document).ready(function(){
 		writeDB("history")
 		getID(username, region, season);
 	});
-
-	$("#clearButton").click(function(){
-		clear("resultsTableDiv")
-	});
-
 });
 
 function clear(id){

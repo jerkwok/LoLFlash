@@ -18,10 +18,6 @@
 	border-left: none !important;
 }
 
-#fresh{
-	display: inline-block;
-}
-
-#hot{
+#fresh, #hot{
 	display: inline-block;
 }

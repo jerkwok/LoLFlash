@@ -23,7 +23,7 @@ $(document).ready(function(){
 	}
 
 
-	$("#goButton").click(function(){
+	$(".goButton").click(function(){
  		clear("userStats")
  		clear("userSum")
 
@@ -35,10 +35,6 @@ $(document).ready(function(){
     	writeDB("profile")
 		getID(username, region, season);
   	});
-
- 	$("#clearButton").click(function(){
- 		clear("userStats")
- 	});
 });
 
 function clear(id){

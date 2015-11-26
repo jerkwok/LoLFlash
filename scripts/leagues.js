@@ -12,9 +12,7 @@ $(document).ready(function(){
 		getID(username, region, queue);
 	}
 
-	$("#goButton").click(function(){
-		clear("container")
-
+	$(".goButton").click(function(){
 
 		var username = $("#username").val()
 		var region = $('#region').val()
@@ -22,10 +20,6 @@ $(document).ready(function(){
 		// season not used in this page. May remove after
 
 		getID(username, region, season);
-	});
-
-	$("#clearButton").click(function(){
-		clear("container")
 	});
 });
 
@@ -104,6 +98,8 @@ function getLeagues(region, sID){
 }
 
 function buildTable(tier, divisionList, sID){
+
+	clear("container")
 
 	newTable = document.createElement("table");
 	newTable.setAttribute("class", "table table-inverse");

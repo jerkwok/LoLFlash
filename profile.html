@@ -23,46 +23,51 @@
 		   		<li id="historyLink"><a href="./history.html">History</a></li>
 		       	<li id="leaguesLink"><a href="./leagues.html">Leagues</a></li>
 		   	</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+			
+				<form class="navbar-form navbar-right customNav">
+					<label for="username" id="summoner">Summoner: </label>
+					<span>
+					   	<div class="input-group">
+					   		<input type="text" class="form-control customInput" id="username" value="feed l0rd">
+					   		<span class="input-group-btn">
+					       		<button class="btn btn-default customBut goButton" type="button">Search</button>
+					   		</span>
+					   	</div>
+					</span>
+		      	</form>
+
+        		<li>
+        			<label for="region">Region:</label>
+					<select class="form-control customSelect" id="region">
+					  <option value="na">North America</option>
+					  <option value="euw">Europe West</option>
+					  <option value="eune">Europe Nordic & East</option>
+					  <option value="br">Brazil</option>
+					  <option value="kr">Korea</option>
+					  <option value="tr">Turkey</option>
+					  <option value="ru">Russia</option>
+					  <option value="lan">Latin America North</option>
+					  <option value="las">Latin America South</option>
+					  <option value="oce">Oceania</option>
+					</select>	
+        		</li>
+
+        		<li>
+        			<label for="season">Season:</label>
+					<select class="form-control customSelect" id="season">
+					  <option value="PRESEASON3">Preseason 3</option>
+					  <option value="SEASON3">Season 3</option>
+					  <option value="PRESEASON2014">Preseason 4</option>
+					  <option value="SEASON2014">Season 4</option>
+					  <option value="PRESEASON2015">Preseason 5</option>
+					  <option selected value="SEASON2015">Season 5</option>
+					  <option value="PRESEASON2016">Preseason 6</option>
+					</select>
+				</li>
+      		</ul>
 	    </div>
-	</div>
-
-	<div class="container" id="search">
-		
-		<div class="text-center">
-
-			<label for="username">Username:</label>
-			<input type="text" id="username" value="feed l0rd">
-
-			<label for="region">Region:</label>
-			<select id="region">
-			  <option value="na">North America</option>
-			  <option value="euw">Europe West</option>
-			  <option value="eune">Europe Nordic & East</option>
-			  <option value="br">Brazil</option>
-			  <option value="kr">Korea</option>
-			  <option value="tr">Turkey</option>
-			  <option value="ru">Russia</option>
-			  <option value="lan">Latin America North</option>
-			  <option value="las">Latin America South</option>
-			  <option value="oce">Oceania</option>
-			</select>	
-
-			<label for="season">Season:</label>
-			<select id="season">
-			  <option value="PRESEASON3">Preseason 3</option>
-			  <option value="SEASON3">Season 3</option>
-			  <option value="PRESEASON2014">Preseason 4</option>
-			  <option value="SEASON2014">Season 4</option>
-			  <option value="PRESEASON2015">Preseason 5</option>
-			  <option selected value="SEASON2015">Season 5</option>
-			  <option value="PRESEASON2016">Preseason 6</option>
-			</select>
-
-			<button type="button" id="goButton">Find Summoner</button>
-			<button type="button" id="clearButton">Clear</button>
-
-		</div>
-
 	</div>
 
 	<div class="container">
