@@ -58,12 +58,12 @@ function getID(user, region, season){
 	})
 }
 
-function getMatchHistory(id, region, queue){
+function getMatchHistory(id, region, season){
 
 	var optargs = ""
 
 	if (season != undefined) {
-		optargs += "&queue=" + queue;
+		optargs += "&seasons=" + season;
 	};
 
 	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchlist/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
@@ -78,7 +78,7 @@ function getMatchHistory(id, region, queue){
 			},
 			success: function(data){
 
-				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History" + "</p>"
+				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History" + "</br>(click to expand/collapse)</p>"
 
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;

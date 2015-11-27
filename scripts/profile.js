@@ -67,6 +67,8 @@ function getID(user, region, season){
 			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
 			getWinStats(sID, region, season);
+
+			getRecentStats(sID,region,season);
 		}
 	})
 }
@@ -153,7 +155,7 @@ function getWinStats(id, region, season){
 
 		},
 		success: function(data){
-
+			console.log(data)
 			for(var i = 0; i < data["playerStatSummaries"].length; i++){
 				if(data["playerStatSummaries"][i].playerStatSummaryType == "Unranked"){
 
