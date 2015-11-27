@@ -39,32 +39,52 @@ $(document).ready(function(){
 	});
 
 
+
 	$(".findButton").click(function(){
-		gotoPage("profile", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
+		console.log(getRseasonMap())
+		// console.log($("#seasonC").val())
+		// console.log($("#regionC").val())
+		// console.log($("#usernameC").val())
+		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
 	$("#historyButton").click(function(){
-		gotoPage("history", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())	    
+		gotoPage("history", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())    
 	});
 
 	$("#leaguesButton").click(function(){
-		gotoPage("leagues", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
+		gotoPage("leagues", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
-	$("#searchButton").click(function(){
+	$(".searchButton").click(function(){
 		//Need to change these to grab the top bar values
-		gotoPage("profile", $("#username").val(),$("#region").val(),"SEASON2015", $("#queueType").val())
+		console.log("searchbutton")
+		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
 });
 
-function gotoPage(destination, sourcename, region, season ,queue){
+function writeDB(type){
+	var values = {
+		'username':$("#usernameC").val(),
+		'region':$("#regionC").val(),
+		'season':$("#seasonC").val(),
+		'type':type
+	}
+	$.ajax({
+		url: "./scripts/writesearch.php",
+		type:"POST",
+		data:values
+	})
+}
+
+function gotoPage(destination, sourcename, region, season){
 	var name = sourcename;
 
 	    if (name != undefined && name != null) {
-	    	writeDB(destination)
-	        window.location = './'+destination+'.html?username=' + name +'&region=' 
-	        + region + '&queue=' + queue;
+    		window.location = './'+destination+'.html?username=' + name +'&region=' 
+	        + region + '&season=' + season;
+	     	writeDB(destination)
 	    }
 }
 

@@ -4,7 +4,6 @@
 	<title>webLOL</title>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="scripts/home.js"></script>
-	<script type="text/javascript" src="scripts/search.js"></script>
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 	<link rel="stylesheet" type="text/css" href="styles/home.css">
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
@@ -82,10 +81,10 @@
 				<div class="text-center">
 
 					<label for="username">Username:</label>
-					<input type="text" id="username" value="feed l0rd">
+					<input type="text" id="usernameC" value="feed l0rd" class="customInput">
 
 					<label for="region">Region:</label>
-					<select id="region">
+					<select id="regionC" class="form-control customSelect">
 					  <option value="na">North America</option>
 					  <option value="euw">Europe West</option>
 					  <option value="eune">Europe Nordic & East</option>
@@ -99,7 +98,7 @@
 					</select>	
 
 					<label for="season">Season:</label>
-					<select id="season">
+					<select id="seasonC" class="form-control customSelect">
 					  <option value="PRESEASON3">Preseason 3</option>
 					  <option value="SEASON3">Season 3</option>
 					  <option value="PRESEASON2014">Preseason 4</option>
@@ -113,13 +112,13 @@
 
 			</div>
 			<div class="buttons">
-				<button type="button" class="findButton">Profile</button>
-				<button type="button" id="historyButton">Match History</button>
-				<button type="button" id="leaguesButton">Leagues</button>
+				<button type="button" class="findButton customBut btn btn-default">Profile</button>
+				<button type="button" id="historyButton" class="customBut btn btn-default">Match History</button>
+				<button type="button" id="leaguesButton" class="customBut btn btn-default">Leagues</button>
 			</div>
 
 			<div class="recentButton" id="recentButton">
-				<button type="button" value="recent">Recent Searches</button>
+				<button type="button" value="recent" class="customBut btn btn-default">Recent Searches</button>
 			</div>
 
 			</br>
