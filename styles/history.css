@@ -3,15 +3,15 @@ table{
 }
 
 .minisummary{
-	border-top: 1px solid #6B6565;
-	border-left: 1px solid #6B6565;
-	border-right: 1px solid #6B6565;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 .minitable{
-	border-bottom: 1px solid #6B6565;
-	border-left: 1px solid #6B6565;
-	border-right: 1px solid #6B6565;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 .matchTitle{
@@ -19,6 +19,7 @@ table{
 	padding-left: 4%;
 }
 
+/*Images for Table*/
 .champPic{
 	width: 50px;
 	height: 50px;
@@ -45,14 +46,27 @@ table{
 	margin-bottom: 25px
 }
 
-.resultstablediv{
+.resultsTableDiv{
 	text-align: center;
 }
 
-.resultstable, td > td{
-	border: 1px solid #6B6565;
+td > td{
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
 	border-spacing: 0;
 	border-collapse: collapse;
+}
+
+td > td:last-child{
+	border-right: 1px solid black;
+}
+
+.blue_player_wards{
+	border-right: none;
+}
+
+.icon_7{
+	border-right: none;
 }
 
 .minitable, .minisummary{
@@ -102,7 +116,7 @@ table{
 }
 
 .blue_player_items, .red_player_items, .icon_4{
-	width: 100px;
+	width: 101px;
 }
 
 .blue_player_items, .red_player_items{
@@ -127,20 +141,21 @@ table{
 	text-align: center;
 }
 
+.resultstable td, .resultstable th{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
 .blue_player_name, .blue_player_kda, .blue_player_cs, .blue_player_gold,.blue_player_wards, .red_player_name, .red_player_kda, .red_player_cs, .red_player_gold,.red_player_wards {
 	font-size: 11px;
 	text-align: center;
 	white-space: nowrap;
 }
 
-#historyLink{
-	background-color: #595959;
-	border-radius: 5px;
-}
-
 #image img{
 	width: 100%;
 	border: 1px solid black;
+
 }
 
 #mainWrap{

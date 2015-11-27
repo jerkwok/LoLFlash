@@ -349,88 +349,78 @@ function createTable(teamplayersNum, tableNum){
 	
 
 	//Create the table
-	var table = document.createElement('TABLE');
+	var table = document.createElement('table');
 	table.setAttribute("class","resultstable")
 	table.setAttribute("id","resultstable" + tableId)
 
-	var tableBody = document.createElement('TBODY');
+	var tableBody = document.createElement('tbody');
 	table.appendChild(tableBody);
 	tableBody.setAttribute("class", "resultstablebody")
 	tableBody.setAttribute("id", "resultstablebody")
 
-	var summary_row = document.createElement('TR');
-	tableBody.appendChild(summary_row);
+	var summary_row = document.createElement('tr');
 	summary_row.setAttribute("class", "summary_row")
 	summary_row.setAttribute("id", "summary_row")
 
 	//Icons
 	var iconslist = ["champion","spells","name","score","items","gold","minion","wards"]
 	for (var i = 0; i < 2; i++) {
-		var tdContainer = document.createElement('TD');
 		for (var icon in iconslist){
-			var td = document.createElement('TD');
+			var th = document.createElement('th');
 			var tag = "icon" + "_" + icon;
-		    td.setAttribute("class", tag)
-			td.setAttribute("id", tag)
+		    th.setAttribute("class", tag)
+			th.setAttribute("id", tag + i)
 
 			if( i == 0 ){
-				td.style.backgroundColor = "#0b3d59";
+				th.style.backgroundColor = "#0b3d59";
 			} else{
-				td.style.backgroundColor = "#6F0007";
+				th.style.backgroundColor = "#6F0007";
 			}
 
 			if (iconslist[icon] != "name"){
-				td.innerHTML = "<img alt=\"" + iconslist[icon] + "\"title=\"" + iconslist[icon] + "\"class=\"iconPic\"src=\"./images/" + iconslist[icon] + ".png\"></img>"
+				th.innerHTML = "<img alt=\"" + iconslist[icon] + "\"title=\"" + iconslist[icon] + "\"class=\"iconPic\"src=\"./images/" + iconslist[icon] + ".png\"></img>"
 			}else{
-				td.innerHTML = "Name"
+				th.innerHTML = "Name"
 			}
-
-		    tdContainer.appendChild(td);
+			summary_row.appendChild(th);
 		}
-		summary_row.appendChild(tdContainer);
 	}
+
+	tableBody.appendChild(summary_row);
 
 	var colslist = ["champ","spells","name","kda","items","gold", "cs","wards"]
 	for (var playernum = 0; playernum < teamplayersNum; playernum++){
-		var player_row = document.createElement('TR');
-		tableBody.appendChild(player_row);
+		var player_row = document.createElement('tr');
 
 		player_row.setAttribute("class",  "player_row" + playernum)
 		player_row.setAttribute("id",  "player_row" + tableId + playernum)
 
 		// Blue player table
-		var player_a = document.createElement('TD')
-
-		player_a.setAttribute("class", "blue_player" + playernum)
-		player_a.setAttribute("id", "blue_player" + tableId + playernum)
 
 		for(var col in colslist){
-			var currTD = document.createElement('TD')
+			var currTD = document.createElement('td')
 
 			currTD.setAttribute("id", "blue_player_" + colslist[col] + tableId + playernum)
 			currTD.setAttribute("class", "blue_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#0b3d59";
-			player_a.appendChild(currTD)
+			player_row.appendChild(currTD)
 		}
 
 		// Red player table
-		var player_b = document.createElement('TD')
-
-		player_b.setAttribute("class", "red_player" + playernum)
-		player_b.setAttribute("id", "red_player"+ tableId + playernum)
 
 		for(var col in colslist){
-			var currTD = document.createElement('TD')
+			var currTD = document.createElement('td')
 
 			currTD.setAttribute("id", "red_player_" + colslist[col] + tableId + playernum)
 			currTD.setAttribute("class", "red_player_" + colslist[col]);
 			currTD.style.backgroundColor = "#6F0007";
-			player_b.appendChild(currTD)
+			player_row.appendChild(currTD)
 		}
 
-        player_row.appendChild(player_a)
-        player_row.appendChild(player_b)
+        tableBody.appendChild(player_row);
 	}
+
+
 	document.getElementById('resultsTableDiv').appendChild(minisummary);
 	document.getElementById('resultsTableDiv').appendChild(minitable);
 	document.getElementById('resultsTableDiv').appendChild(table);
