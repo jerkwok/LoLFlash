@@ -7,6 +7,8 @@
 }
 
 .logo{
+	padding-top: 60px;
+	padding-bottom: 30px;
 	text-align: center;
 }
 
@@ -19,4 +21,37 @@
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 	border: 1px solid #ccc;
+}
+
+.table > tbody > tr > td{
+	border-top: 1px solid black !important;
+	text-align: center;
+}
+
+.table > tbody > tr > th{
+	border-top: none !important;
+	border-bottom: 2px solid black !important;
+}
+
+.table > tbody > tr > th, .table > tbody > tr > td{
+	border-left: none !important;
+	text-align: center;
+}
+
+.table > tbody > tr > th:first-child, .table > tbody > tr > td:first-child{
+	border-right: none !important;
+	border-left: none !important;
+}
+
+.table > thead > tr >th{
+	text-align: center;
+	border-bottom: 2px solid black !important
+}
+
+.table tbody tr:hover{
+	background:#73787D;
+}
+
+.table tbody tr{
+	cursor: pointer;
 }
