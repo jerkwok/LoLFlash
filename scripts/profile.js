@@ -68,7 +68,7 @@ function getID(user, region, season){
 
 			getWinStats(sID, region, season);
 
-			getRecentStats(sID,region,season);
+			getRecentChamps(sID,region,season);
 		}
 	})
 }
@@ -187,6 +187,46 @@ function getWinStats(id, region, season){
 	})
 }
 
+function getRecentChamps(id, region, season){
+	//get match history
+	var optargs = ""
+
+	if (season != undefined) {
+		optargs += "&seasons=" + season;
+	};
+
+	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchlist/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+
+	$.ajax({		
+			url: matchHistUrl,
+			type: 'GET',
+			dataType: 'json',
+			data: {
+
+			},
+			success: function(data){
+				console.log(data)
+				// Change this value based on how many games you want
+				var gamesToDisplay = 3;
+				console.log(data.matches[0])
+				if(data.totalGames > gamesToDisplay-1){
+					for(var i = 0; i < gamesToDisplay; i++){
+				 		displayChamp(id, data.matches[i], region,i);
+				 	}
+				}
+			}
+		})
+}
+
+function displayChamp(id, match, region, iterator){
+	var champKey = match.champion;
+	var champName = getChampName(champKey)
+	var champPic;
+	console.log(match.champion)
+	divdest = "last"+iterator
+	document.getElementById(divdest).innerHTML = getChampPic(champName,champName)
+}
+
 // Retrieves all of the champion's data and stores it into the champIdMap
 function getChampIdMap(callback){
 
@@ -234,15 +274,11 @@ function getSpellIdMap(callback){
 
 // Gets the champion's name (full name with punctuation)
 // Title is a boolean to return the title as well
-function getChampName(champId, title){
+function getChampName(champId){
 	var champion;
 	for(var key in champIdMap.data){
 		if(champIdMap.data[key].id == champId){
-			if (title = false){
-				return champIdMap.data[key].name;
-			}else{
-				return champIdMap.data[key].name + ", " + champIdMap.data[key].title;				
-			}
+			return champIdMap.data[key].name;
 		}
 	}
 }

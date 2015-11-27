@@ -68,8 +68,7 @@ function getMatchHistory(id, region, season){
 
 	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchlist/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
 
-	$.ajax({
-			
+	$.ajax({		
 			url: matchHistUrl,
 			type: 'GET',
 			dataType: 'json',
