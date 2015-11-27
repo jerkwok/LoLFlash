@@ -19,6 +19,7 @@ $(document).ready(function(){
 		var season = $('#season').val()
 		// season not used in this page. May remove after
 
+		writeDB("leagues")
 		getID(username, region, season);
 	});
 });

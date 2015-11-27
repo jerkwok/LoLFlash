@@ -163,3 +163,7 @@ td > td:last-child{
 	padding-right: 5%;
 	padding-top: 0;
 }
+
+.minitable, .minisummary{
+	cursor: pointer;
+}
