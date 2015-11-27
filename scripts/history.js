@@ -204,13 +204,16 @@ function getMatchInfo(region, matchId,playerID){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
 						console.log(data.participants[spotlightID].stats[itemstring])
-						if(itemIdMap.data.hasOwnProperty(data.participants[spotlightID].stats[itemstring])){
+						if (data.participants[spotlightID].stats[itemstring] == 0) {
+							document.getElementById(playerdivdest).innerHTML += 
+								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+						}else if(itemIdMap.data.hasOwnProperty(data.participants[spotlightID].stats[itemstring])){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[spotlightID].stats[itemstring],itemIdMap.data[data.participants[spotlightID].stats[itemstring]].name)
 						}else{
 							//Need to make a empty item slot picture
 							document.getElementById(playerdivdest).innerHTML += 
-								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
 				}
 
@@ -265,13 +268,16 @@ function getMatchInfo(region, matchId,playerID){
 					for (var itemnum = 0; itemnum < 7; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
-						if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
+						if (data.participants[i].stats[itemstring] == 0) {
+							document.getElementById(playerdivdest).innerHTML += 
+								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+						}else if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 						}else{
 							//Need to make a empty item slot picture
 							document.getElementById(playerdivdest).innerHTML += 
-								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
 					}
 
