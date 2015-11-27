@@ -55,3 +55,7 @@
 .table tbody tr{
 	cursor: pointer;
 }
+
+.form-control{
+	display: inline-block !important;
+}

@@ -78,7 +78,7 @@ function getMatchHistory(id, region, queue){
 			},
 			success: function(data){
 
-				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History:" + "</p>"
+				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History" + "</p>"
 
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
@@ -168,7 +168,7 @@ function getMatchInfo(region, matchId,playerID){
 				
 
 				document.getElementById(playerdivdest).innerHTML = 				
-					"duration: " + formattedDate;
+					"Duration: " + formattedDate;
 
 				//result
 				var playerdivdest = "minisummary_" + "result" + tableId
