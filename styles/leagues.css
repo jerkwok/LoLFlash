@@ -32,3 +32,19 @@
 	padding-right: 5%;
 	padding-top: 0;
 }
+
+.division{
+	text-align: center;
+}
+
+.dispRank{
+	/*text-align: center;*/
+	font-size: 26px;
+	display: inline-block;
+}
+
+.rankPic{
+	/*text-align: center;*/
+	display: inline-block;
+	width: 150px;
+}

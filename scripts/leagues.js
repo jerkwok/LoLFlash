@@ -62,6 +62,8 @@ function getLeagues(region, sID){
 					
 					tier = data[sID][i].tier
 
+					divName = data[sID][i].name
+
 					var divisionList = [];
 
 					// Find the division the summoner is in
@@ -86,7 +88,7 @@ function getLeagues(region, sID){
 					});
 
 					// Builds the table
-					buildTable(tier, divisionList, sID)
+					buildTable(tier, division, divName, divisionList, sID)
 
 					break;
 				}
@@ -97,9 +99,19 @@ function getLeagues(region, sID){
 	})
 }
 
-function buildTable(tier, divisionList, sID){
+function buildTable(tier, division, divName, divisionList, sID){
 
 	clear("table")
+	clear("division")
+
+	imgTier = tier.toLowerCase().trim();
+
+	imgTier = imgTier + "Tier";
+
+	console.log(divisionList)
+
+	document.getElementById("division").innerHTML += "<img src=\"./images/" + imgTier + ".png\" class=\"rankPic\"></img>"
+	document.getElementById("division").innerHTML += "<h3 class=\"dispRank\">" + tier + " " + division + " - " + divName + "</h3>"
 
 	newTable = document.createElement("table");
 	newTable.setAttribute("class", "table table-inverse");
