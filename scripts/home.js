@@ -1,18 +1,10 @@
 $(document).ready(function(){
 
-	$("#recent").hide()
-
-	$("#recentButton").click(function(){
-		if ($("#recent").is(':visible')){
-			$("#recent").fadeOut('fast')
-		}else{
-			$.ajax({
+	$.ajax({
 				url: "./scripts/displaysearches.php",
 				success: function(response){
-					console.log(response)
 					splitresponse = response.split("<br />")
 					responsedata = new Array(splitresponse.length);
-					console.log(splitresponse)
 					for (var i = 0; i < 10; i++) {
 						responsedata[i] = new Array(4);
 					}
@@ -29,22 +21,23 @@ $(document).ready(function(){
 							responsedata[i][0]= ""
 						}
 					}
-					console.log(responsedata)
 					buildTable(responsedata)
 					// document.getElementById("recent").innerHTML = response
-					$("#recent").fadeIn('fast')
 				}
 			})
+	$("#recent").hide()
+
+	$("#recentButton").click(function(){
+		if ($("#recent").is(':visible')){
+			$("#recent").fadeOut('fast')
+		}else{
+			$("#recent").fadeIn('fast')
 		}
-	});
+	})
 
 
 
 	$(".findButton").click(function(){
-		console.log(getRseasonMap())
-		// console.log($("#seasonC").val())
-		// console.log($("#regionC").val())
-		// console.log($("#usernameC").val())
 		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
@@ -58,7 +51,6 @@ $(document).ready(function(){
 
 	$(".searchButton").click(function(){
 		//Need to change these to grab the top bar values
-		console.log("searchbutton")
 		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
@@ -94,6 +86,22 @@ function buildTable(responsedata){
 	seasonMap = getseasonMap();
 	newTable = document.createElement("table");
 	newTable.setAttribute("class", "table table-inverse");
+
+	newHead = document.createElement("thead");
+	titles = ["Summoner Name", "Region", "Season", "Search Type"]
+
+	newRow = document.createElement("tr");
+
+	for(title in titles){
+		newCol = document.createElement("th");
+		text = document.createTextNode(titles[title]);
+		newCol.appendChild(text)
+		newRow.appendChild(newCol)
+	}
+
+	newHead.appendChild(newRow)
+	newTable.appendChild(newHead);
+
 	newBody = document.createElement("tbody");
 
 	for(i = 0; i < responsedata.length; i++){
@@ -103,6 +111,7 @@ function buildTable(responsedata){
 			newRow = document.createElement("tr");
 			var clickID = "rowClick("+i+")"
 			newRow.setAttribute("onclick",clickID)
+			newRow.setAttribute("class", "recent_row")
 			var rowID = "results_row_" + i
 			newRow.setAttribute("id",rowID)
 			

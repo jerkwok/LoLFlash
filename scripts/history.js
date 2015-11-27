@@ -140,15 +140,33 @@ function getMatchInfo(region, matchId,playerID){
 				//duration
 				var playerdivdest = "minisummary_" + "duration" + tableId
 				var formattedDate = ""
+				var hours = ""
+				var minutes = ""
+				var seconds = ""
 				if (data.matchDuration > 3600){
-					formattedDate = formattedDate + Math.floor(data.matchDuration/60) + ":" +
-					Math.floor(data.matchDuration - 3600 / 60) + ":" +
-					(data.matchDuration - 3600) % 60 
+					hours = Math.floor(data.matchDuration/60) 
+					minutes = Math.floor(data.matchDuration - 3600 / 60)
+					seconds = (data.matchDuration - 3600) % 60
 				} else{
-					formattedDate = formattedDate +
-					Math.floor(data.matchDuration / 60) + ":" +
-					(data.matchDuration) % 60 
+					minutes = Math.floor(data.matchDuration / 60)
+					seconds = (data.matchDuration) % 60 
 				}
+
+				if (minutes < 10){
+					minutes = "0" + minutes
+				}
+
+				if (seconds < 10){
+					seconds = "0" + seconds
+				}
+
+				if (data.matchDuration > 3600){
+					formattedDate = formattedDate + hours + ":"
+				}
+
+				formattedDate = formattedDate + minutes + ":" + seconds
+				
+
 				document.getElementById(playerdivdest).innerHTML = 				
 					"duration: " + formattedDate;
 
