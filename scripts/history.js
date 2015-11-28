@@ -76,14 +76,15 @@ function getMatchHistory(id, region, season){
 
 			},
 			success: function(data){
-
+				console.log(data)
 				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History" + "</br>(click to expand/collapse)</p>"
 
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
 
-				if(data.totalGames > gamesToDisplay-1){
-					for(var i = 0; i < gamesToDisplay; i++){
+				if(data.totalGames >= gamesToDisplay){
+					tableNum = gamesToDisplay;
+					for(var i = gamesToDisplay-1; i >= 0; i--){
 				 		displayGame(id, data.matches[i], region);
 				 	}
 				}
@@ -103,6 +104,7 @@ function getMatchInfo(region, matchId,playerID){
 	var champKey;
 	var champPic;
 	var KDA = [0,0,0];
+	var gameResult;
 	$.ajax({
 			
 			url: matchUrl,
@@ -115,7 +117,14 @@ function getMatchInfo(region, matchId,playerID){
 					if (data.participantIdentities[i].player.summonerId == playerID)
 					spotlightID = data.participantIdentities[i].participantId - 1
 				}
-				createTable((data.participants.length/2),tableNum);
+
+				if (data.teams[(data.participants[spotlightID].teamId-100)/100].winner == true){
+					gameResult = 1
+				}else{
+					gameResult = 0
+				}
+
+				createTable((data.participants.length/2),tableNum,gameResult);
 				var tableId = tableNum + ""
 
 				//create mini match table
@@ -171,8 +180,7 @@ function getMatchInfo(region, matchId,playerID){
 
 				//result
 				var playerdivdest = "minisummary_" + "result" + tableId
-				// console.log((data.participants[spotlightID].teamId-100)/100)
-				if (data.teams[(data.participants[spotlightID].teamId-100)/100].winner == true){
+				if (gameResult){
 					document.getElementById(playerdivdest).innerHTML = 				
 						"Victory"
 				}else{
@@ -198,14 +206,19 @@ function getMatchInfo(region, matchId,playerID){
 				+ ratio;
 				
 				var playerdivdest = "miniplayer_" + "items" + tableId
-				console.log(data.participants[spotlightID])
+				// console.log(data.participants[spotlightID])
+
 				for (var itemnum = 0; itemnum < 7; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
-						console.log(data.participants[spotlightID].stats[itemstring])
 						if (data.participants[spotlightID].stats[itemstring] == 0) {
-							document.getElementById(playerdivdest).innerHTML += 
-								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+							if (gameResult){
+								document.getElementById(playerdivdest).innerHTML += 
+									"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/blueempty.png\"></img>"
+							}else{
+								document.getElementById(playerdivdest).innerHTML += 
+									"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/redempty.png\"></img>"
+							}
 						}else if(itemIdMap.data.hasOwnProperty(data.participants[spotlightID].stats[itemstring])){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[spotlightID].stats[itemstring],itemIdMap.data[data.participants[spotlightID].stats[itemstring]].name)
@@ -214,12 +227,12 @@ function getMatchInfo(region, matchId,playerID){
 							document.getElementById(playerdivdest).innerHTML += 
 								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
-				}
+					}
 
 				var playerdivdest = "miniplayer_" + "stats" + tableId
 				document.getElementById(playerdivdest).innerHTML = 
 				"CS: "+
-				data.participants[spotlightID].stats.minionsKilled + 
+				(data.participants[spotlightID].stats.minionsKilled+data.participants[spotlightID].stats.neutralMinionsKilled) + 
 				" Wards: "+
 				data.participants[spotlightID].stats.wardsPlaced
 
@@ -274,7 +287,6 @@ function getMatchInfo(region, matchId,playerID){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 						}else{
-
 							//Need to make a empty item slot picture
 							document.getElementById(playerdivdest).innerHTML += 
 								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
@@ -282,8 +294,6 @@ function getMatchInfo(region, matchId,playerID){
 					}
 
 					//Trinket
-
-					//End game items
 					playerdivdest = team + "_player_trinket" + tableId + teamplayernum
 
 					if (data.participants[i].stats["item6"] == 0) {
@@ -306,7 +316,7 @@ function getMatchInfo(region, matchId,playerID){
 					//CS
 					playerdivdest = team + "_player_cs" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
-					data.participants[i].stats.minionsKilled ;
+					(data.participants[spotlightID].stats.minionsKilled+data.participants[spotlightID].stats.neutralMinionsKilled) ;
 
 					//Wards
 					playerdivdest = team + "_player_wards" + tableId + teamplayernum
@@ -314,7 +324,7 @@ function getMatchInfo(region, matchId,playerID){
 					data.participants[i].stats.wardsPlaced;				
 				}
 
-				tableNum++;
+				tableNum--;
 			}
 		})
 }
@@ -323,16 +333,14 @@ function tableClick(clickedNum){
 	console.log(clickedNum)
 	tablestring = "#resultstable"+clickedNum
 	if ($(tablestring).is(':visible')){
-		// $(tablestring).hide()		
 		$(tablestring).fadeOut('fast')		
 	}else{
-		// $(tablestring).show()
 		$(tablestring).fadeIn('fast')
 	}
 }
 
 //Argument is the number of players per team
-function createTable(teamplayersNum, tableNum){
+function createTable(teamplayersNum, tableNum, gameResult){
 
 	tableId = tableNum + ""
 	//Create mini table
@@ -368,7 +376,11 @@ function createTable(teamplayersNum, tableNum){
 
 		currTD.setAttribute("id", "minisummary_" + minisumcolslist[col] + tableId)
 		currTD.setAttribute("class", "minisummary_" + minisumcolslist[col]);
-		currTD.style.backgroundColor = "#0b3d59";
+		if (gameResult){
+			currTD.style.backgroundColor = "#0b3d59";
+		} else{
+			currTD.style.backgroundColor = "#6F0007";			
+		}
 		minisummary_row.appendChild(currTD)
 	}
 
@@ -384,7 +396,11 @@ function createTable(teamplayersNum, tableNum){
 
 		currTD.setAttribute("id", "miniplayer_" + minicolslist[col] + tableId)
 		currTD.setAttribute("class", "miniplayer_" + minicolslist[col]);
-		currTD.style.backgroundColor = "#0b3d59";
+		if (gameResult){
+			currTD.style.backgroundColor = "#0b3d59";
+		} else{
+			currTD.style.backgroundColor = "#6F0007";			
+		}
 		miniplayer_row.appendChild(currTD)
 	}
 	

@@ -50,6 +50,10 @@ table{
 	text-align: center;
 }
 
+.resultsTableTitle{
+	text-align: center;
+}
+
 td > td{
 	border-bottom: 1px solid black;
 	border-left: 1px solid black;
