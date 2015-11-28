@@ -16,6 +16,7 @@ $dbhost = 'localhost';
                 echo $row['username'] . "," . $row['region'] . "," . $row['season'] . "," . $row['type'] . "<br />";
             }  
 
+            echo "php done";
             $id = $conn->lastInsertId();                    
             $conn = null;
             

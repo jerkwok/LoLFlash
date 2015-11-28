@@ -30,6 +30,7 @@ html, body{
 
 .navbar-brand {
 	font-size: 14px !important;
+	width: 95px !important;
 }
 
 #container{
@@ -92,5 +93,5 @@ select{
 
 .bolt{
 	height:20px;
-	display:inline;
+	float: right;
 }

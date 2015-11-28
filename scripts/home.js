@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$.ajax({
 				url: "./scripts/displaysearches.php",
 				success: function(response){
+					console.log(response)
 					splitresponse = response.split("<br />")
 					responsedata = new Array(splitresponse.length);
 					for (var i = 0; i < 10; i++) {
