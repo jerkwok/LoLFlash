@@ -264,22 +264,40 @@ function getMatchInfo(region, matchId,playerID){
 					//End game items
 					playerdivdest = team + "_player_items" + tableId + teamplayernum
 
-					for (var itemnum = 0; itemnum < 7; itemnum++){
+					for (var itemnum = 0; itemnum < 6; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
 						if (data.participants[i].stats[itemstring] == 0) {
 							document.getElementById(playerdivdest).innerHTML += 
-								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/"+team+"empty.png\"></img>"
 						}else if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
 							document.getElementById(playerdivdest).innerHTML +=
 							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 						}else{
+
 							//Need to make a empty item slot picture
 							document.getElementById(playerdivdest).innerHTML += 
 								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
 					}
 
+					//Trinket
+
+					//End game items
+					playerdivdest = team + "_player_trinket" + tableId + teamplayernum
+
+					if (data.participants[i].stats["item6"] == 0) {
+						document.getElementById(playerdivdest).innerHTML += 
+							"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+					}else if(itemIdMap.data.hasOwnProperty(data.participants[i].stats["item6"])){
+						document.getElementById(playerdivdest).innerHTML +=
+						getItemPic(data.participants[i].stats["item6"],itemIdMap.data[data.participants[i].stats["item6"]].name)
+					}else{
+						//Need to make a empty item slot picture
+						document.getElementById(playerdivdest).innerHTML += 
+							"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
+					}
+					
 					//Gold`
 					playerdivdest = team + "_player_gold" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
@@ -386,7 +404,7 @@ function createTable(teamplayersNum, tableNum){
 	summary_row.setAttribute("id", "summary_row")
 
 	//Icons
-	var iconslist = ["champion","spells","name","score","items","gold","minion","wards"]
+	var iconslist = ["champion","spells","name","score","items","trinket","gold","minion","wards"]
 	for (var i = 0; i < 2; i++) {
 		for (var icon in iconslist){
 			var th = document.createElement('th');
@@ -411,7 +429,7 @@ function createTable(teamplayersNum, tableNum){
 
 	tableBody.appendChild(summary_row);
 
-	var colslist = ["champ","spells","name","kda","items","gold", "cs","wards"]
+	var colslist = ["champ","spells","name","kda","items","trinket", "gold", "cs","wards"]
 	for (var playernum = 0; playernum < teamplayersNum; playernum++){
 		var player_row = document.createElement('tr');
 

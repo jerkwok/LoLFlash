@@ -27,13 +27,14 @@ $(document).ready(function(){
  		clear("userStats")
  		clear("userSum")
 
-		document.getElementById("player").style.display = "inline-block";
 
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()
     	writeDB("profile")
 		getID(username, region, season);
+		// document.getElementById("player").style.display = "inline-block";
+		$("#player").show();
   	});
 });
 
@@ -224,7 +225,7 @@ function displayChamp(id, match, region, iterator){
 	var champPic;
 	console.log(match.champion)
 	divdest = "last"+iterator
-	document.getElementById(divdest).innerHTML = getChampPic(champName,champName)
+	document.getElementById(divdest).innerHTML = getChampPic(getChampKey(champKey))
 }
 
 // Retrieves all of the champion's data and stores it into the champIdMap

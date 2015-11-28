@@ -148,3 +148,36 @@
 	padding-right: 5%;
 	padding-top: 0;
 }
+
+.lastchamps{
+	width: 60%;
+	border-spacing: 0;
+	float: right;
+	margin-right: 4%;
+}
+
+.lastchamps > tbody > tr > td {
+	text-align: center;
+}
+
+.lastchamps > tbody > tr > th > h3 {
+	width:500px;
+	/*text-align: center;*/
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.lastchamps > tbody > tr > th{
+	height: 30px;
+	text-align: center;
+}
+
+.lastchamps {
+	margin-top: 5px;
+	border: 1px solid #6B6565;
+}
+
+
+.lastchamps > tbody > tr{
+	border: 1px solid #6B6565;
+}

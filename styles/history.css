@@ -124,20 +124,24 @@ td > td:last-child{
 	text-align: center;
 }
 
-.blue_player_cs, .red_player_cs, .icon_5{
+.blue_player_trinket, .red_player_trinket, .icon_5{
 	width: 50px;
 }
 
-.blue_player_gold, .red_player_gold, .icon_6{
+.blue_player_cs, .red_player_cs, .icon_6{
 	width: 50px;
 }
 
-.blue_player_wards, .red_player_wards, .icon_7{
+.blue_player_gold, .red_player_gold, .icon_7{
+	width: 50px;
+}
+
+.blue_player_wards, .red_player_wards, .icon_8{
 	width: 50px;
 	text-align: center;
 }
 
-.icon_0, .icon_1, .icon_2, .icon_3, .icon_4, .icon_5, .icon_6{
+.icon_0, .icon_1, .icon_2, .icon_3, .icon_4, .icon_5, .icon_6, .icon_7, .icon_8{
 	text-align: center;
 }
 
