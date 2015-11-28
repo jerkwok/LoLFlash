@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$.ajax({
 				url: "./scripts/displaysearches.php",
 				success: function(response){
-					console.log(response)
+					// console.log(response)
 					splitresponse = response.split("<br />")
 					responsedata = new Array(splitresponse.length);
 					for (var i = 0; i < 10; i++) {
@@ -51,10 +51,25 @@ $(document).ready(function(){
 	});
 
 	$(".searchButton").click(function(){
+		console.log("search")
 		//Need to change these to grab the top bar values
 		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
+	$("#username").keydown(function(event){
+	   event.preventDefault();
+		console.log("enter")
+	    if(event.keyCode == 13){
+			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+    	}
+	});
+
+	$("#usernameC").keydown(function(event){
+		console.log("enter")
+	    if(event.keyCode == 13){
+			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+    	}
+	});
 });
 
 function writeDB(type){

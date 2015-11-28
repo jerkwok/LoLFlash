@@ -31,6 +31,14 @@ $(document).ready(function(){
 		writeDB("history")
 		getID(username, region, season);
 	});
+
+	$("#username").keydown(function(event){
+	    if(event.keyCode == 13){
+    	   event.preventDefault();
+        	$(".goButton").click();
+    	}
+	});
+
 });
 
 function clear(id){

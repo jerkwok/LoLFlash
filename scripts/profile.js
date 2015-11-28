@@ -24,6 +24,7 @@ $(document).ready(function(){
 
 
 	$(".goButton").click(function(){
+		console.log("enter")
  		clear("userStats")
  		clear("userSum")
 
@@ -36,6 +37,13 @@ $(document).ready(function(){
 		// document.getElementById("player").style.display = "inline-block";
 		$("#player").show();
   	});
+
+	$("#username").keydown(function(event){
+	    if(event.keyCode == 13){
+    	   event.preventDefault();
+        	$(".goButton").click();
+    	}
+	});
 });
 
 function clear(id){

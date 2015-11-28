@@ -22,6 +22,19 @@ $(document).ready(function(){
 		writeDB("leagues")
 		getID(username, region, season);
 	});
+
+	$(document).keyup(function(event){
+	    if(event.keyCode == 13){
+        	$(".goButton").click();
+    	}
+	});
+
+	$("#username").keydown(function(event){
+	    if(event.keyCode == 13){
+    	   event.preventDefault();
+        	$(".goButton").click();
+    	}
+	});
 });
 
 function clear(id){
