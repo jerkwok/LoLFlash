@@ -161,14 +161,11 @@
 }
 
 .lastchamps > tbody > tr > th > h3 {
-	width:500px;
-	/*text-align: center;*/
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 .lastchamps > tbody > tr > th{
-	height: 30px;
 	text-align: center;
 }
 
