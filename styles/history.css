@@ -43,7 +43,7 @@ table{
 .resultstable{
 	margin: 0 auto;
 	background-color: black;
-	margin-bottom: 25px
+	margin-bottom: 0px
 }
 
 .resultsTableDiv{
@@ -52,6 +52,18 @@ table{
 
 .resultsTableTitle{
 	text-align: center;
+}
+
+.teamstats{
+	/*text-align: center;*/
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+
 }
 
 td > td{
@@ -174,4 +186,28 @@ td > td:last-child{
 
 .minitable, .minisummary{
 	cursor: pointer;
+}
+
+.teamstats_name{
+	width:75px;
+}
+
+.teamstats_result{
+	width:75px;	
+}
+
+.teamstats_gold{
+	width:75px;	
+}
+
+.teamstats_towers{
+	width:75px;
+}
+
+.teamstats_dragons{
+	width:75px;
+}
+
+.teamstats_barons{
+	width:75px;
 }

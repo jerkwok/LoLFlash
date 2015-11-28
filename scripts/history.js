@@ -104,6 +104,8 @@ function getMatchInfo(region, matchId,playerID){
 	var champKey;
 	var champPic;
 	var KDA = [0,0,0];
+	var teamGold = [0,0];
+	var teamGoldsmall = [0,0];
 	var gameResult;
 	$.ajax({
 			
@@ -124,7 +126,7 @@ function getMatchInfo(region, matchId,playerID){
 					gameResult = 0
 				}
 
-				createTable((data.participants.length/2),tableNum,gameResult);
+				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner);
 				var tableId = tableNum + ""
 
 				//create mini match table
@@ -312,6 +314,7 @@ function getMatchInfo(region, matchId,playerID){
 					playerdivdest = team + "_player_gold" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.goldEarned;
+					teamGold[(data.participants[i].teamId/100)-1] += data.participants[i].stats.goldEarned
 
 					//CS
 					playerdivdest = team + "_player_cs" + tableId + teamplayernum
@@ -322,6 +325,34 @@ function getMatchInfo(region, matchId,playerID){
 					playerdivdest = team + "_player_wards" + tableId + teamplayernum
 					document.getElementById(playerdivdest).innerHTML = 
 					data.participants[i].stats.wardsPlaced;				
+				}	
+
+				// ["name","result","gold","kda","towers", "dragons", "barons"]
+				for (var i = 0; i < 2; i++){
+					console.log(teamGold[i])
+					teamGoldsmall[i] = (teamGold[i]%1000)/100
+					teamGold[i] = teamGold[i]/1000
+
+					//fill teamstats table
+
+					//gold
+					var playerdivdest = "teamstats_" + tableId + "_" + "gold" + i
+					document.getElementById(playerdivdest).innerHTML += Math.floor(teamGold[i]) + "." + Math.floor(teamGoldsmall[i]) + "K"
+
+					//kda
+
+
+					//towers
+					var playerdivdest = "teamstats_" + tableId + "_" + "towers" + i
+					document.getElementById(playerdivdest).innerHTML += data.teams[i].towerKills
+
+					//dragons
+					var playerdivdest = "teamstats_" + tableId + "_" + "dragons" + i
+					document.getElementById(playerdivdest).innerHTML += data.teams[i].dragonKills
+
+					//barons
+					var playerdivdest = "teamstats_" + tableId + "_" + "barons" + i
+					document.getElementById(playerdivdest).innerHTML += data.teams[i].baronKills
 				}
 
 				tableNum--;
@@ -332,15 +363,18 @@ function getMatchInfo(region, matchId,playerID){
 function tableClick(clickedNum){
 	console.log(clickedNum)
 	tablestring = "#resultstable"+clickedNum
+	statsstring = "#teamstats"+clickedNum
 	if ($(tablestring).is(':visible')){
 		$(tablestring).fadeOut('fast')		
+		$(statsstring).fadeOut('fast')		
 	}else{
 		$(tablestring).fadeIn('fast')
+		$(statsstring).fadeIn('fast')
 	}
 }
 
 //Argument is the number of players per team
-function createTable(teamplayersNum, tableNum, gameResult){
+function createTable(teamplayersNum, tableNum, gameResult, winningTeam){
 
 	tableId = tableNum + ""
 	//Create mini table
@@ -478,10 +512,71 @@ function createTable(teamplayersNum, tableNum, gameResult){
 	}
 
 
+	//teamstats row
+	var teamstats = document.createElement('table')
+	teamstats.setAttribute("class", "teamstats")
+	teamstats.setAttribute("id", "teamstats"+tableId)
+	var teamstats_row = document.createElement('tr');
+	teamstats_row.setAttribute("class", "teamstats_row")
+	teamstats_row.setAttribute("id", "teamstats_row"+tableId)
+
+	var collist = ["name","result","gold","kda","towers", "dragons", "barons"]
+	for (var i = 0; i < 2; i++) {
+		if (i == 0){
+			var teamname = "blue"
+		}else{
+			var teamname = "red"
+		}
+		for (var col in collist){
+			var teamstats_td = document.createElement('td');
+			var tag = "teamstats" + "_" + tableNum + "_" + collist[col];
+		    teamstats_td.setAttribute("class", "teamstats" + "_" +collist[col])
+			teamstats_td.setAttribute("id", tag + i)
+
+			if( i == 0 ){
+				teamstats_td.style.backgroundColor = "#0b3d59";
+			} else{
+				teamstats_td.style.backgroundColor = "#6F0007";
+			}
+
+			if(col == 0){
+				if( i == 0 ){
+					teamstats_td.innerHTML = "Blue Team"
+				} else{
+					teamstats_td.innerHTML = "Red Team"
+				}
+			}else if (col == 1){
+				if( i == 0 ){
+					if (winningTeam){
+						teamstats_td.innerHTML = "Victory"
+					}else{
+						teamstats_td.innerHTML = "Defeat"						
+					}
+				}else{
+					if (!winningTeam){
+						teamstats_td.innerHTML = "Victory"
+					}else{
+						teamstats_td.innerHTML = "Defeat"						
+					}
+				}
+			}else if (col == 2) {
+					teamstats_td.innerHTML = "<img alt=\"" + collist[col] + "\"title=\"" + collist[col] + "\"class=\"iconPic\"src=\"./images/" + collist[col] + ".png\"></img>"
+			}else if ((col == 4) || (col == 5) || (col == 6)){
+					teamstats_td.innerHTML = "<img alt=\"" + collist[col] + "\"title=\"" + collist[col] + "\"class=\"iconPic\"src=\"./images/" + teamname + collist[col] + ".png\"></img>"
+			}
+
+			teamstats_row.appendChild(teamstats_td)
+		}
+	}
+	teamstats.appendChild(teamstats_row)
+
+
 	document.getElementById('resultsTableDiv').appendChild(minisummary);
 	document.getElementById('resultsTableDiv').appendChild(minitable);
 	document.getElementById('resultsTableDiv').appendChild(table);
+	document.getElementById('resultsTableDiv').appendChild(teamstats);
 	$("#resultstable" + tableId).hide();
+	$(teamstats).hide();
 }
 
 function getKDA(data,participantId){
