@@ -120,7 +120,7 @@ function buildTable(responsedata){
 
 	newBody = document.createElement("tbody");
 
-	for(i = 0; i < responsedata.length; i++){
+	for(i = responsedata.length-1; i >= 0; i--){
 		
 			if (responsedata[i][1] != undefined){
 
