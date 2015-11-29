@@ -211,3 +211,11 @@ td > td:last-child{
 .teamstats_barons{
 	width:75px;
 }
+
+.selectedblue{
+	border: 3px solid #8dcdf1 !important;
+}
+
+.selectedred{
+	border: 3px solid #ff8087 !important;
+}

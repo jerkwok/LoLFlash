@@ -247,11 +247,9 @@ function getMatchInfo(region, matchId,playerID){
 					if(data.participants[i].teamId == 100){
 						var team = "blue"
 						var teamplayernum = i
-						var bordercolor = "#8dcdf1";
 					} else{
 						var team = "red"
 						var teamplayernum = i-(data.participants.length/2)
-						var bordercolor = "#ff8087";
 					}
 
 					//highlight the searched player
@@ -263,20 +261,20 @@ function getMatchInfo(region, matchId,playerID){
 					if (data.participantIdentities[i].player.summonerId == playerID) {
 						console.log(team +"_player_champ"+tableNum+ rownum)
 						// if (data.participants[i].teamId == 100){
-							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderLeft="3px " + bordercolor
-							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderTop="3px " + bordercolor
-							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team
+							// document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderTop="3px " + bordercolor + " !important"
+							// document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderBottom="3px " + bordercolor + " !important"
 							
 							cols = ["spells", "name", "kda", "items", "trinket", "gold", "cs"]
 
 							for (col in cols){
-								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderTop="3px " + bordercolor
-								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).className += " selected" + team
+								// document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderBottom="3px " + bordercolor
 							}
 
-							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderRight="3px " + bordercolor
-							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderTop="3px " + bordercolor
-							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+							document.getElementById(team +"_player_wards"+tableNum+ rownum).className += " selected" + team
+							// document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderTop="3px " + bordercolor
+							// document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
 						// }else{
 
 						// }
