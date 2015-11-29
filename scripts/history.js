@@ -112,6 +112,8 @@ function getMatchInfo(region, matchId,playerID){
 	var champKey;
 	var champPic;
 	var KDA = [0,0,0];
+	var blueKDA = [0,0,0];
+	var redKDA = [0,0,0];
 	var teamGold = [0,0];
 	var teamGoldsmall = [0,0];
 	var gameResult;
@@ -253,32 +255,25 @@ function getMatchInfo(region, matchId,playerID){
 					}
 
 					//highlight the searched player
-					if (i > 4){
-						var rownum = i - 5; 
+					if (i > (data.participants.length/2)-1){
+						var rownum = i - (data.participants.length/2); 
 					}else{
 						var rownum = i; 
 					}
+
 					if (data.participantIdentities[i].player.summonerId == playerID) {
 						console.log(team +"_player_champ"+tableNum+ rownum)
-						// if (data.participants[i].teamId == 100){
 							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team
-							// document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderTop="3px " + bordercolor + " !important"
-							// document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderBottom="3px " + bordercolor + " !important"
+							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team + "left"
 							
 							cols = ["spells", "name", "kda", "items", "trinket", "gold", "cs"]
 
 							for (col in cols){
 								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).className += " selected" + team
-								// document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderBottom="3px " + bordercolor
 							}
 
 							document.getElementById(team +"_player_wards"+tableNum+ rownum).className += " selected" + team
-							// document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderTop="3px " + bordercolor
-							// document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
-						// }else{
-
-						// }
-
+							document.getElementById(team +"_player_wards"+tableNum+ rownum).className += " selected" + team + "right"
 					};
 
 					//Champ
@@ -296,6 +291,16 @@ function getMatchInfo(region, matchId,playerID){
 					//KDA
 					document.getElementById(team + "_player_kda" + tableId + teamplayernum).innerHTML = 
 					KDA[0] + "/" + KDA[1] + "/" + KDA[2];
+
+					if (team == "blue"){
+						blueKDA[0]+=KDA[0]
+						blueKDA[1]+=KDA[1]
+						blueKDA[2]+=KDA[2]
+					}else{
+						redKDA[0]+=KDA[0]
+						redKDA[1]+=KDA[1]
+						redKDA[2]+=KDA[2]
+					}
 
 					//End game items
 					for (var itemnum = 0; itemnum < 6; itemnum++){
@@ -353,6 +358,11 @@ function getMatchInfo(region, matchId,playerID){
 					document.getElementById("teamstats_" + tableId + "_" + "gold" + i).innerHTML += Math.floor(teamGold[i]) + "." + Math.floor(teamGoldsmall[i]) + "K"
 
 					//kda
+					if (i == 0){
+						document.getElementById("teamstats_" + tableId + "_" + "kda" + i).innerHTML += blueKDA[0] + "/" + blueKDA[1] + "/" + blueKDA[2]
+					}else{
+						document.getElementById("teamstats_" + tableId + "_" + "kda" + i).innerHTML += redKDA[0] + "/" + redKDA[1] + "/" + redKDA[2]
+					}
 
 					//towers
 					document.getElementById("teamstats_" + tableId + "_" + "towers" + i).innerHTML += data.teams[i].towerKills
