@@ -143,20 +143,16 @@ function getMatchInfo(region, matchId,playerID){
 
 				//minitable summary
 				//match id
-				var playerdivdest = "minisummary_" + "id" + tableId
-				document.getElementById(playerdivdest).innerHTML = 				
+				document.getElementById("minisummary_" + "id" + tableId).innerHTML = 				
 					"MatchId: " + matchId
 
 				//date of game
-				var playerdivdest = "minisummary_" + "date" + tableId
-
 				var d = new Date(data.matchCreation);
 
-				document.getElementById(playerdivdest).innerHTML = 				
+				document.getElementById("minisummary_" + "date" + tableId).innerHTML = 				
 					d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear();
 
 				//duration
-				var playerdivdest = "minisummary_" + "duration" + tableId
 				var formattedDate = ""
 				var hours = ""
 				var minutes = ""
@@ -185,62 +181,55 @@ function getMatchInfo(region, matchId,playerID){
 				formattedDate = formattedDate + minutes + ":" + seconds
 				
 
-				document.getElementById(playerdivdest).innerHTML = 				
+				document.getElementById("minisummary_" + "duration" + tableId).innerHTML = 				
 					"Duration: " + formattedDate;
 
 				//result
-				var playerdivdest = "minisummary_" + "result" + tableId
 				if (gameResult){
-					document.getElementById(playerdivdest).innerHTML = 				
+					document.getElementById("minisummary_" + "result" + tableId).innerHTML = 				
 						"Victory"
 				}else{
-					document.getElementById(playerdivdest).innerHTML = 				
+					document.getElementById("minisummary_" + "result" + tableId).innerHTML = 				
 						"Defeat"
 				}
 
 				//minitable elements
-				var playerdivdest = "miniplayer_" + "champ" + tableId
-				document.getElementById(playerdivdest).innerHTML = 
+				document.getElementById("miniplayer_" + "champ" + tableId).innerHTML = 
 				getChampPic(getChampKey(data.participants[spotlightID].championId),
 					getChampName(data.participants[spotlightID].championId,true))
 				
-				var playerdivdest = "miniplayer_" + "spells" + tableId
-				document.getElementById(playerdivdest).innerHTML = 
+				document.getElementById("miniplayer_" + "spells" + tableId).innerHTML = 
 					getSpellPic(spellImgMap[data.participants[spotlightID].spell1Id],spellIdMap[data.participants[spotlightID].spell1Id]) + 
 					getSpellPic(spellImgMap[data.participants[spotlightID].spell2Id],spellIdMap[data.participants[spotlightID].spell2Id]);
 				
-				var playerdivdest = "miniplayer_" + "kda" + tableId
 				KDA = getKDA(data.participants[spotlightID],spotlightID);
 				var ratio=parseFloat((KDA[0]+KDA[2])/KDA[1]).toFixed(2);
-				document.getElementById(playerdivdest).innerHTML = KDA[0] + "/" + KDA[1] + "/" + KDA[2] +"</br>" +" KDA:" 
+				document.getElementById("miniplayer_" + "kda" + tableId).innerHTML = KDA[0] + "/" + KDA[1] + "/" + KDA[2] +"</br>" +" KDA:" 
 				+ ratio;
 				
-				var playerdivdest = "miniplayer_" + "items" + tableId
 				// console.log(data.participants[spotlightID])
-
 				for (var itemnum = 0; itemnum < 7; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
 						if (data.participants[spotlightID].stats[itemstring] == 0) {
 							if (gameResult){
-								document.getElementById(playerdivdest).innerHTML += 
+								document.getElementById("miniplayer_" + "items" + tableId).innerHTML += 
 									"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/blueempty.png\"></img>"
 							}else{
-								document.getElementById(playerdivdest).innerHTML += 
+								document.getElementById("miniplayer_" + "items" + tableId).innerHTML += 
 									"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/redempty.png\"></img>"
 							}
 						}else if(itemIdMap.data.hasOwnProperty(data.participants[spotlightID].stats[itemstring])){
-							document.getElementById(playerdivdest).innerHTML +=
+							document.getElementById("miniplayer_" + "items" + tableId).innerHTML +=
 							getItemPic(data.participants[spotlightID].stats[itemstring],itemIdMap.data[data.participants[spotlightID].stats[itemstring]].name)
 						}else{
 							//Need to make a empty item slot picture
-							document.getElementById(playerdivdest).innerHTML += 
+							document.getElementById("miniplayer_" + "items" + tableId).innerHTML += 
 								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
 					}
 
-				var playerdivdest = "miniplayer_" + "stats" + tableId
-				document.getElementById(playerdivdest).innerHTML = 
+				document.getElementById("miniplayer_" + "stats" + tableId).innerHTML = 
 				"CS: "+
 				(data.participants[spotlightID].stats.minionsKilled+data.participants[spotlightID].stats.neutralMinionsKilled) + 
 				" Wards: "+
@@ -258,80 +247,99 @@ function getMatchInfo(region, matchId,playerID){
 					if(data.participants[i].teamId == 100){
 						var team = "blue"
 						var teamplayernum = i
-
+						var bordercolor = "#8dcdf1";
 					} else{
 						var team = "red"
 						var teamplayernum = i-(data.participants.length/2)
+						var bordercolor = "#ff8087";
 					}
-					//Champ
-					var playerdivdest = team + "_player_champ"  + tableId + teamplayernum
 
-					document.getElementById(playerdivdest).innerHTML = champPic;
+					//highlight the searched player
+					if (i > 4){
+						var rownum = i - 5; 
+					}else{
+						var rownum = i; 
+					}
+					if (data.participantIdentities[i].player.summonerId == playerID) {
+						console.log(team +"_player_champ"+tableNum+ rownum)
+						// if (data.participants[i].teamId == 100){
+							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderLeft="3px " + bordercolor
+							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderTop="3px " + bordercolor
+							document.getElementById(team +"_player_champ"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+							
+							cols = ["spells", "name", "kda", "items", "trinket", "gold", "cs"]
+
+							for (col in cols){
+								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderTop="3px " + bordercolor
+								document.getElementById(team +"_player_"+cols[col]+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+							}
+
+							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderRight="3px " + bordercolor
+							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderTop="3px " + bordercolor
+							document.getElementById(team +"_player_wards"+tableNum+ rownum).style.borderBottom="3px " + bordercolor
+						// }else{
+
+						// }
+
+					};
+
+					//Champ
+					document.getElementById(team + "_player_champ"  + tableId + teamplayernum).innerHTML = champPic;
 
 					//Summoners
-					playerdivdest = team + "_player_spells" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
+					document.getElementById(team + "_player_spells" + tableId + teamplayernum).innerHTML = 
 					getSpellPic(spellImgMap[data.participants[i].spell1Id],spellIdMap[data.participants[i].spell1Id]) + 
 					getSpellPic(spellImgMap[data.participants[i].spell2Id],spellIdMap[data.participants[i].spell2Id]);
 
 					//Name
-					playerdivdest = team + "_player_name" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML =
+					document.getElementById(team + "_player_name" + tableId + teamplayernum).innerHTML =
 					data.participantIdentities[i].player.summonerName; 
 
 					//KDA
-					playerdivdest = team + "_player_kda" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
+					document.getElementById(team + "_player_kda" + tableId + teamplayernum).innerHTML = 
 					KDA[0] + "/" + KDA[1] + "/" + KDA[2];
 
 					//End game items
-					playerdivdest = team + "_player_items" + tableId + teamplayernum
-
 					for (var itemnum = 0; itemnum < 6; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
 						if (data.participants[i].stats[itemstring] == 0) {
-							document.getElementById(playerdivdest).innerHTML += 
+							document.getElementById(team + "_player_items" + tableId + teamplayernum).innerHTML += 
 								"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/"+team+"empty.png\"></img>"
 						}else if(itemIdMap.data.hasOwnProperty(data.participants[i].stats[itemstring])){
-							document.getElementById(playerdivdest).innerHTML +=
+							document.getElementById(team + "_player_items" + tableId + teamplayernum).innerHTML +=
 							getItemPic(data.participants[i].stats[itemstring],itemIdMap.data[data.participants[i].stats[itemstring]].name)
 						}else{
 							//Need to make a empty item slot picture
-							document.getElementById(playerdivdest).innerHTML += 
+							document.getElementById(team + "_player_items" + tableId + teamplayernum).innerHTML += 
 								"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 						}
 					}
 
 					//Trinket
-					playerdivdest = team + "_player_trinket" + tableId + teamplayernum
-
 					if (data.participants[i].stats["item6"] == 0) {
-						document.getElementById(playerdivdest).innerHTML += 
+						document.getElementById(team + "_player_trinket" + tableId + teamplayernum).innerHTML += 
 							"<img alt=\"No Item\"title=\"No Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 					}else if(itemIdMap.data.hasOwnProperty(data.participants[i].stats["item6"])){
-						document.getElementById(playerdivdest).innerHTML +=
+						document.getElementById(team + "_player_trinket" + tableId + teamplayernum).innerHTML +=
 						getItemPic(data.participants[i].stats["item6"],itemIdMap.data[data.participants[i].stats["item6"]].name)
 					}else{
 						//Need to make a empty item slot picture
-						document.getElementById(playerdivdest).innerHTML += 
+						document.getElementById(team + "_player_trinket" + tableId + teamplayernum).innerHTML += 
 							"<img alt=\"Depreciated Item\"title=\"Depreciated Item\"class=\"iconPic\"src=\"./images/empty.png\"></img>"
 					}
 					
-					//Gold`
-					playerdivdest = team + "_player_gold" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
+					//Gold
+					document.getElementById(team + "_player_gold" + tableId + teamplayernum).innerHTML = 
 					data.participants[i].stats.goldEarned;
 					teamGold[(data.participants[i].teamId/100)-1] += data.participants[i].stats.goldEarned
 
 					//CS
-					playerdivdest = team + "_player_cs" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
+					document.getElementById(team + "_player_cs" + tableId + teamplayernum).innerHTML = 
 					(data.participants[spotlightID].stats.minionsKilled+data.participants[spotlightID].stats.neutralMinionsKilled) ;
 
 					//Wards
-					playerdivdest = team + "_player_wards" + tableId + teamplayernum
-					document.getElementById(playerdivdest).innerHTML = 
+					document.getElementById(team + "_player_wards" + tableId + teamplayernum).innerHTML = 
 					data.participants[i].stats.wardsPlaced;				
 				}	
 
@@ -344,23 +352,18 @@ function getMatchInfo(region, matchId,playerID){
 					//fill teamstats table
 
 					//gold
-					var playerdivdest = "teamstats_" + tableId + "_" + "gold" + i
-					document.getElementById(playerdivdest).innerHTML += Math.floor(teamGold[i]) + "." + Math.floor(teamGoldsmall[i]) + "K"
+					document.getElementById("teamstats_" + tableId + "_" + "gold" + i).innerHTML += Math.floor(teamGold[i]) + "." + Math.floor(teamGoldsmall[i]) + "K"
 
 					//kda
 
-
 					//towers
-					var playerdivdest = "teamstats_" + tableId + "_" + "towers" + i
-					document.getElementById(playerdivdest).innerHTML += data.teams[i].towerKills
+					document.getElementById("teamstats_" + tableId + "_" + "towers" + i).innerHTML += data.teams[i].towerKills
 
 					//dragons
-					var playerdivdest = "teamstats_" + tableId + "_" + "dragons" + i
-					document.getElementById(playerdivdest).innerHTML += data.teams[i].dragonKills
+					document.getElementById("teamstats_" + tableId + "_" + "dragons" + i).innerHTML += data.teams[i].dragonKills
 
 					//barons
-					var playerdivdest = "teamstats_" + tableId + "_" + "barons" + i
-					document.getElementById(playerdivdest).innerHTML += data.teams[i].baronKills
+					document.getElementById("teamstats_" + tableId + "_" + "barons" + i).innerHTML += data.teams[i].baronKills
 				}
 
 				tableNum--;
