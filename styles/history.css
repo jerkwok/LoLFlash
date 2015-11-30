@@ -20,6 +20,13 @@ table{
 	margin-bottom: 10px;
 }
 
+#errordiv{
+	font-size: 26px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
 .champPic{
 	width: 50px;
 	height: 50px;
@@ -200,22 +207,45 @@ td > td:last-child{
 	width:75px;	
 }
 
+.teamstats_kda{
+	width:81px;
+	text-align: center;
+}
+
 .teamstats_towers{
-	width:75px;
+	width:73px;
 }
 
 .teamstats_dragons{
-	width:75px;
+	width:73px;
 }
 
 .teamstats_barons{
-	width:75px;
+	width:73px;
 }
 
 .selectedblue{
-	border: 3px solid #8dcdf1 !important;
+	border-top: 3px solid #8dcdf1 !important;
+	border-bottom: 3px solid #8dcdf1 !important;
+}
+
+.selectedblueleft{
+	border-left: 3px solid #8dcdf1 !important;
+}
+
+.selectedblueright{
+	border-right: 3px solid #8dcdf1 !important;
 }
 
 .selectedred{
-	border: 3px solid #ff8087 !important;
+	border-top: 3px solid #ff8087 !important;
+	border-bottom: 3px solid #ff8087 !important;
+}
+
+.selectedredleft{
+	border-left: 3px solid #ff8087 !important;
+}
+
+.selectedredright{
+	border-right: 3px solid #ff8087 !important;
 }

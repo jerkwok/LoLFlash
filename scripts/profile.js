@@ -28,7 +28,6 @@ $(document).ready(function(){
  		clear("userStats")
  		clear("userSum")
 
-
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()

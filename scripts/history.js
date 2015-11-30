@@ -3,11 +3,14 @@ var itemIdMap
 var spellIdMap = {}
 var spellImgMap = {}
 var tableNum = 0;
+var error = 0;
 
 $(document).ready(function(){
 	getChampIdMap()
 	getItemIdMap()
 	getSpellIdMap()
+
+	$("#matchList").hide()
 
 	var parameters = location.search.substring(1).split("&");
 	
@@ -27,6 +30,8 @@ $(document).ready(function(){
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()
+
+		$("#errordiv").hide()
 	
 		writeDB("history")
 		getID(username, region, season);
@@ -62,6 +67,16 @@ function getID(user, region, season){
 			sID = data[user].id;
 
 			getMatchHistory(sID,region,season)
+		},
+		statusCode:{
+			429:function (xhr, ajaxOptions, thrownError){
+		        alert("getId");
+		        document.getElementById("errordiv").innerHTML = "API Rate limit reached. Try Again Later."
+		        $("#errordiv").show()
+		        console.log("Thrown Error:" + thrownError);
+		        console.log("xhr:" + xhr);
+		        error = 1;
+	   		}
 		}
 	})
 }
@@ -75,6 +90,8 @@ function getMatchHistory(id, region, season){
 	};
 
 	var matchHistUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/matchlist/by-summoner/" + id + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec" + optargs;
+
+	error = 0;
 
 	$.ajax({		
 			url: matchHistUrl,
@@ -90,24 +107,35 @@ function getMatchHistory(id, region, season){
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
 
+				createTableDivs(gamesToDisplay);
+
 				if(data.totalGames >= gamesToDisplay){
 					tableNum = gamesToDisplay;
 					for(var i = gamesToDisplay-1; i >= 0; i--){
-				 		displayGame(id, data.matches[i], region);
+				 		displayGame(id, data.matches[i], region,i);
 				 	}
 				}
-			}
+
+				if (!error){
+					$("#matchList").show()
+				}
+			},
+			error:function (xhr, ajaxOptions, thrownError){
+		        alert(xhr.status);
+		        alert("match history")
+		        error = 1;
+	   		}
 		})
 }
 
-function displayGame(playerID, match, region){
+function displayGame(playerID, match, region, i){
 
-	getMatchInfo(region,match.matchId,playerID);
+	getMatchInfo(region,match.matchId,playerID, i+1);
 
 	var name = getChampName(match.champion,false)
 }
 
-function getMatchInfo(region, matchId,playerID){
+function getMatchInfo(region, matchId, playerID,i){
 	var matchUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
@@ -136,11 +164,10 @@ function getMatchInfo(region, matchId,playerID){
 					gameResult = 0
 				}
 
-				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner);
+				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner,i);
 				var tableId = tableNum + ""
-
+				console.log(tableId)
 				//create mini match table
-
 				console.log(data)
 
 				//minitable summary
@@ -262,7 +289,7 @@ function getMatchInfo(region, matchId,playerID){
 					}
 
 					if (data.participantIdentities[i].player.summonerId == playerID) {
-						console.log(team +"_player_champ"+tableNum+ rownum)
+						// console.log(team +"_player_champ"+tableNum+ rownum)
 							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team
 							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team + "left"
 							
@@ -348,7 +375,6 @@ function getMatchInfo(region, matchId,playerID){
 
 				// ["name","result","gold","kda","towers", "dragons", "barons"]
 				for (var i = 0; i < 2; i++){
-					console.log(teamGold[i])
 					teamGoldsmall[i] = (teamGold[i]%1000)/100
 					teamGold[i] = teamGold[i]/1000
 
@@ -375,7 +401,12 @@ function getMatchInfo(region, matchId,playerID){
 				}
 
 				tableNum--;
-			}
+			},
+			error:function (xhr, ajaxOptions, thrownError){
+		        alert(xhr.status);
+		        alert("match info")
+		        error = 1;
+	   		}
 		})
 }
 
@@ -393,7 +424,7 @@ function tableClick(clickedNum){
 }
 
 //Argument is the number of players per team
-function createTable(teamplayersNum, tableNum, gameResult, winningTeam){
+function createTable(teamplayersNum, tableNum, gameResult, winningTeam,gameNum){
 
 	tableId = tableNum + ""
 	//Create mini table
@@ -539,7 +570,7 @@ function createTable(teamplayersNum, tableNum, gameResult, winningTeam){
 	teamstats_row.setAttribute("class", "teamstats_row")
 	teamstats_row.setAttribute("id", "teamstats_row"+tableId)
 
-	var collist = ["name","result","gold","kda","towers", "dragons", "barons"]
+	var collist = ["name","result","kda","gold","towers", "dragons", "barons"]
 	for (var i = 0; i < 2; i++) {
 		if (i == 0){
 			var teamname = "blue"
@@ -578,7 +609,7 @@ function createTable(teamplayersNum, tableNum, gameResult, winningTeam){
 						teamstats_td.innerHTML = "Defeat"						
 					}
 				}
-			}else if (col == 2) {
+			}else if (col == 3) {
 					teamstats_td.innerHTML = "<img alt=\"" + collist[col] + "\"title=\"" + collist[col] + "\"class=\"iconPic\"src=\"./images/" + collist[col] + ".png\"></img>"
 			}else if ((col == 4) || (col == 5) || (col == 6)){
 					teamstats_td.innerHTML = "<img alt=\"" + collist[col] + "\"title=\"" + collist[col] + "\"class=\"iconPic\"src=\"./images/" + teamname + collist[col] + ".png\"></img>"
@@ -589,13 +620,24 @@ function createTable(teamplayersNum, tableNum, gameResult, winningTeam){
 	}
 	teamstats.appendChild(teamstats_row)
 
+	console.log(gameNum)
+	console.log(tableNum)
+	document.getElementById('matchtable'+tableId).appendChild(minisummary);
+	document.getElementById('matchtable'+tableId).appendChild(minitable);
+	document.getElementById('matchtable'+tableId).appendChild(table);
+	document.getElementById('matchtable'+tableId).appendChild(teamstats);
 
-	document.getElementById('resultsTableDiv').appendChild(minisummary);
-	document.getElementById('resultsTableDiv').appendChild(minitable);
-	document.getElementById('resultsTableDiv').appendChild(table);
-	document.getElementById('resultsTableDiv').appendChild(teamstats);
 	$("#resultstable" + tableId).hide();
 	$(teamstats).hide();
+}
+
+function createTableDivs(numGames){
+	for (i = 1; i <= numGames; i++){
+		var div = document.createElement('div');
+		div.setAttribute("class","matchDiv");
+		div.setAttribute("id","matchtable"+i);
+		$('.resultsTableDiv').append(div)
+	}
 }
 
 function getKDA(data,participantId){
