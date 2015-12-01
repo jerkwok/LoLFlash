@@ -136,14 +136,14 @@ function getMatchHistory(id, region, season){
 		})
 }
 
-function displayGame(playerID, match, region, i){
+function displayGame(playerID, match, region, gameNum){
 
-	getMatchInfo(region,match.matchId,playerID, i+1);
+	getMatchInfo(region,match.matchId,playerID, gameNum);
 
 	var name = getChampName(match.champion,false)
 }
 
-function getMatchInfo(region, matchId, playerID,i){
+function getMatchInfo(region, matchId, playerID,gameNum){
 	var matchUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v2.2/match/" + matchId + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 	var champKey;
 	var champPic;
@@ -172,7 +172,8 @@ function getMatchInfo(region, matchId, playerID,i){
 					gameResult = 0
 				}
 
-				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner,i);
+				console.log(gameNum)
+				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner,gameNum);
 				var tableId = tableNum + ""
 				console.log(tableId)
 				//create mini match table
@@ -628,12 +629,13 @@ function createTable(teamplayersNum, tableNum, gameResult, winningTeam,gameNum){
 	}
 	teamstats.appendChild(teamstats_row)
 
+	gameNum = gameNum+1
 	console.log(gameNum)
 	console.log(tableNum)
-	document.getElementById('matchtable'+tableId).appendChild(minisummary);
-	document.getElementById('matchtable'+tableId).appendChild(minitable);
-	document.getElementById('matchtable'+tableId).appendChild(table);
-	document.getElementById('matchtable'+tableId).appendChild(teamstats);
+	document.getElementById('matchtable'+gameNum).appendChild(minisummary);
+	document.getElementById('matchtable'+gameNum).appendChild(minitable);
+	document.getElementById('matchtable'+gameNum).appendChild(table);
+	document.getElementById('matchtable'+gameNum).appendChild(teamstats);
 
 	$("#resultstable" + tableId).hide();
 	$(teamstats).hide();
