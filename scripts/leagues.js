@@ -24,7 +24,6 @@ $(document).ready(function(){
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()
-		// season not used in this page. May remove after
 
 		writeDB("leagues")
 		getID(username, region, season);
@@ -128,8 +127,6 @@ function buildTable(tier, division, divName, divisionList, sID){
 	imgTier = tier.toLowerCase().trim();
 
 	imgTier = imgTier + "Tier";
-
-	console.log(divisionList)
 
 	document.getElementById("division").innerHTML += "<img src=\"./images/" + imgTier + ".png\" class=\"rankPic\"></img>"
 	document.getElementById("division").innerHTML += "<h3 class=\"dispRank\">" + tier + " " + division + " - " + divName + "</h3>"

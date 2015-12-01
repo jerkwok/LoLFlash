@@ -76,16 +76,21 @@ function getID(user, region, season){
 
 			getMatchHistory(sID,region,season)
 		},
-		statusCode:{
-			429:function (xhr, ajaxOptions, thrownError){
-		        alert("getId");
-		        document.getElementById("errordiv").innerHTML = "API Rate limit reached. Try Again Later."
-		        $("#errordiv").show()
-		        console.log("Thrown Error:" + thrownError);
-		        console.log("xhr:" + xhr);
-		        error = 1;
+		error:
+			function (xhr, ajaxOptions, thrownError){
+		        // alert("429");
+		        // document.getElementById("errordiv").innerHTML = "API Rate limit reached. Try Again Later."
+		        // $("#errordiv").show()
+		        // console.log("Thrown Error:" + thrownError);
+		        // console.log("xhr:" + xhr);
+		        // error = 1;
+
+		        //API ERROR CODE
+				document.getElementById("errordiv").innerHTML = "API Rate Limit Reached. Try Again."
+				$("#matchList").hide()
+				$("#errordiv").show()
 	   		}
-		}
+		
 	})
 }
 
@@ -109,7 +114,7 @@ function getMatchHistory(id, region, season){
 
 			},
 			success: function(data){
-				console.log(data)
+				$("#errordiv").hide()
 				document.getElementById("resultsTableDiv").innerHTML += "<p class=\"matchTitle\">" + "Match History" + "</br>(click to expand/collapse)</p>"
 
 				// Change this value based on how many games you want
@@ -122,16 +127,21 @@ function getMatchHistory(id, region, season){
 					for(var i = gamesToDisplay-1; i >= 0; i--){
 				 		displayGame(id, data.matches[i], region,i);
 				 	}
-				}
 
-				if (!error){
-					$("#matchList").show()
+					if (!error){
+						$("#matchList").show()
+					}
+				}else{
+					document.getElementById("errordiv").innerHTML = "No games to display"
+					$("#matchList").hide()
+					$("#errordiv").show()
 				}
 			},
 			error:function (xhr, ajaxOptions, thrownError){
-		        alert(xhr.status);
-		        alert("match history")
-		        error = 1;
+		        //API ERROR CODE
+				document.getElementById("errordiv").innerHTML = "API Rate Limit Reached. Try Again."
+				$("#matchList").hide()
+				$("#errordiv").show()
 	   		}
 		})
 }
@@ -172,13 +182,9 @@ function getMatchInfo(region, matchId, playerID,gameNum){
 					gameResult = 0
 				}
 
-				console.log(gameNum)
 				createTable((data.participants.length/2),tableNum,gameResult,data.teams[0].winner,gameNum);
 				var tableId = tableNum + ""
-				console.log(tableId)
 				//create mini match table
-				console.log(data)
-
 				//minitable summary
 				//match id
 				document.getElementById("minisummary_" + "id" + tableId).innerHTML = 				
@@ -245,7 +251,6 @@ function getMatchInfo(region, matchId, playerID,gameNum){
 				document.getElementById("miniplayer_" + "kda" + tableId).innerHTML = KDA[0] + "/" + KDA[1] + "/" + KDA[2] +"</br>" +" KDA:" 
 				+ ratio;
 				
-				// console.log(data.participants[spotlightID])
 				for (var itemnum = 0; itemnum < 7; itemnum++){
 						var itemstring = "item"+itemnum
 						var itemnump = itemnum+1
@@ -298,7 +303,6 @@ function getMatchInfo(region, matchId, playerID,gameNum){
 					}
 
 					if (data.participantIdentities[i].player.summonerId == playerID) {
-						// console.log(team +"_player_champ"+tableNum+ rownum)
 							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team
 							document.getElementById(team +"_player_champ"+tableNum+ rownum).className += " selected" + team + "left"
 							
@@ -412,15 +416,18 @@ function getMatchInfo(region, matchId, playerID,gameNum){
 				tableNum--;
 			},
 			error:function (xhr, ajaxOptions, thrownError){
-		        alert(xhr.status);
-		        alert("match info")
-		        error = 1;
+		        // alert(xhr.status);
+		        // alert("match info")
+		        // error = 1;
+		        //API ERROR CODE
+				document.getElementById("errordiv").innerHTML = "API Rate Limit Reached. Try Again."
+				$("#matchList").hide()
+				$("#errordiv").show()
 	   		}
 		})
 }
 
 function tableClick(clickedNum){
-	console.log(clickedNum)
 	tablestring = "#resultstable"+clickedNum
 	statsstring = "#teamstats"+clickedNum
 	if ($(tablestring).is(':visible')){
@@ -630,8 +637,6 @@ function createTable(teamplayersNum, tableNum, gameResult, winningTeam,gameNum){
 	teamstats.appendChild(teamstats_row)
 
 	gameNum = gameNum+1
-	console.log(gameNum)
-	console.log(tableNum)
 	document.getElementById('matchtable'+gameNum).appendChild(minisummary);
 	document.getElementById('matchtable'+gameNum).appendChild(minitable);
 	document.getElementById('matchtable'+gameNum).appendChild(table);
@@ -682,7 +687,6 @@ function getItemIdMap(callback){
 		type: 'GET',
 		dataType: 'json',
 		success: function(data){
-			console.log(data)
 			itemIdMap = data;
 		}
 	})

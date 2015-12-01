@@ -31,7 +31,6 @@ $(document).ready(function(){
 
 
 	$(".goButton").click(function(){
-		// console.log("enter")
  		clear("userStats")
  		clear("userSum")
  		// clear("player")
@@ -75,7 +74,6 @@ function getID(user, region, season){
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
 			icon = data[user].profileIconId
-			// console.log(data)
 			sumName = data[user].name
 
 			dispSum(icon, sumName, sLevel, sID, region);
@@ -121,9 +119,6 @@ function dispSum(icon, sumName, sLevel, sID, region){
 
 			},
 			success: function(data){
-
-				// console.log(data)
-
 				document.getElementById("userSum").innerHTML += getIconPic(icon);
 				sumSpec = document.createElement("div")
 				sumSpec.setAttribute("id", "sumSpec")
@@ -179,7 +174,6 @@ function getWinStats(id, region, season){
 
 		},
 		success: function(data){
-			// console.log(data)
 			for(var i = 0; i < data["playerStatSummaries"].length; i++){
 				if(data["playerStatSummaries"][i].playerStatSummaryType == "Unranked"){
 
@@ -229,10 +223,8 @@ function getRecentChamps(id, region, season){
 
 			},
 			success: function(data){
-				// console.log(data)
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
-				// console.log(data.matches[0])
 				if(data.totalGames > gamesToDisplay-1){
 					for(var i = 0; i < gamesToDisplay; i++){
 				 		displayChamp(id, data.matches[i], region,i);
@@ -246,7 +238,6 @@ function displayChamp(id, match, region, iterator){
 	var champKey = match.champion;
 	var champName = getChampName(champKey)
 	var champPic;
-	// console.log(match.champion)
 	divdest = "last"+iterator
 	document.getElementById(divdest).innerHTML = getChampPic(getChampKey(champKey))
 }

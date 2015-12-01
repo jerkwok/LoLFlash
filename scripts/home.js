@@ -10,7 +10,6 @@ $(document).ready(function(){
 	$.ajax({
 				url: "./scripts/displaysearches.php",
 				success: function(response){
-					console.log(response)
 					splitresponse = response.split("<br />")
 					responsedata = new Array(splitresponse.length);
 					for (var i = 0; i < 10; i++) {
@@ -19,9 +18,7 @@ $(document).ready(function(){
 
 					for (i = 0; i < splitresponse.length;i++){
 						if (splitresponse[i] != ""){
-							// console.log(splitresponse[i])
 							rowdata = splitresponse[i].split(",")
-							// console.log(rowdata)
 							for(j = 0; j < 4; j++){
 								responsedata[i][j] = rowdata[j]
 							}
@@ -30,7 +27,6 @@ $(document).ready(function(){
 						}
 					}
 					buildTable(responsedata)
-					// document.getElementById("recent").innerHTML = response
 				}
 			})
 	$("#recent").hide()
@@ -42,8 +38,6 @@ $(document).ready(function(){
 			$("#recent").fadeIn('fast')
 		}
 	})
-
-
 
 	$(".findButton").click(function(){
 		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
@@ -58,21 +52,18 @@ $(document).ready(function(){
 	});
 
 	$(".searchButton").click(function(){
-		console.log("search")
 		//Need to change these to grab the top bar values
 		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
 	});
 
 	$("#username").keydown(function(event){
 	   event.preventDefault();
-		console.log("enter")
 	    if(event.keyCode == 13){
 			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
     	}
 	});
 
 	$("#usernameC").keydown(function(event){
-		console.log("enter")
 	    if(event.keyCode == 13){
 			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
     	}
@@ -173,15 +164,12 @@ function rowClick(row){
 	RregionMap = getRregionMap();
 	RseasonMap = getRseasonMap();
 
-	console.log(RseasonMap)
-
 	rowID = "results_row_" + row
 	var rowdata = document.getElementById(rowID).childNodes
 	window.location = './'+ rowdata[3].textContent +
 				'.html?username=' + rowdata[0].textContent +
 				'&region=' + RregionMap[rowdata[1].textContent] + 
 				'&season=' + RseasonMap[rowdata[2].textContent];
-	// console.log(rowID)
 }
 
 function getregionMap(){

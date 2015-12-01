@@ -18,7 +18,6 @@ function writeDB(type){
 		type:"POST",
 		data:values,
 		success: function(response){
-			console.log(response)
 		}
 
 	})
