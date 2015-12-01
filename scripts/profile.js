@@ -85,7 +85,10 @@ function getID(user, region, season){
 			getWinStats(sID, region, season);
 
 			getRecentChamps(sID,region,season);
-		}
+		},
+		error: function (request, status, error) {
+
+   		}
 	})
 }
 
