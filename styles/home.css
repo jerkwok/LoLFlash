@@ -30,6 +30,10 @@
 	text-align: center;
 }
 
+.recent{
+	width: 50%;
+}
+
 #usernameC{
 	width: 200px;
 	border-radius: 4px;
