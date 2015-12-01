@@ -31,9 +31,10 @@ $(document).ready(function(){
 
 
 	$(".goButton").click(function(){
-		console.log("enter")
+		// console.log("enter")
  		clear("userStats")
  		clear("userSum")
+ 		// clear("player")
 
 		var username = $("#username").val()
 		var region = $('#region').val()
@@ -60,8 +61,6 @@ function clear(id){
 function getID(user, region, season){
 	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
-	rawUser = user;
-
 	$.ajax({
 		url: summonerUrl,
 		type: 'GET',
@@ -76,8 +75,10 @@ function getID(user, region, season){
 			sLevel = data[user].summonerLevel;
 			sID = data[user].id;
 			icon = data[user].profileIconId
+			// console.log(data)
+			sumName = data[user].name
 
-			dispSum(icon, rawUser, sLevel, sID, region);
+			dispSum(icon, sumName, sLevel, sID, region);
 
 			var statsUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + sID + "/ranked?season=" + season + "&api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
 
@@ -88,12 +89,8 @@ function getID(user, region, season){
 	})
 }
 
-function dispSum(icon, user, sLevel, sID, region){
+function dispSum(icon, sumName, sLevel, sID, region){
 	
-	document.getElementById("userSum").innerHTML += getIconPic(icon);
-	document.getElementById("userSum").innerHTML += "<p class=\"userName\">" + user + "</p>";
-	document.getElementById("userSum").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
-
 	document.getElementById("solo").innerHTML = "<h3>Ranked Solo/Duo:</h3>";
 	document.getElementById("solo").innerHTML += "<img src=\"./images/unrankedTier.png\" class=\"rankPic\"></img>"
 	document.getElementById("solo").innerHTML += "<h3>UNRANKED</h3>";
@@ -122,6 +119,15 @@ function dispSum(icon, user, sLevel, sID, region){
 			},
 			success: function(data){
 
+				// console.log(data)
+
+				document.getElementById("userSum").innerHTML += getIconPic(icon);
+				sumSpec = document.createElement("div")
+				sumSpec.setAttribute("id", "sumSpec")
+				document.getElementById("userSum").appendChild(sumSpec)
+				document.getElementById("sumSpec").innerHTML += "<p class=\"userName\">" + sumName + "</p>";
+				document.getElementById("sumSpec").innerHTML += "<p class=\"userLevel\">" + "Level: " + sLevel + "</p></br>";
+
 				for(var i = 0; i < data[sID].length; i++){
 
 					queue = data[sID][i].queue
@@ -138,7 +144,7 @@ function dispSum(icon, user, sLevel, sID, region){
 					if(queue == "RANKED_TEAM_3x3"){
 						document.getElementById("threes").innerHTML = "<h3>Ranked Threes:</h3>";						
 						document.getElementById("threes").innerHTML += "<img src=\"./images/" + tier + ".png\" class=\"rankPic\"></img><br>"
-						document.getElementById("threes").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
+						document.getElementById("threes").innerHTML += "<h3>" + (data[sID][i].tier + " " + data[sID][i].entries[0].division) + " - " + data[sID][i].entries[0].leaguePoints + " LP</h3>";
 						document.getElementById("threes").innerHTML += "<p>(Wins: " + (data[sID][i].entries[0].wins + " - Losses: " + data[sID][i].entries[0].losses) + ")</p>";
 					}
 
@@ -152,7 +158,7 @@ function dispSum(icon, user, sLevel, sID, region){
 			},
 			error:function (xhr, ajaxOptions, thrownError){
     			if(xhr.status==404) {
-    				console.log("404 Error: Page does not exist.");
+    				// console.log("404 Error: Page does not exist.");
     			}
 			}
 		})
@@ -170,7 +176,7 @@ function getWinStats(id, region, season){
 
 		},
 		success: function(data){
-			console.log(data)
+			// console.log(data)
 			for(var i = 0; i < data["playerStatSummaries"].length; i++){
 				if(data["playerStatSummaries"][i].playerStatSummaryType == "Unranked"){
 
@@ -220,10 +226,10 @@ function getRecentChamps(id, region, season){
 
 			},
 			success: function(data){
-				console.log(data)
+				// console.log(data)
 				// Change this value based on how many games you want
 				var gamesToDisplay = 3;
-				console.log(data.matches[0])
+				// console.log(data.matches[0])
 				if(data.totalGames > gamesToDisplay-1){
 					for(var i = 0; i < gamesToDisplay; i++){
 				 		displayChamp(id, data.matches[i], region,i);
@@ -237,7 +243,7 @@ function displayChamp(id, match, region, iterator){
 	var champKey = match.champion;
 	var champName = getChampName(champKey)
 	var champPic;
-	console.log(match.champion)
+	// console.log(match.champion)
 	divdest = "last"+iterator
 	document.getElementById(divdest).innerHTML = getChampPic(getChampKey(champKey))
 }
