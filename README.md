@@ -1,5 +1,6 @@
 # LoLFlash
-*"The bonjwa of LoL sites"*
+
+###### *"The bonjwa of LoL sites"*
 ---
 **Final Project for CSCI3230U**
 by
@@ -11,7 +12,7 @@ LoLFlash is a website that allows users to look up information of users on the c
 
 ### Navigation Bar
 ---
-Each page on LoLFlash contains a navigation bar. In the top left, there are links to any of the other pages on the website, allowing for easy navigation between pages. The navigation bar will light up the coresponding section that you are currently in to remind you where you are. The nav bar also has dropdown menus and a text box that allows you to perform searches. When you are on the home page, clicking the search button on the nav bar will perform a profile search with the parameters from the nav bar. When you are on a page that is not the home page, clicking the search button will perform that page's respective search. When typing the username, you may also hit enter to perform the search button action.
+Each page on LoLFlash contains a navigation bar. In the top left, there are links to any of the other pages on the website, allowing for easy navigation between pages. The navigation bar will light up the corresponding section that you are currently in to remind you where you are. The nav bar also has dropdown menus and a text box that allows you to perform searches. When you are on the home page, clicking the search button on the nav bar will perform a profile search with the parameters from the nav bar. When you are on a page that is not the home page, clicking the search button will perform that page's respective search. When typing the username, you may also hit enter to perform the search button action.
 
 ### Home Page
 ---
