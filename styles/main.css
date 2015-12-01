@@ -1,3 +1,10 @@
+/*
+ * Final Project for Web Development CSCI 3230U: LoL Flash
+ *
+ * Copyright (C) 2015, <Akira Aida 100526064, Jeremy Kwok 100341977>
+ * All rights reserved.
+ * 
+ */
 html, body{
 	background-color: #111 !important;
 	font-family: "Titillium Web", sans-serif, Arial !important;
@@ -5,7 +12,7 @@ html, body{
 	margin: 0;
 	padding: 0;
 	z-index: -1;
-	height: 100%;
+	height: 95%;
 }
 
 .navbar{
@@ -18,6 +25,10 @@ html, body{
 
 .navbar-inverse .navbar-nav > .active > a{
      background: #d65c14 !important;
+}
+
+.active{
+	background: #d65c14 !important;
 }
 
 .navbar li{

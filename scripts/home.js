@@ -1,9 +1,16 @@
+/*
+ * Final Project for Web Development CSCI 3230U: LoL Flash
+ *
+ * Copyright (C) 2015, <Akira Aida 100526064, Jeremy Kwok 100341977>
+ * All rights reserved.
+ * 
+ */
 $(document).ready(function(){
 
 	$.ajax({
 				url: "./scripts/displaysearches.php",
 				success: function(response){
-					// console.log(response)
+					console.log(response)
 					splitresponse = response.split("<br />")
 					responsedata = new Array(splitresponse.length);
 					for (var i = 0; i < 10; i++) {
