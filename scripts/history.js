@@ -41,7 +41,6 @@ $(document).ready(function(){
 		$("#errordiv").hide()
 	
 		writeDB("history")
-
 		
 		getID(username, region, season);
 	});
