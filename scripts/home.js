@@ -57,8 +57,8 @@ $(document).ready(function(){
 	});
 
 	$("#username").keydown(function(event){
-	   event.preventDefault();
 	    if(event.keyCode == 13){
+		   event.preventDefault();
 			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
     	}
 	});

@@ -41,7 +41,7 @@ $(document).ready(function(){
     	writeDB("profile")
 		getID(username, region, season);
 		// document.getElementById("player").style.display = "inline-block";
-		$("#player").show();
+		// $("#player").show();
   	});
 
 	$("#username").keydown(function(event){
@@ -59,7 +59,7 @@ function clear(id){
 
 function getID(user, region, season){
 	var summonerUrl = "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + user + "?api_key=a45ee173-8cd1-4345-955c-c06a8ae10bec"
-
+	$("#player").hide()
 	$.ajax({
 		url: summonerUrl,
 		type: 'GET',
@@ -68,6 +68,8 @@ function getID(user, region, season){
 
 		},
 		success: function(data){
+
+			$("#player").show()
 
 			user = user.replace(" ", "");
 			user = user.toLowerCase().trim();
@@ -85,7 +87,7 @@ function getID(user, region, season){
 			getRecentChamps(sID,region,season);
 		},
 		error: function (request, status, error) {
-
+			$("#player").hide()
    		}
 	})
 }
