@@ -20,7 +20,7 @@ When you first visit LoLFlash, you will be taken to the site's home page. The ho
 
 ### Profile Page
 ---
-Performing a search on the profile page will bring up some account statistics for the searched player. It will display the player's name, their account level, and their profile picture. Below shows win statistics for the player. In addition, this page will also show the player's current rank in the three major game types (Ranked Solo, Ranked Threes, and Ranked Fives). Lastly, this page displays the champions played in the last three games the player partook in.
+Performing a search on the profile page will bring up some applicable account statistics for the searched player. It will display the player's name, their account level, and their profile picture if they have one. Below shows win statistics for the player. In addition, this page will also show the player's current rank in the three major game types (Ranked Solo, Ranked Threes, and Ranked Fives). Lastly, this page displays the champions played in the last three games the player partook in.
 
 ### History Page
 ---
