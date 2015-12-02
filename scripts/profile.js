@@ -38,8 +38,9 @@ $(document).ready(function(){
 		var username = $("#username").val()
 		var region = $('#region').val()
 		var season = $('#season').val()
-    	writeDB("profile")
-		getID(username, region, season);
+		if (username){
+			getID(username, region, season);
+		}
 		// document.getElementById("player").style.display = "inline-block";
 		// $("#player").show();
   	});
@@ -85,6 +86,7 @@ function getID(user, region, season){
 			getWinStats(sID, region, season);
 
 			getRecentChamps(sID,region,season);
+	    	writeDB("profile")
 		},
 		error: function (request, status, error) {
 			$("#player").hide()

@@ -39,10 +39,9 @@ $(document).ready(function(){
 		var season = $('#season').val()
 
 		$("#errordiv").hide()
-	
-		writeDB("history")
-		
-		getID(username, region, season);
+		if (username){
+			getID(username, region, season);
+		}
 	});
 
 	$("#username").keydown(function(event){
@@ -75,6 +74,7 @@ function getID(user, region, season){
 			sID = data[user].id;
 
 			getMatchHistory(sID,region,season)
+			writeDB("history")
 		},
 		error:
 			function (xhr, ajaxOptions, thrownError){

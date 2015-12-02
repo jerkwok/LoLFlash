@@ -25,20 +25,23 @@ $(document).ready(function(){
 		var region = $('#region').val()
 		var season = $('#season').val()
 
-		writeDB("leagues")
 		getID(username, region, season);
 	});
 
 	$(document).keyup(function(event){
 	    if(event.keyCode == 13){
-        	$(".goButton").click();
+	    	if (username){
+	        	$(".goButton").click();
+	    	}
     	}
 	});
 
 	$("#username").keydown(function(event){
 	    if(event.keyCode == 13){
     	   event.preventDefault();
-        	$(".goButton").click();
+    	   if (username){
+	        	$(".goButton").click();
+	        }
     	}
 	});
 });
@@ -62,6 +65,7 @@ function getID(user, region, season){
 			sID = data[user].id;
 
 			getLeagues(region, sID);
+			writeDB("leagues")
 		}
 	})
 }

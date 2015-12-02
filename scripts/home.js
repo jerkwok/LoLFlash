@@ -40,33 +40,44 @@ $(document).ready(function(){
 	})
 
 	$(".findButton").click(function(){
-		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		if ($("#usernameC").val()) {
+			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		};
 	});
 
 	$("#historyButton").click(function(){
-		gotoPage("history", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())    
+		if ($("#usernameC").val()) {
+			gotoPage("history", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())    
+		}
 	});
 
 	$("#leaguesButton").click(function(){
-		gotoPage("leagues", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		if ($("#usernameC").val()) {		
+			gotoPage("leagues", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		}
 	});
 
 	$(".searchButton").click(function(){
-		//Need to change these to grab the top bar values
-		gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		if ($("#usernameC").val()) {
+			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+		}
 	});
 
 	$("#username").keydown(function(event){
 	    if(event.keyCode == 13){
 		   event.preventDefault();
-			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+	   		if ($("#usernameC").val()) {
+				gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+			}
     	}
 	});
 
 	$("#usernameC").keydown(function(event){
 	    if(event.keyCode == 13){
-			gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
-    	}
+			if ($("#usernameC").val()) {
+				gotoPage("profile", $("#usernameC").val(),$("#regionC").val(),$("#seasonC").val())
+			}    	
+		}
 	});
 });
 
