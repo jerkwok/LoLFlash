@@ -51,3 +51,19 @@ Assorted Friends:
 
 ###### Note about the Riot API
 When planning and envisioning the LoLFlash project, one of the goals was to allow users to lookup many games from their match history. Unfortunately, we ran into an issue with the Riot API which we used to grab user data. For each game we wanted to display, it would require multiple calls to the API, and the API currently uses a development key rather than a production key, which has a rate limit of 10 requests per 10 seconds. Because of this, we have had to scale back some of the functionality regarding displaying old matches, and performing too many searches within a short time frame will cause a 429 error (Rate limit reached). Obtaining a live key with higher rate limits to use rather than our single production key is not possible in this current timeframe.
+
+###### Instructions for getting the Application Running
+1. Download and install XAMPP.
+2. Move all files (except the "recent.sql") associated with our project into a directory named "LoLFlash".
+3. Move the "LoLFlash" directory into the directory "opt/lampp/htdocs".
+4. Start XAMPP.
+5. Navigate to localhost/phpmyadmin/ in a browser.
+6. Navigate to the "Databases" tab and create a database called "recent".
+7. Navigate to the "import" button in the newly created "recent" database. Select the file "recent.sql" and press "Go".
+8. Navigate to the "SQL" button on the home page. Enter the following commands...
+      a) CREATE USER 'csci3230u'@'localhost' IDENTIFIED BY 'csci';
+      b) GRANT ALL ON recent.*TO'csci3230u'@'localhost'identified by 'csci';
+9. Navigate to localhost/LoLFlash/home.html
+10. Everything should be working.
+
+
