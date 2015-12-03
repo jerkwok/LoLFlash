@@ -61,8 +61,11 @@ When planning and envisioning the LoLFlash project, one of the goals was to allo
 6. Navigate to the "Databases" tab and create a database called "recent".
 7. Navigate to the "import" button in the newly created "recent" database. Select the file "recent.sql" and press "Go".
 8. Navigate to the "SQL" button on the home page. Enter the following commands...
+
       a) CREATE USER 'csci3230u'@'localhost' IDENTIFIED BY 'csci';
+      
       b) GRANT ALL ON recent.*TO'csci3230u'@'localhost'identified by 'csci';
+      
 9. Navigate to localhost/LoLFlash/home.html in a browser.
 10. Everything should be working.
 
