@@ -63,7 +63,7 @@ When planning and envisioning the LoLFlash project, one of the goals was to allo
 8. Navigate to the "SQL" button on the home page. Enter the following commands...
       a) CREATE USER 'csci3230u'@'localhost' IDENTIFIED BY 'csci';
       b) GRANT ALL ON recent.*TO'csci3230u'@'localhost'identified by 'csci';
-9. Navigate to localhost/LoLFlash/home.html
+9. Navigate to localhost/LoLFlash/home.html in a browser.
 10. Everything should be working.
 
 
